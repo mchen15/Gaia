@@ -32,7 +32,7 @@
     <ClInclude Include="..\..\src\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
+    <ClInclude Include="..\..\src\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -43,7 +43,7 @@
     <ClCompile Include="..\..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
+    <ClCompile Include="..\..\src\camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

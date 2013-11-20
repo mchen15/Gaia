@@ -86,14 +86,14 @@
     <None Include="..\..\shaders\pass.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\camera.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\Utility.h" />
-    <ClInclude Include="camera.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\camera.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Utility.cpp" />
-    <ClCompile Include="camera.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
