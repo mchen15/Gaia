@@ -4,7 +4,8 @@ Plane::Plane(glm::vec2 l, glm::vec2 u, int subdivisionsX, int subdivisionsY)
 	:lCorner(l),
 	 uCorner(u),
 	 divx(subdivisionsX),
-	 divy(subdivisionsY)
+	 divy(subdivisionsY),
+	 wireframe(false)
 {
 	initVAO();
 }
@@ -91,10 +92,19 @@ void Plane::draw(int positionLocation, int texcoordsLocation)
     glVertexAttribPointer((GLuint)texcoordsLocation, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
+	if(wireframe)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
     glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
 
     glDisableVertexAttribArray(positionLocation);
     glDisableVertexAttribArray(texcoordsLocation);
 }
 
+void Plane::toggleWireframe()
+{
+	wireframe = !wireframe;
+}

@@ -21,7 +21,7 @@ void reshape(int w, int h)
 void display(void)
 {
     glUseProgram(pass_prog);
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     mat4 model(1.0f);
 	mat4 view = cam->getView();
 	mat4 persp = cam->getPersp(float(width), float(height));
@@ -42,6 +42,9 @@ void keyboard(unsigned char key, int x, int y)
 		case(27):
 			exit(0);
 			break;
+		case('w'):
+			plane->toggleWireframe();
+			break;
 	}
 }
 
@@ -55,7 +58,7 @@ void initScene()
 	float farPlane = 100.0f;
 
 	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
-	plane = new Plane(vec2(-50), vec2(50), 5,5);
+	plane = new Plane(vec2(-1), vec2(1), 5,5);
 }
 
 
