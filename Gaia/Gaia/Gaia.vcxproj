@@ -87,15 +87,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
+    <ClInclude Include="..\..\src\glslUtility.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\plane.h" />
-    <ClInclude Include="..\..\src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\camera.cpp" />
+    <ClCompile Include="..\..\src\glslUtility.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />
-    <ClCompile Include="..\..\src\Utility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,7 +25,6 @@ void display(void)
 
     glUseProgram(pass_prog);
 
-
     mat4 model(1.0f);
 	mat4 view = cam->getView();
     mat4 persp = glm::perspective(45.0f,(float)width/(float)height,NEARP,FARP);
