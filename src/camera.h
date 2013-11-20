@@ -11,8 +11,11 @@ class Camera
 {
 public:
 	Camera();
-	Camera(vec3 posv, vec3 viewDir, vec3 upv);
+	Camera(vec3 posv, vec3 viewDir, vec3 upv,float fieldOfView,float nearPlane, float farPlane);
 	mat4 getView();
+	mat4 getPersp(float width, float height);
+	float getNearPlane();
+	float getFarPlane();
 	
 private:
 	float rx;
@@ -21,6 +24,10 @@ private:
 	vec3 position;
 	vec3 up;
 	vec3 view;
+	float fov;
+	float nearp;
+	float farp;
+
 };
 
 #endif
