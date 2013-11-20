@@ -12,14 +12,6 @@ using std::ios;
 
 namespace glslUtility {
 
-	typedef struct {
-		GLuint vertex;
-		GLuint fragment;
-		GLuint tess_control;
-		GLuint tess_eval;
-		GLuint geometry;
-	} shaders_t;
-
 	char* loadFile(const char *fname, GLint &fSize)
 	{
 		// file read based on example in cplusplus.com tutorial

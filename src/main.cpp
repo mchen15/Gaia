@@ -64,14 +64,12 @@ void initScene()
 void initShader() {
 	const char * pass_vert = "../../shaders/pass.vert";
 	const char * pass_frag = "../../shaders/pass.frag";
-
 	
-	glslUtility::shaders_t shaders = glslUtility::loadShaders(pass_vert,NULL,NULL,NULL, pass_frag);
-    pass_prog = glCreateProgram();
-
+	pass_prog= glslUtility::createProgram(pass_vert,pass_frag,0,0);
+    glUseProgram(pass_prog);
     glBindAttribLocation(pass_prog, triangle_attributes::POSITION, "Position");
     glBindAttribLocation(pass_prog, triangle_attributes::TEXCOORD, "Texcoord");
-    glslUtility::attachAndLinkProgram(pass_prog,shaders);
+    
 }
 
 void clearScene()

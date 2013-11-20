@@ -12,6 +12,13 @@
 
 namespace glslUtility
 {
+	typedef struct {
+		GLuint vertex;
+		GLuint fragment;
+		GLuint tess_control;
+		GLuint tess_eval;
+		GLuint geometry;
+	} shaders_t;
 
 GLuint createProgram(const char *vertexShaderPath, const char *fragmentShaderPath, const char *attributeLocations[], GLuint numberOfLocations);
 GLuint createProgram(const char *vertexShaderPath, const char *geometryShaderPath, const char *fragmentShaderPath, const char *attributeLocations[], GLuint numberOfLocations);
