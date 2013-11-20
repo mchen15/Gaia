@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <cstring>
+#include "SOIL.h"
 
 
 #endif
