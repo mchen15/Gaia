@@ -20,22 +20,17 @@ void reshape(int w, int h)
 
 void display(void)
 {
-    float FARP = 100.0f;
-    float NEARP = 0.1f;
-
     glUseProgram(pass_prog);
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     mat4 model(1.0f);
 	mat4 view = cam->getView();
-    mat4 persp = glm::perspective(45.0f,(float)width/(float)height,NEARP,FARP);
+	mat4 persp = cam->getPersp(float(width), float(height));
     mat4 inverse_transposed = glm::transpose(glm::inverse(view*model));
-    glUniform1f(glGetUniformLocation(pass_prog, "u_Far"), FARP);
+    glUniform1f(glGetUniformLocation(pass_prog, "u_Far"), cam->getFarPlane());
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Model"),1,GL_FALSE,&model[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_View"),1,GL_FALSE,&view[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Persp"),1,GL_FALSE,&persp[0][0]);
-
-
-	plane->draw(0,1);
+	plane->draw(triangle_attributes::POSITION,triangle_attributes::TEXCOORD);
 	glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -47,6 +42,9 @@ void keyboard(unsigned char key, int x, int y)
 		case(27):
 			exit(0);
 			break;
+		case('w'):
+			plane->toggleWireframe();
+			break;
 	}
 }
 
@@ -55,8 +53,11 @@ void initScene()
 	vec3 camPosition = vec3(0, -10, 2);
 	vec3 viewDir = vec3(0, 0, -1);
 	vec3 up = vec3(0,0,1);
+	float fov = 45.0f;
+	float nearPlane = 0.01f;
+	float farPlane = 100.0f;
 
-	cam = new Camera(camPosition, viewDir, up);
+	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
 	plane = new Plane(vec2(-1), vec2(1), 5,5);
 }
 
@@ -68,11 +69,16 @@ void initShader() {
 	Utility::shaders_t shaders = Utility::loadShaders(pass_vert, pass_frag);
     pass_prog = glCreateProgram();
 
-    glBindAttribLocation(pass_prog, 0, "Position");
-    glBindAttribLocation(pass_prog, 1, "Texcoord");
+    glBindAttribLocation(pass_prog, triangle_attributes::POSITION, "Position");
+    glBindAttribLocation(pass_prog, triangle_attributes::TEXCOORD, "Texcoord");
     Utility::attachAndLinkProgram(pass_prog,shaders);
 }
 
+void clearScene()
+{
+	delete plane;
+	delete cam;
+}
 
 int main(int argc, char* argv[])
 {
@@ -103,5 +109,6 @@ int main(int argc, char* argv[])
     //glutMotionFunc(motion);
 
     glutMainLoop();
+	clearScene();
     return 0;
 }

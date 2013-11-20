@@ -13,6 +13,7 @@ public:
 	GLuint getTBO() {return tbo;}
 	GLuint getIBO() {return ibo;}	
 	void draw(int positionLocation, int texcoordsLocation);
+	void toggleWireframe();
 	~Plane();
 
 private:
@@ -23,7 +24,7 @@ private:
 	GLuint vbo;
 	GLuint tbo;
 	GLuint ibo;
-
+	bool wireframe;
 	void initVAO();
 };
 

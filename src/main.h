@@ -16,6 +16,13 @@ using std::cout;
 using std::endl;
 using glm::vec2;
 
+namespace triangle_attributes {
+    enum {
+        POSITION,
+        TEXCOORD
+    };
+}
+
 Camera* cam;
 Plane* plane;
 GLuint pass_prog;
