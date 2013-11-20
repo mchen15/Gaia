@@ -9,12 +9,15 @@
 #include <iostream>
 #include <string>
 #include "SOIL.h"
+#include "camera.h"
 
+using std::cout;
+using std::endl;
 
-namespace glut_window_const {
-	int width;
-	int height;
-}
+Camera cam;
+
+int width;
+int height;
 
 void reshape(int w, int h);
 void display(void);

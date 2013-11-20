@@ -1,11 +1,5 @@
 #include "main.h"
 
-using glut_window_const::width;
-using glut_window_const::height;
-using std::cout;
-using std::endl;
-
-
 
 void reshape(int w, int h)
 {
@@ -31,6 +25,11 @@ void keyboard(unsigned char key, int x, int y)
 	}
 }
 
+void initCamera()
+{
+	cam = Camera(vec3(-10), vec3(0,0,-1), vec3(0,1,0));
+}
+
 int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);
@@ -50,7 +49,8 @@ int main(int argc, char* argv[])
 	
     cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << endl;
     cout << "OpenGL version " << glGetString(GL_VERSION) << " supported" << endl;
-
+	
+	initCamera();
 	glutDisplayFunc(display);
     glutReshapeFunc(reshape);	
     glutKeyboardFunc(keyboard);
