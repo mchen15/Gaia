@@ -1,5 +1,4 @@
 #include "main.h"
-#include "Utility.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_projection.hpp>
 #include <glm/gtc/matrix_operation.hpp>
@@ -66,12 +65,13 @@ void initShader() {
 	const char * pass_vert = "../../shaders/pass.vert";
 	const char * pass_frag = "../../shaders/pass.frag";
 
-	Utility::shaders_t shaders = Utility::loadShaders(pass_vert, pass_frag);
+	
+	glslUtility::shaders_t shaders = glslUtility::loadShaders(pass_vert,NULL,NULL,NULL, pass_frag);
     pass_prog = glCreateProgram();
 
     glBindAttribLocation(pass_prog, triangle_attributes::POSITION, "Position");
     glBindAttribLocation(pass_prog, triangle_attributes::TEXCOORD, "Texcoord");
-    Utility::attachAndLinkProgram(pass_prog,shaders);
+    glslUtility::attachAndLinkProgram(pass_prog,shaders);
 }
 
 void clearScene()

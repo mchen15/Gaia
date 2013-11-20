@@ -11,6 +11,7 @@
 #include "SOIL.h"
 #include "camera.h"
 #include "plane.h"
+#include "glslUtility.h"
 
 using std::cout;
 using std::endl;
