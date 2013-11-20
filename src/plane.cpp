@@ -91,7 +91,7 @@ void Plane::draw(int positionLocation, int texcoordsLocation)
     glVertexAttribPointer((GLuint)texcoordsLocation, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
 
     glDisableVertexAttribArray(positionLocation);

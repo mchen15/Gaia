@@ -53,8 +53,12 @@ void keyboard(unsigned char key, int x, int y)
 
 void initScene()
 {
-	cam = new Camera(vec3(-10), vec3(0,0,-1), vec3(0,0,1));
-	plane = new Plane();
+	vec3 camPosition = vec3(0, -10, 2);
+	vec3 viewDir = vec3(0, 0, -1);
+	vec3 up = vec3(0,0,1);
+
+	cam = new Camera(camPosition, viewDir, up);
+	plane = new Plane(vec2(-1), vec2(1), 5,5);
 }
 
 
