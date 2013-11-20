@@ -14,5 +14,5 @@ void main(void)
 {
     out_Normal = vec4(normalize(fs_Normal),0.0f);
     out_Position = vec4(fs_Position.xyz,1.0f); //Tuck position into 0 1 range
-    out_Color = u_Color;
+    out_Color = vec4(1.0,1.0,0.0,1.0);//u_Color;
 }

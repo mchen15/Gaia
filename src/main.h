@@ -10,11 +10,14 @@
 #include <string>
 #include "SOIL.h"
 #include "camera.h"
+#include "plane.h"
 
 using std::cout;
 using std::endl;
 
-Camera cam;
+Camera* cam;
+Plane* plane;
+GLuint pass_prog;
 
 int width;
 int height;
