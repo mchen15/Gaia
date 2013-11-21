@@ -1,4 +1,13 @@
 #include "plane.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_projection.hpp>
+#include <glm/gtc/matrix_operation.hpp>
+#include <glm/gtx/transform2.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/verbose_operator.hpp>
+#include <iostream>
+
 
 Plane::Plane(glm::vec2 l, glm::vec2 u, int subdivisionsX, int subdivisionsY)
 	:lCorner(l),
@@ -34,6 +43,7 @@ void Plane::initVAO()
 	glm::vec4 lr(lCorner.x,lCorner.y,texL.x,texL.y);
     glm::vec4 ul(uCorner.x,uCorner.y,texU.x,texU.y);
 
+	glm::mat4 debug = glm::lookAt(glm::vec3(0,-10,2), glm::vec3(0.0), glm::vec3(0,0,1));
 
     for(int i = 0; i < divx; ++i)
     {
@@ -45,7 +55,11 @@ void Plane::initVAO()
             vertices[(j*divx + i)*2+1] = beta*lr.y + (1-beta)*ul.y;
             texcoords[(j*divx + i)*2  ] = alpha*lr.z + (1-alpha)*ul.z;
             texcoords[(j*divx + i)*2+1] = beta*lr.w + (1-beta)*ul.w;
-        }
+
+			glm::vec4 test = debug*glm::vec4( alpha*lr.x + (1-alpha)*ul.x,beta*lr.y + (1-beta)*ul.y,0.0,1.0);
+			float debug2 = abs(test.z)/30.0; 
+			std::cout<< test.x<<" "<<test.y<<" "<<test.z<<" "<<debug2<<std::endl;
+		}
     }
 
     for(int i = 0; i < fw_1; ++i)
