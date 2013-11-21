@@ -25,6 +25,8 @@ namespace glslUtility {
 			file.read (memblock, size);
 			file.close();
 			std::cout << "file " << fname << " loaded" << std::endl;
+
+			std::cout<<std::endl;
     		return memblock;
 		}
 
@@ -91,7 +93,7 @@ namespace glslUtility {
 		vs = loadFile(vert_path,vlen);
 		if(geom_path) gs = loadFile(geom_path,glen);
 		if(tcs_path) tcs = loadFile(tcs_path,tcLen);
-		if(tes_path) tes = loadFile(tes_path,tcLen);
+		if(tes_path) tes = loadFile(tes_path,teLen);
 		fs = loadFile(frag_path,flen);
 
 		const char * vv = vs;
