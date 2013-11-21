@@ -45,6 +45,8 @@ void display(void)
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Model"),1,GL_FALSE,&model[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_View"),1,GL_FALSE,&view[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Persp"),1,GL_FALSE,&persp[0][0]);
+    glUniform1f(glGetUniformLocation(pass_prog, "u_tessLevelInner"), tessLevelInner);
+	glUniform1f(glGetUniformLocation(pass_prog, "u_tessLevelOuter"), tessLevelOuter);
 	plane->draw(triangle_attributes::POSITION,triangle_attributes::TEXCOORD);
 	glutPostRedisplay();
     glutSwapBuffers();
@@ -59,6 +61,22 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case('w'):
 			plane->toggleWireframe();
+			break;
+		case ('1'):
+			tessLevelInner++;
+			std::cout<<"Inner: "<<tessLevelInner<<std::endl;
+			break;
+		case ('2'):
+			tessLevelInner--;
+			std::cout<<"Inner: "<<tessLevelInner<<std::endl;
+			break;
+		case ('3'):
+			tessLevelOuter++;
+			std::cout<<"Outer: "<<tessLevelOuter<<std::endl;
+			break;
+		case ('4'):
+			tessLevelOuter--;
+			std::cout<<"Outer: "<<tessLevelOuter<<std::endl;
 			break;
 	}
 }

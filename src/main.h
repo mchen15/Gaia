@@ -27,6 +27,8 @@ namespace triangle_attributes {
 Camera* cam;
 Plane* plane;
 GLuint pass_prog;
+float tessLevelInner = 1.0;
+float tessLevelOuter = 1.0;
 
 int width;
 int height;
