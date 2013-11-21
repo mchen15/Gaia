@@ -3,7 +3,7 @@
 layout(vertices = 3) out;
 in vec3 vPosition[];
 out vec3 tcPosition[];
-uniform float TessLevelInner=1.0;
+uniform float TessLevelInner=3.0;
 uniform float TessLevelOuter=1.0;
 
 void main()

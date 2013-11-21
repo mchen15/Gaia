@@ -73,7 +73,7 @@ void initScene()
 	float farPlane = 100.0f;
 
 	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
-	plane = new Plane(vec2(-20), vec2(20),5,5);
+	plane = new Plane(vec2(-2), vec2(2),2,2);
 }
 
 
