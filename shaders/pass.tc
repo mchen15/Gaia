@@ -3,10 +3,17 @@
 layout(vertices = 3) out;
 in vec3 vPosition[];
 out vec3 tcPosition[];
-uniform float TessLevelInner;
-uniform float TessLevelOuter;
+uniform float TessLevelInner=1.0;
+uniform float TessLevelOuter=1.0;
 
 void main()
 {
-	toPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+	tcPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+	if ( gl_InvocationID == 0)
+	{
+	 gl_TessLevelInner[0] = TessLevelInner;
+	 gl_TessLevelOuter[1] = TessLevelOuter;
+	 gl_TessLevelOuter[2] = TessLevelOuter;
+	 gl_TessLevelOuter[3] = TessLevelOuter;
+	}
 }

@@ -3,8 +3,9 @@ layout(triangles, equal_spacing, cw) in;
 in vec3 tcPosition[];
 out vec3 tePosition;
 out vec3 tePatchDistance;
-uniform mat4 Projection;
-uniform mat4 Modelview;
+uniform mat4 u_Persp;
+uniform mat4 u_Model;
+uniform mat4 u_View;
 
 void main()
 {
@@ -12,6 +13,7 @@ void main()
     vec3 p1 = gl_TessCoord.y * tcPosition[1];
     vec3 p2 = gl_TessCoord.z * tcPosition[2];
     tePatchDistance = gl_TessCoord;
-    tePosition = normalize(p0 + p1 + p2);
-    gl_Position = Projection * Modelview * vec4(tePosition, 1);
+    //tePosition = normalize(p0 + p1 + p2);
+	tePosition = p0 + p1 + p2;
+    gl_Position = u_Persp *u_View*u_Model*vec4(tePosition, 1);
 }
