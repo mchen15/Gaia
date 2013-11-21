@@ -29,16 +29,8 @@ void main()
 	else
 		debug = 3.0;
 
-
 	 float normalizedZMin = zMin/(30 - u_Near);
-	 
-	 //gl_TessLevelInner[0] = mix(maxTessLevelInner, minTessLevelInner,normalizedZMin);
-	 //gl_TessLevelOuter[0] = mix(maxTessLevelInner, minTessLevelInner,normalizedZMin);
-	 //gl_TessLevelOuter[1] = mix(maxTessLevelInner, minTessLevelInner,normalizedZMin);
-	 //gl_TessLevelOuter[2] = mix(maxTessLevelInner, minTessLevelInner,normalizedZMin);
-
-
-
+	
 	 gl_TessLevelInner[0] = debug;u_tessLevelInner;
 	 gl_TessLevelOuter[0] = debug;u_tessLevelOuter;
 	 gl_TessLevelOuter[1] = debug;u_tessLevelOuter;
