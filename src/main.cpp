@@ -7,7 +7,6 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/verbose_operator.hpp>
 
-
 void reshape(int w, int h)
 {
     width = w;
@@ -16,9 +15,26 @@ void reshape(int w, int h)
     glViewport(0,0,(GLsizei)w,(GLsizei)h);
 }
 
+void updateFPS()
+{
+    frame++;
+	int time=glutGet(GLUT_ELAPSED_TIME);
+
+    if (time - timebase > 1000) {
+        fps = frame*1000.0f/(time-timebase);
+        timebase = time;
+        frame = 0;
+    }
+
+	char title[100];
+	sprintf(title,"GAIA [%0.2f fps]", fps);
+	glutSetWindowTitle(title);
+}
 
 void display(void)
 {
+	updateFPS();
+
     glUseProgram(pass_prog);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     mat4 model(1.0f);
@@ -64,12 +80,13 @@ void initScene()
 void initShader() {
 	const char * pass_vert = "../../shaders/pass.vert";
 	const char * pass_frag = "../../shaders/pass.frag";
-	
-	pass_prog= glslUtility::createProgram(pass_vert,pass_frag,0,0);
-    glUseProgram(pass_prog);
-    glBindAttribLocation(pass_prog, triangle_attributes::POSITION, "Position");
-    glBindAttribLocation(pass_prog, triangle_attributes::TEXCOORD, "Texcoord");
-    
+	const char * pass_tc =   "../../shaders/pass.tc";
+	const char * pass_te =   "../../shaders/pass.te";
+
+	std::cout << "Creating program." << std::endl;
+
+	pass_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocations,2);   
+	//pass_prog= glslUtility::createProgram(pass_vert, pass_frag, attributeLocations,2);   
 }
 
 void clearScene()
@@ -85,7 +102,9 @@ int main(int argc, char* argv[])
     width = 1280;
     height = 720;
     glutInitWindowSize(width,height);
-	glutCreateWindow("GAIA Frame");
+	char title[100];
+	sprintf(title,"GAIA [%0.2f fps]", fps);
+	glutCreateWindow(title);
     glewInit();
     GLenum err = glewInit();
     if (GLEW_OK != err)

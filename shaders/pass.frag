@@ -1,4 +1,4 @@
-#version 330
+#version 400
 
 uniform float u_Far;
 uniform vec4 u_Color;

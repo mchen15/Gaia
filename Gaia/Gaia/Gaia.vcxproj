@@ -83,6 +83,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\..\shaders\pass.frag" />
+    <None Include="..\..\shaders\pass.tc" />
+    <None Include="..\..\shaders\pass.te" />
     <None Include="..\..\shaders\pass.vert" />
   </ItemGroup>
   <ItemGroup>

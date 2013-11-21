@@ -75,7 +75,7 @@ namespace glslUtility {
 		GLuint f, tc=-1, te=-1, g=-1, v;
 
 		char *vs, *tcs, *tes, *gs, *fs;
-
+		std::cout << "1." << std::endl;
 		v = glCreateShader(GL_VERTEX_SHADER);
 		if(geom_path) g = glCreateShader(GL_GEOMETRY_SHADER);
 		if(tcs_path) tc = glCreateShader(GL_TESS_CONTROL_SHADER);
@@ -105,7 +105,6 @@ namespace glslUtility {
 		if(tcs_path) glShaderSource(tc, 1, &ttcc, &tcLen);
 		if(tes_path) glShaderSource(te, 1, &ttee, &teLen);
 		glShaderSource(f, 1, &ff,&flen);
-
 		GLint compiled;
 
 		glCompileShader(v);
@@ -118,6 +117,7 @@ namespace glslUtility {
         
 		if(tcs_path)
 		{
+			std::cout << tc << std::endl;
 			glCompileShader(tc);
 			glGetShaderiv(tc, GL_COMPILE_STATUS, &compiled);
 			if(!compiled)
@@ -137,7 +137,7 @@ namespace glslUtility {
 			}
 			printShaderInfoLog(te);
 		}
-
+		
         if(geom_path)
         {
             glCompileShader(g);
@@ -163,7 +163,7 @@ namespace glslUtility {
 		out.tess_eval = te;
 		out.geometry = g; 
 		out.fragment = f;
-
+		std::cout << "4." << std::endl;
 		delete [] vs; // dont forget to free allocated memory, or else really bad things start happening
         if(geom_path) delete[] gs;
 		if(tcs_path) delete[] tcs;
@@ -176,6 +176,8 @@ namespace glslUtility {
 	void attachAndLinkProgram( GLuint program, shaders_t shaders) {
 		glAttachShader(program, shaders.vertex);
         if(shaders.geometry >= 0) glAttachShader(program, shaders.geometry);
+		if(shaders.tess_control >= 0) glAttachShader(program, shaders.tess_control);
+		if(shaders.tess_eval >= 0) glAttachShader(program, shaders.tess_eval);
 		glAttachShader(program, shaders.fragment);
 
 		glLinkProgram(program);
@@ -223,16 +225,16 @@ namespace glslUtility {
 	GLuint createProgram(const char *vertexShaderPath, const char *tessControlShaderPath, const char *tessEvalShaderPath, const char *geometryShaderPath, const char *fragmentShaderPath, const char *attributeLocations[], GLuint numberOfLocations)
     {
 	    glslUtility::shaders_t shaders = glslUtility::loadShaders(vertexShaderPath, tessControlShaderPath, tessEvalShaderPath, geometryShaderPath, fragmentShaderPath);
-	
+		
 	    GLuint program = glCreateProgram();
-
+		
 		for (GLuint i = 0; i < numberOfLocations; ++i)
 		{
             glBindAttribLocation(program, i, attributeLocations[i]);
 		}
 
 	    glslUtility::attachAndLinkProgram(program, shaders);
-
+		
         return program;
     }
 }

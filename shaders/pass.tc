@@ -1,0 +1,12 @@
+#version 400
+
+layout(vertices = 3) out;
+in vec3 vPosition[];
+out vec3 tcPosition[];
+uniform float TessLevelInner;
+uniform float TessLevelOuter;
+
+void main()
+{
+	toPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+}

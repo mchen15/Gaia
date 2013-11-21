@@ -80,6 +80,30 @@ void Plane::initVAO()
     delete[] indices;
 }
 
+//void Plane::draw(int positionLocation, int texcoordsLocation)
+//{
+//    glEnableVertexAttribArray(positionLocation);
+//    glEnableVertexAttribArray(texcoordsLocation);
+//    
+//    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+//    glVertexAttribPointer((GLuint)positionLocation, 2, GL_FLOAT, GL_FALSE, 0, 0); 
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, tbo);
+//    glVertexAttribPointer((GLuint)texcoordsLocation, 2, GL_FLOAT, GL_FALSE, 0, 0);
+//
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+//	
+//	if(wireframe)
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//	else
+//		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//
+//    glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+//
+//    glDisableVertexAttribArray(positionLocation);
+//    glDisableVertexAttribArray(texcoordsLocation);
+//}
+
 void Plane::draw(int positionLocation, int texcoordsLocation)
 {
     glEnableVertexAttribArray(positionLocation);
@@ -98,7 +122,8 @@ void Plane::draw(int positionLocation, int texcoordsLocation)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
-    glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+	glPatchParameteri(GL_PATCH_VERTICES, 3);
+    glDrawElements(GL_PATCHES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
 
     glDisableVertexAttribArray(positionLocation);
     glDisableVertexAttribArray(texcoordsLocation);

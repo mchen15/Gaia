@@ -1,4 +1,4 @@
-#version 330
+#version 400
 
 uniform mat4x4 u_Model;
 uniform mat4x4 u_View;
