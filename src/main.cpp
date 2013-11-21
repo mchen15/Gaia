@@ -42,6 +42,7 @@ void display(void)
 	mat4 persp = cam->getPersp(float(width), float(height));
     mat4 inverse_transposed = glm::transpose(glm::inverse(view*model));
     glUniform1f(glGetUniformLocation(pass_prog, "u_Far"), cam->getFarPlane());
+	glUniform1f(glGetUniformLocation(pass_prog, "u_Near"), cam->getNearPlane());
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Model"),1,GL_FALSE,&model[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_View"),1,GL_FALSE,&view[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Persp"),1,GL_FALSE,&persp[0][0]);
@@ -91,7 +92,7 @@ void initScene()
 	float farPlane = 100.0f;
 
 	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
-	plane = new Plane(vec2(-2), vec2(2),2,2);
+	plane = new Plane(vec2(-10), vec2(10),5,5);
 }
 
 
