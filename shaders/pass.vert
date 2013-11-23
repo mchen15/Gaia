@@ -5,7 +5,7 @@ uniform mat4x4 u_View;
 uniform mat4x4 u_Persp;
 
 in vec3 Position;
-in vec3 Texcoords;
+
 out vec3 vPosition;
 out vec3 vPositionCamSpace;
 

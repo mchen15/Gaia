@@ -36,7 +36,6 @@ int frame;
 int timebase;
 static float fps = 0;
 
-const char *attributeLocations[] = { "Position", "Texcoords" };
 const char *attributeLocation[] = {"Position"};
 
 void reshape(int w, int h);

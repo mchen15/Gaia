@@ -42,16 +42,16 @@ void display(void)
 	mat4 view = cam->getView();
 	mat4 persp = cam->getPersp(float(width), float(height));
     mat4 inverse_transposed = glm::transpose(glm::inverse(view*model));
-    glUniform1f(glGetUniformLocation(pass_prog, "u_Far"), cam->getFarPlane());
-	glUniform1f(glGetUniformLocation(pass_prog, "u_Near"), cam->getNearPlane());
-    glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Model"),1,GL_FALSE,&model[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_View"),1,GL_FALSE,&view[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Persp"),1,GL_FALSE,&persp[0][0]);
-    glUniform1f(glGetUniformLocation(pass_prog, "u_tessLevelInner"), tessLevelInner);
-	glUniform1f(glGetUniformLocation(pass_prog, "u_tessLevelOuter"), tessLevelOuter);
+    glUniform1f(glGetUniformLocation(pass_prog, U_FARID), cam->getFarPlane());
+	glUniform1f(glGetUniformLocation(pass_prog, U_NEARID), cam->getNearPlane());
+    glUniformMatrix4fv(glGetUniformLocation(pass_prog,U_MODELID),1,GL_FALSE,&model[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(pass_prog,U_VIEWID),1,GL_FALSE,&view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(pass_prog,U_PERSPID),1,GL_FALSE,&persp[0][0]);
+    glUniform1f(glGetUniformLocation(pass_prog, U_TESSINNERID), tessLevelInner);
+	glUniform1f(glGetUniformLocation(pass_prog, U_TESSOUTERID), tessLevelOuter);
 	
 	int mode = plane->getIndexMode();
-	plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
+	plane->draw(triangle_attributes::POSITION);
 
 	glutPostRedisplay();
     glutSwapBuffers();
@@ -99,7 +99,7 @@ void initScene()
 	float farPlane = 100.0f;
 
 	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
-	plane = new Plane(vec2(0), vec2(1), 20, 20); // LOOK: Our plane is from 0 to 1 with numPatches
+	plane = new Plane(vec2(-10), vec2(10), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
 }
 
 
@@ -119,7 +119,7 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-	pass_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocations,2);   
+	pass_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocation, 1);   
 	//pass_prog= glslUtility::createProgram(pass_vert, pass_frag, attributeLocations,2);   
 }
 

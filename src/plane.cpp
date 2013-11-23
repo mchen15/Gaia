@@ -130,7 +130,6 @@ void Plane::deleteVAOs()
 {
 	glDeleteBuffers(1, &vbo);
 	glDeleteBuffers(1, &t_ibo);
-	glDeleteBuffers(1, &q_ibo);
 	glDeleteBuffers(1, &tbo);
 }
 

@@ -36,6 +36,18 @@
     <None Include="..\..\shaders\tessNoise.te">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\shaders\static_heightmap.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.tc">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.te">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\main.h">

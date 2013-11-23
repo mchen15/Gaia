@@ -86,6 +86,10 @@
     <None Include="..\..\shaders\pass.tc" />
     <None Include="..\..\shaders\pass.te" />
     <None Include="..\..\shaders\pass.vert" />
+    <None Include="..\..\shaders\static_heightmap.frag" />
+    <None Include="..\..\shaders\static_heightmap.tc" />
+    <None Include="..\..\shaders\static_heightmap.te" />
+    <None Include="..\..\shaders\static_heightmap.vert" />
     <None Include="..\..\shaders\tessNoise.tc" />
     <None Include="..\..\shaders\tessNoise.te" />
   </ItemGroup>
