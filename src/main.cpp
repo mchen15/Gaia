@@ -163,6 +163,41 @@ void keyboard(unsigned char key, int x, int y)
 	}
 }
 
+void initTextures()
+{
+	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
+    glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
+	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
+	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
+	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 void initScene()
 {
 	vec3 camPosition = vec3(0, -10, 2);
@@ -226,6 +261,7 @@ int main(int argc, char* argv[])
     cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << endl;
     cout << "OpenGL version " << glGetString(GL_VERSION) << " supported" << endl;
 	
+	initTextures();
 	initScene();
 	initShader();
 	glutDisplayFunc(display);

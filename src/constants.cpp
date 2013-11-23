@@ -7,6 +7,9 @@ float heightScale = 1;
 vec3 lightPosWorld = vec3(0, 0, 10);
 float gridSpacing = 1;
 
+const char* heightmapPath = "../../textures/heightmap.png";
+//"../../../res/random_normal.png";
+
 // uniform ids
 char* U_FARID = "u_Far";
 char* U_NEARID = "u_Near";

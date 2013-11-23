@@ -18,6 +18,9 @@ extern float heightScale;
 extern vec3 lightPosWorld;
 extern float gridSpacing;		// how far away each grid is
 
+const extern char* heightmapPath;
+
+
 // uniform ids
 extern char* U_FARID;
 extern char* U_NEARID;

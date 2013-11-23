@@ -28,6 +28,7 @@ namespace triangle_attributes {
 Camera* cam;
 Plane* plane;
 GLuint curr_prog;
+GLuint heightmap_tex;
 float tessLevelInner = 1.0;
 float tessLevelOuter = 1.0;
 
@@ -42,5 +43,6 @@ const char *attributeLocation[] = {"Position"};
 void setUniforms();
 void reshape(int w, int h);
 void display(void);
+void initTextures();
 
 #endif
