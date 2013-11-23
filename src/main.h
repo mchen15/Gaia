@@ -12,6 +12,7 @@
 #include "camera.h"
 #include "plane.h"
 #include "glslUtility.h"
+#include "constants.h"
 
 using std::cout;
 using std::endl;
@@ -26,7 +27,7 @@ namespace triangle_attributes {
 
 Camera* cam;
 Plane* plane;
-GLuint pass_prog;
+GLuint curr_prog;
 float tessLevelInner = 1.0;
 float tessLevelOuter = 1.0;
 
@@ -38,6 +39,7 @@ static float fps = 0;
 
 const char *attributeLocation[] = {"Position"};
 
+void setUniforms();
 void reshape(int w, int h);
 void display(void);
 

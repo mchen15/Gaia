@@ -11,7 +11,7 @@ uniform float u_texScale;
 uniform float u_gridSpacing;
 uniform vec2 u_numPatches;
 uniform float u_heightScale;
-uniform mat3 pvm;
+uniform mat3 u_pvm;
 
 void main()
 {	
@@ -23,5 +23,5 @@ void main()
 	
 	tePosition = vec3( worldPos.x,worldPos.y,texture(u_heightMap,globalUV).r)*u_heightScale;
 
-	gl_Position = pvm*vec4(tePosition,1.0);
+	gl_Position = u_pvm*vec4(tePosition,1.0);
 }

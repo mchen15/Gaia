@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 using glm::vec2;
+using glm::vec3;
 
 enum INDEX_MODE {
 	TRIANGLES,
@@ -12,6 +13,10 @@ enum INDEX_MODE {
 
 extern int NUM_QUADS;
 extern vec2 SUBDIV;
+extern float texScale;
+extern float heightScale;
+extern vec3 lightPosWorld;
+extern float gridSpacing;		// how far away each grid is
 
 // uniform ids
 extern char* U_FARID;
@@ -21,5 +26,13 @@ extern char* U_VIEWID;
 extern char* U_PERSPID;
 extern char* U_TESSINNERID;
 extern char* U_TESSOUTERID;
+extern char* U_TEXSCALEID;
+extern char* U_NUMPATCHESID;
+extern char* U_HEIGHTSCALEID;
+extern char* U_GRIDSPACINGID;
+extern char* U_HEIGHTMAPID;
+extern char* U_MVINVTRANSID;
+extern char* U_PVMID;
+extern char* U_LIGHTPOSWORLDID;
 
 #endif

@@ -1,5 +1,5 @@
 #include "main.h"
-#include "constants.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_projection.hpp>
 #include <glm/gtc/matrix_operation.hpp>
@@ -36,25 +36,99 @@ void display(void)
 {
 	updateFPS();
 
-    glUseProgram(pass_prog);
+    glUseProgram(curr_prog);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    mat4 model(1.0f);
-	mat4 view = cam->getView();
-	mat4 persp = cam->getPersp(float(width), float(height));
-    mat4 inverse_transposed = glm::transpose(glm::inverse(view*model));
-    glUniform1f(glGetUniformLocation(pass_prog, U_FARID), cam->getFarPlane());
-	glUniform1f(glGetUniformLocation(pass_prog, U_NEARID), cam->getNearPlane());
-    glUniformMatrix4fv(glGetUniformLocation(pass_prog,U_MODELID),1,GL_FALSE,&model[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(pass_prog,U_VIEWID),1,GL_FALSE,&view[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(pass_prog,U_PERSPID),1,GL_FALSE,&persp[0][0]);
-    glUniform1f(glGetUniformLocation(pass_prog, U_TESSINNERID), tessLevelInner);
-	glUniform1f(glGetUniformLocation(pass_prog, U_TESSOUTERID), tessLevelOuter);
+	
+	setUniforms();
 	
 	int mode = plane->getIndexMode();
 	plane->draw(triangle_attributes::POSITION);
 
 	glutPostRedisplay();
     glutSwapBuffers();
+}
+
+void setUniforms()
+{
+	mat4 model(1.0f);
+	mat4 view = cam->getView();
+	mat4 persp = cam->getPersp(float(width), float(height));
+    mat4 inverse_transposed = glm::transpose(glm::inverse(view*model));
+
+	GLint uniformLocation = -1;
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_FARID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, cam->getFarPlane());
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_NEARID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, cam->getNearPlane());
+	
+	uniformLocation = glGetUniformLocation(curr_prog, U_TESSINNERID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, tessLevelInner);
+	
+	uniformLocation = glGetUniformLocation(curr_prog, U_TESSOUTERID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, tessLevelOuter);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_MODELID);
+	if (uniformLocation != -1)
+		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&model[0][0]);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_VIEWID);
+	if (uniformLocation != -1)
+		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&view[0][0]);
+	
+	uniformLocation = glGetUniformLocation(curr_prog,U_PERSPID);
+	if (uniformLocation != -1)
+		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&persp[0][0]);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_TEXSCALEID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, texScale);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_NUMPATCHESID);
+	if (uniformLocation != -1)
+		glUniform2fv(uniformLocation, 1, &SUBDIV[0]);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTSCALEID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, heightScale);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_GRIDSPACINGID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, gridSpacing);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_PVMID);
+	if (uniformLocation != -1)
+	{
+		mat4 mvp = persp * view * model;
+		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&mvp[0][0]);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_MVINVTRANSID);
+	if (uniformLocation != -1)
+	{
+		mat4 imv = glm::inverse(view * model);
+		glUniformMatrix4fv(uniformLocation,1, GL_TRUE, &imv[0][0]);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_LIGHTPOSWORLDID);
+	if (uniformLocation != -1)
+	{
+		glUniform3fv(uniformLocation, 1, &lightPosWorld[0]);
+	}
+
+
+
+	// TODO: heightMap sampler
+	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTMAPID);
+	if (uniformLocation != -1)
+	{
+
+	}
 }
 
 void keyboard(unsigned char key, int x, int y) 
@@ -119,8 +193,8 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-	pass_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocation, 1);   
-	//pass_prog= glslUtility::createProgram(pass_vert, pass_frag, attributeLocations,2);   
+	curr_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocation, 1);   
+	//curr_prog= glslUtility::createProgram(pass_vert, pass_frag, attributeLocations,2);   
 }
 
 void clearScene()

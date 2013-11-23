@@ -1,9 +1,10 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#include "glm/glm.hpp"
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include "glm/glm.hpp"
+#include "constants.h"
 
 class Plane
 {

@@ -1,5 +1,4 @@
 #include "plane.h"
-#include "constants.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_projection.hpp>
 #include <glm/gtc/matrix_operation.hpp>
