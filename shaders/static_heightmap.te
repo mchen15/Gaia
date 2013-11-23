@@ -1,0 +1,27 @@
+#version 400
+
+layout(quads,fractional_even_spacing, cw) in;
+
+in vec3 tcPosition[];
+out vec3 tePosition;
+out vec2 teGlobalUV;
+
+uniform sampler2D u_heightMap;
+uniform float u_texScale;
+uniform float u_gridSpacing;
+uniform vec2 u_numPatches;
+uniform float u_heightScale;
+uniform mat3 pvm;
+
+void main()
+{	
+	vec2 texSize = texScale*textureSize(u_heightMap,0);
+	vec2 patchLocalSize = vec2(1.0/numPatchesX*texSize.x, 1.0/numPatchesY*texSize.y);
+	vec2 patchLocalUnit = vec2(1.0/patchLocalSize.x, 1.0/patchLocalSize.y);
+	teGlobalUV = tcPosition[0].xy+gl_TessCoord*patchLocalSize;
+	vec2 worldPos = teGlobalUV*u_texScale*gridSpacing;
+	
+	tePosition = vec3( worldPos.x,worldPos.y,texture(u_heightMap,globalUV).r)*u_heightScale;
+
+	gl_Position = pvm*vec4(tePosition,1.0);
+}
