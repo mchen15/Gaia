@@ -15,7 +15,7 @@ Plane::Plane(glm::vec2 l, glm::vec2 u, int subdivisionsX, int subdivisionsY)
 	 divx(subdivisionsX),
 	 divy(subdivisionsY),
 	 wireframe(false),
-	 indexingMode(INDEX_MODE::TRIANGLES)
+	 indexingMode(INDEX_MODE::QUADS)
 {
 	initVAO();
 }
@@ -113,7 +113,8 @@ void Plane::draw(int positionLocation)
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, t_ibo);
 		glPatchParameteri(GL_PATCH_VERTICES, 3);
-		glDrawElements(GL_PATCHES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_PATCHES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
 	}
 	else
 	{

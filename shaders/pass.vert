@@ -14,4 +14,5 @@ void main(void) {
     vec4 camera = u_View * world;
 	vPositionCamSpace = camera.xyz;
 	vPosition = Position.xyz;
+	gl_Position = u_Persp * u_View * u_Model *  vec4(Position, 1.0);
 }
