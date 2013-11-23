@@ -184,15 +184,15 @@ void initTextures()
 
 void initScene()
 {
-	vec3 camPosition = vec3(0, -10, 2);
-	vec3 viewDir = vec3(0, 0, -1);
+	vec3 camPosition = vec3(0, -8, 50);
+	vec3 lookAtPoint = vec3(0,0,0);
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
 	float nearPlane = 0.01f;
 	float farPlane = 100.0f;
 
-	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
-	plane = new Plane(vec2(-10), vec2(10), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
+	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
+	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
 }
 
 
@@ -212,7 +212,8 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-	//curr_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocation, 1);   
+	// debug
+	//curr_prog = glslUtility::createProgram(vertShaderPath, NULL, NULL, NULL, pass_frag, attributeLocation, 1);
 	curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 }
 
@@ -220,7 +221,6 @@ void clearScene()
 {
 	delete plane;
 	delete cam;
-
 }
 
 int main(int argc, char* argv[])

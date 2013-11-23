@@ -45,7 +45,7 @@ void Plane::initVAO()
 	glm::vec4 lr(lCorner.x,lCorner.y,texL.x,texL.y);
     glm::vec4 ul(uCorner.x,uCorner.y,texU.x,texU.y);
 
-	glm::mat4 debug = glm::lookAt(glm::vec3(0,-10,2), glm::vec3(0.0), glm::vec3(0,0,1));
+	//glm::mat4 debug = glm::lookAt(glm::vec3(0,-10,2), glm::vec3(0.0), glm::vec3(0,0,1));
 
     for(int i = 0; i < divx; ++i)
     {
@@ -58,9 +58,9 @@ void Plane::initVAO()
             texcoords[(j*divx + i)*2  ] = alpha*lr.z + (1-alpha)*ul.z;
             texcoords[(j*divx + i)*2+1] = beta*lr.w + (1-beta)*ul.w;
 
-			glm::vec4 test = debug*glm::vec4( alpha*lr.x + (1-alpha)*ul.x,beta*lr.y + (1-beta)*ul.y,0.0,1.0);
-			float debug2 = abs(test.z)/30.0f; 
-			std::cout<< test.x<<" "<<test.y<<" "<<test.z<<" "<<debug2<<std::endl;
+			//glm::vec4 test = debug*glm::vec4( alpha*lr.x + (1-alpha)*ul.x,beta*lr.y + (1-beta)*ul.y,0.0,1.0);
+			//float debug2 = abs(test.z)/30.0f; 
+			//std::cout<< test.x<<" "<<test.y<<" "<<test.z<<" "<<debug2<<std::endl;
 		}
     }
 

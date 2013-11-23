@@ -5,19 +5,19 @@ Camera::Camera()
 {
 }
 
-Camera::Camera(vec3 posv, vec3 viewDir, vec3 upv,float fieldOfView,float np, float fp) :
+Camera::Camera(vec3 posv, vec3 lp, vec3 upv,float fieldOfView,float np, float fp) :
 	position(posv),
-	view(viewDir),
 	up(upv),
 	fov(fieldOfView),
 	nearp(np),
-	farp(fp)
+	farp(fp),
+	lookAtPoint(lp)
 {
 }
 
 mat4 Camera::getView()
 {
-	return lookAt(position, vec3(0), up);
+	return lookAt(position, lookAtPoint, up);
 }
 
 

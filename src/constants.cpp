@@ -1,7 +1,7 @@
 #include "constants.h"
 
 int NUM_QUADS = 1;
-vec2 SUBDIV = vec2(18, 18);
+vec2 SUBDIV = vec2(32, 32);
 float texScale = 1;
 float heightScale = 1;
 vec3 lightPosWorld = vec3(0, 0, 10);
@@ -15,7 +15,6 @@ const char* tessEvalShadePath = "../../shaders/static_heightmap.te";
 const char* fragShaderPath = "../../shaders/static_heightmap.frag";
 
 //const char* heightmapPath = "D:/Dropbox/UPenn/CIS-565 (GPU Programming)/Assignments/Project7-FinalProject/Gaia/textures/heightmap.png";
-//"../../../res/random_normal.png";
 
 // uniform ids
 char* U_FARID = "u_Far";
