@@ -121,13 +121,18 @@ void setUniforms()
 		glUniform3fv(uniformLocation, 1, &lightPosWorld[0]);
 	}
 
-
-
-	// TODO: heightMap sampler
 	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTMAPID);
 	if (uniformLocation != -1)
 	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+	    glUniform1i(uniformLocation,0);
+	}
 
+	uniformLocation = glGetUniformLocation(curr_prog,U_LODFACTOR);
+	if (uniformLocation != -1)
+	{
+		glUniform1f(uniformLocation, lodFactor);
 	}
 }
 
@@ -165,32 +170,11 @@ void keyboard(unsigned char key, int x, int y)
 
 void initTextures()
 {
-	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
+	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(
+		heightmapPath,
+		SOIL_LOAD_AUTO,SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
     glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -228,8 +212,8 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-	curr_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocation, 1);   
-	//curr_prog= glslUtility::createProgram(pass_vert, pass_frag, attributeLocations,2);   
+	//curr_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocation, 1);   
+	curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 }
 
 void clearScene()

@@ -6,8 +6,15 @@ float texScale = 1;
 float heightScale = 1;
 vec3 lightPosWorld = vec3(0, 0, 10);
 float gridSpacing = 1;
+float lodFactor = 1;
 
-const char* heightmapPath = "../../textures/heightmap.png";
+const char* heightmapPath = "../../textures/earthbump1024.png";
+const char* vertShaderPath = "../../shaders/static_heightmap.vert";
+const char* tessCtrlShaderPath = "../../shaders/static_heightmap.tc";
+const char* tessEvalShadePath = "../../shaders/static_heightmap.te";
+const char* fragShaderPath = "../../shaders/static_heightmap.frag";
+
+//const char* heightmapPath = "D:/Dropbox/UPenn/CIS-565 (GPU Programming)/Assignments/Project7-FinalProject/Gaia/textures/heightmap.png";
 //"../../../res/random_normal.png";
 
 // uniform ids
@@ -26,3 +33,4 @@ char* U_HEIGHTSCALEID = "u_heightScale";
 char* U_MVINVTRANSID = "u_mvInvTrans";
 char* U_PVMID = "u_pvm";
 char* U_LIGHTPOSWORLDID = "u_lightPosWorld";
+char* U_LODFACTOR = "u_lodFactor";

@@ -17,9 +17,14 @@ extern float texScale;
 extern float heightScale;
 extern vec3 lightPosWorld;
 extern float gridSpacing;		// how far away each grid is
+extern float lodFactor;
 
+// paths
 const extern char* heightmapPath;
-
+const extern char* vertShaderPath;
+const extern char* fragShaderPath;
+const extern char* tessCtrlShaderPath;
+const extern char* tessEvalShadePath;
 
 // uniform ids
 extern char* U_FARID;
@@ -37,5 +42,6 @@ extern char* U_HEIGHTMAPID;
 extern char* U_MVINVTRANSID;
 extern char* U_PVMID;
 extern char* U_LIGHTPOSWORLDID;
+extern char* U_LODFACTOR;
 
 #endif
