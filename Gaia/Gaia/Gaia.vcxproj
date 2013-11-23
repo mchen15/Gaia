@@ -86,15 +86,19 @@
     <None Include="..\..\shaders\pass.tc" />
     <None Include="..\..\shaders\pass.te" />
     <None Include="..\..\shaders\pass.vert" />
+    <None Include="..\..\shaders\tessNoise.tc" />
+    <None Include="..\..\shaders\tessNoise.te" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
+    <ClInclude Include="..\..\src\constants.h" />
     <ClInclude Include="..\..\src\glslUtility.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\plane.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\camera.cpp" />
+    <ClCompile Include="..\..\src\constants.cpp" />
     <ClCompile Include="..\..\src\glslUtility.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />

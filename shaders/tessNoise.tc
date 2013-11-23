@@ -1,0 +1,44 @@
+#version 400
+
+layout(vertices = 3) out;
+in vec3 vPosition[];
+in vec3 vPositionCamSpace[];
+out vec3 tcPosition[];
+uniform float u_tessLevelInner=1.0;
+uniform float u_tessLevelOuter=1.0;
+uniform float u_Near;
+uniform float u_Far;
+
+uniform mat4 u_Model;
+uniform mat4 u_View;
+
+const float minTessLevelInner = 1.0;
+const float maxTessLevelInner = 5.0;
+
+void main()
+{
+	tcPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+	if ( gl_InvocationID == 0)
+	{
+
+	 float zMin = min(abs(vPositionCamSpace[2].z), min( abs(vPositionCamSpace[0].z), abs(vPositionCamSpace[1].z)));
+	
+	float debug = 0.0;
+	if (zMin > 10.0)
+		debug = 1.0;
+	else
+		debug = 3.0;
+
+	 float normalizedZMin = zMin/(30 - u_Near);
+	
+	 gl_TessLevelInner[0] = debug;u_tessLevelInner;
+	 gl_TessLevelOuter[0] = debug;u_tessLevelOuter;
+	 gl_TessLevelOuter[1] = debug;u_tessLevelOuter;
+	 gl_TessLevelOuter[2] = debug;u_tessLevelOuter;
+
+	 gl_TessLevelInner[0] = 3.0;
+	 gl_TessLevelOuter[0] = 4.0;
+	 gl_TessLevelOuter[1] = 4.0;
+	 gl_TessLevelOuter[2] = 4.0;
+	}
+}

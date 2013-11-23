@@ -11,9 +11,12 @@ public:
 	Plane(glm::vec2 = glm::vec2(1.0,1.0), glm::vec2 u = glm::vec2(-1.0,-1.0),int subdivX=2, int subdivY=2);
 	GLuint getVBO() {return vbo;}
 	GLuint getTBO() {return tbo;}
-	GLuint getIBO() {return ibo;}	
-	void draw(int positionLocation, int texcoordsLocation);
+	GLuint getT_IBO() {return t_ibo;}	
+
+	int getIndexMode();
+	void draw(int positionLocation));
 	void toggleWireframe();
+	void toggleIndexingMode();
 	~Plane();
 
 private:
@@ -23,9 +26,11 @@ private:
 	int divy;
 	GLuint vbo;
 	GLuint tbo;
-	GLuint ibo;
+	GLuint t_ibo; // with triangle indexing
 	bool wireframe;
+	int indexingMode;
 	void initVAO();
+	void deleteVAOs(); // clears the vbo, tbo, and ibo
 };
 
 #endif 

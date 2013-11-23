@@ -1,4 +1,5 @@
 #include "main.h"
+#include "constants.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_projection.hpp>
 #include <glm/gtc/matrix_operation.hpp>
@@ -48,7 +49,10 @@ void display(void)
     glUniformMatrix4fv(glGetUniformLocation(pass_prog,"u_Persp"),1,GL_FALSE,&persp[0][0]);
     glUniform1f(glGetUniformLocation(pass_prog, "u_tessLevelInner"), tessLevelInner);
 	glUniform1f(glGetUniformLocation(pass_prog, "u_tessLevelOuter"), tessLevelOuter);
-	plane->draw(triangle_attributes::POSITION,triangle_attributes::TEXCOORD);
+	
+	int mode = plane->getIndexMode();
+	plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
+
 	glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -79,6 +83,9 @@ void keyboard(unsigned char key, int x, int y)
 			tessLevelOuter--;
 			std::cout<<"Outer: "<<tessLevelOuter<<std::endl;
 			break;
+		case ('m'):
+			plane->toggleIndexingMode();
+			break;
 	}
 }
 
@@ -92,16 +99,24 @@ void initScene()
 	float farPlane = 100.0f;
 
 	cam = new Camera(camPosition, viewDir, up,fov,nearPlane,farPlane);
-	plane = new Plane(vec2(-10), vec2(10),5,5);
+	plane = new Plane(vec2(0), vec2(1), 20, 20); // LOOK: Our plane is from 0 to 1 with numPatches
 }
 
 
 void initShader() {
+	
+	// set 1
 	const char * pass_vert = "../../shaders/pass.vert";
 	const char * pass_frag = "../../shaders/pass.frag";
 	const char * pass_tc =   "../../shaders/pass.tc";
 	const char * pass_te =   "../../shaders/pass.te";
 
+	// set 2
+	//const char * pass_vert = "../../shaders/pass.vert";
+	//const char * pass_frag = "../../shaders/pass.frag";
+	//const char * pass_tc =   "../../shaders/tessNoise.tc";
+	//const char * pass_te =   "../../shaders/tessNoise.te";
+	
 	std::cout << "Creating program." << std::endl;
 
 	pass_prog= glslUtility::createProgram(pass_vert, pass_tc, pass_te, NULL, pass_frag, attributeLocations,2);   
@@ -112,6 +127,7 @@ void clearScene()
 {
 	delete plane;
 	delete cam;
+
 }
 
 int main(int argc, char* argv[])
