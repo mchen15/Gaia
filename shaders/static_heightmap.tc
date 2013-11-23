@@ -1,0 +1,17 @@
+#version 400
+
+layout(vertices = 1) out;
+in vec3 vPosition[];
+out vec3 tcPosition[];
+
+uniform sampler2D u_heightMap;
+uniform float u_texScale;
+uniform vec2 numPatches;
+
+void main()
+{
+	tcPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+	
+	gl_TessLevelInner = vec2(64.0);
+	gl_TessLevelOuter = vec4(64.0);
+}
