@@ -10,8 +10,9 @@ float lodFactor = 1;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 
-const char* heightmapPath = "../../textures/earthbump1024.png";
+//const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
+const char* heightmapPath = "../../textures/test1024.png";
 const char* vertShaderPath = "../../shaders/static_quad_heightmap.vert";
 const char* tessCtrlShaderPath = "../../shaders/static_quad_heightmap.tc";
 const char* tessEvalShadePath = "../../shaders/static_quad_heightmap.te"; 

@@ -74,10 +74,11 @@ void main(){
 
 
 	fragment = vec4(color,1.0);
-	//fragment = vec4(diff1, 0, 0, 1.0);
+	fragment = vec4(diff1, 0, 0, 1.0);
 	//fragment = vec4(diff2, 0, 0, 1.0);
 	//fragment = vec4(avgSlope, 0, 0, 1.0);
 
 	//fragment = vec4(slopeY, 1.0);
-	fragment = vec4(normal, 1.0);
+	//fragment = vec4(normal, 1.0);
+	//fragment = vec4(1,1,1,1);
 }
