@@ -27,6 +27,11 @@ namespace triangle_attributes {
 
 Camera* cam;
 Plane* plane;
+
+int mouse_buttons = 0;
+int mouse_old_x = 0;
+int mouse_old_y = 0;
+
 GLuint curr_prog;
 GLuint heightmap_tex;
 float tessLevelInner = 1.0;
@@ -41,6 +46,9 @@ static float fps = 0;
 const char *attributeWithTexLocation[] = {"Position", "Texcoord"};
 const char *attributeLocation[] = {"Position"};
 
+
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
 void setUniforms();
 void reshape(int w, int h);
 void display(void);

@@ -8,7 +8,7 @@ void main(void)
 {
 	//vec2 tex = v_Texcoord + vec2(0.5,0.5);
 	vec4 color = texture2D(u_heightMap, v_Texcoord);
-   	//fragColor = vec4(1.0,0.0,0.0,1.0);
+   	
 
 	
 	//vec4 color = vec4(v_Texcoord, 0.0, 1.0);
@@ -18,4 +18,5 @@ void main(void)
 	//	color = vec4(1,0,0,1);
 	
 	fragColor = color;
+	//fragColor = vec4(1.0,0.0,0.0,1.0);
 }
