@@ -60,8 +60,7 @@ void setUniforms()
 	mat4 model(1.0f);
 	mat4 view = cam->getView();
 	mat4 persp = cam->getPersp(float(width), float(height));
-    mat4 inverse_transposed = glm::transpose(glm::inverse(view*model));
-
+  
 	GLint uniformLocation = -1;
 
 	uniformLocation = glGetUniformLocation(curr_prog, U_FARID);
@@ -119,8 +118,12 @@ void setUniforms()
 	if (uniformLocation != -1)
 	{
 		mat4 imv = glm::inverse(view * model);
-		//glUniformMatrix4fv(uniformLocation,1, GL_TRUE, &imv[0][0]);
-		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &inverse_transposed[0][0]);
+		imv[3][0] = 0.0;
+		imv[3][1] = 0.0;
+		imv[3][2] = 0.0;
+		imv = glm::transpose(imv);
+
+		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &imv[0][0]);
 	}
 
 	uniformLocation = glGetUniformLocation(curr_prog,U_LIGHTPOSWORLDID);
