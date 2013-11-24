@@ -195,6 +195,35 @@ void keyboard(unsigned char key, int x, int y)
 	}
 }
 
+void mouse(int button, int state, int x, int y)
+{
+    if (state == GLUT_DOWN) {
+        mouse_buttons |= 1<<button;
+    } else if (state == GLUT_UP) {
+        mouse_buttons = 0;
+    }
+
+    mouse_old_x = x;
+    mouse_old_y = y;
+}
+
+void motion(int x, int y)
+{
+    float dx, dy;
+    dx = (float)(x - mouse_old_x);
+    dy = (float)(y - mouse_old_y);
+
+    if (mouse_buttons & 1<<GLUT_RIGHT_BUTTON) {
+        cam->adjust(0,0,dx,0,0,0);
+    }
+    else {
+        cam->adjust(-dx*0.2f,-dy*0.2f,0,0,0,0);
+    }
+
+    mouse_old_x = x;
+    mouse_old_y = y;
+}
+
 void initTextures()
 {
 	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
@@ -286,8 +315,8 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(display);
     glutReshapeFunc(reshape);	
     glutKeyboardFunc(keyboard);
-    //glutMouseFunc(mouse);
-    //glutMotionFunc(motion);
+    glutMouseFunc(mouse);
+    glutMotionFunc(motion);
 
     glutMainLoop();
 	clearScene();

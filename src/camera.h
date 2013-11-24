@@ -3,10 +3,21 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtx/transform2.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_projection.hpp>
+#include <glm/gtc/matrix_operation.hpp>
+#include <glm/gtx/transform2.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/verbose_operator.hpp>
+#include <iostream>
 
+using glm::vec2;
 using glm::vec3;
 using glm::mat4;
 using glm::lookAt;
+using glm::clamp;
+
 class Camera 
 {
 public:
@@ -20,11 +31,14 @@ public:
 	glm::vec3 getPosition() { return position;}
 	void setLookAtPoint(glm::vec3 pt) { lookAtPoint = pt;}
 	glm::vec3 getLookAtPoint(){ return lookAtPoint;}
+	void adjust(float dx, float dy, float dz, float tx, float ty, float tz);
 	
 private:
 	float rx;
 	float ry;
-	float rz;
+	float z;
+	vec3 startDirection;
+	vec3 startLeft;
 	vec3 position;
 	vec3 up;
 	vec3 lookAtPoint;
