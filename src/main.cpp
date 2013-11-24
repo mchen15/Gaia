@@ -204,12 +204,12 @@ void initTextures()
 
 void initScene()
 {
-	vec3 camPosition = vec3(0, -2, 4);
-	vec3 lookAtPoint = vec3(0,0,0);
+	vec3 camPosition = vec3(0, -200,100);
+	vec3 lookAtPoint = vec3(512,512,0);
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
 	float nearPlane = 0.01f;
-	float farPlane = 100.0f;
+	float farPlane = 1500.0f;
 
 	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
 	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches

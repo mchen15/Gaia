@@ -6,6 +6,8 @@
 
     uniform sampler2D u_heightMap;
     uniform mat4 u_pvm;
+	uniform float u_gridSpacing;
+	uniform float u_heightScale;
 
     void main(){
         float u = gl_TessCoord.x;
@@ -16,6 +18,7 @@
         vec4 position = mix(a, b, v);
         texcoord = position.xy;
         float height = texture(u_heightMap, texcoord).r;
-        gl_Position = u_pvm * vec4(texcoord*10, height, 1.0);
+		vec2 tSize = textureSize(u_heightMap,0)*u_gridSpacing;
+        gl_Position = u_pvm * vec4(texcoord*tSize, height*200, 1.0);
         depth = gl_Position.z;
     }

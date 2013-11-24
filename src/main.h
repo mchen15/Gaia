@@ -29,8 +29,7 @@ Camera* cam;
 Plane* plane;
 GLuint curr_prog;
 GLuint heightmap_tex;
-float tessLevelInner = 1.0;
-float tessLevelOuter = 1.0;
+
 
 int width;
 int height;
