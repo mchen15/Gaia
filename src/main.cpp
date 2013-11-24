@@ -40,9 +40,16 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	setUniforms();
-	
-	int mode = plane->getIndexMode();
+		
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+
+#if ENABLE_TEXCOORDS == 1
+	plane->setIndexMode(INDEX_MODE::TRIANGLES);
+	plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
+#else
 	plane->draw(triangle_attributes::POSITION);
+#endif
 
 	glutPostRedisplay();
     glutSwapBuffers();
@@ -170,10 +177,7 @@ void keyboard(unsigned char key, int x, int y)
 
 void initTextures()
 {
-	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(
-		heightmapPath,
-		SOIL_LOAD_AUTO,SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT);
+	heightmap_tex = (unsigned int)SOIL_load_OGL_texture(heightmapPath,0,0,0);
     glBindTexture(GL_TEXTURE_2D, heightmap_tex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -184,7 +188,7 @@ void initTextures()
 
 void initScene()
 {
-	vec3 camPosition = vec3(0, -8, 3);
+	vec3 camPosition = vec3(0, -1, 3);
 	vec3 lookAtPoint = vec3(0,0,0);
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
@@ -192,8 +196,8 @@ void initScene()
 	float farPlane = 100.0f;
 
 	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
-	//plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
-	plane = new Plane(vec2(-10), vec2(10), 10, 10);
+	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
+	//plane = new Plane(vec2(-10), vec2(10), 10, 10);
 }
 
 
@@ -204,18 +208,16 @@ void initShader() {
 	const char * pass_frag = "../../shaders/pass.frag";
 	const char * pass_tc =   "../../shaders/pass.tc";
 	const char * pass_te =   "../../shaders/pass.te";
-
-	// set 2
-	//const char * pass_vert = "../../shaders/pass.vert";
-	//const char * pass_frag = "../../shaders/pass.frag";
-	//const char * pass_tc =   "../../shaders/tessNoise.tc";
-	//const char * pass_te =   "../../shaders/tessNoise.te";
 	
 	std::cout << "Creating program." << std::endl;
 
-	// debug
-	//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeLocation, 1);
-	curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
+#if ENABLE_TEXCOORDS == 1
+	curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
+#else
+	curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeLocation, 1);
+#endif
+	
+	//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 }
 
 void clearScene()

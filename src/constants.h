@@ -6,6 +6,8 @@
 using glm::vec2;
 using glm::vec3;
 
+#define ENABLE_TEXCOORDS 1;
+
 enum INDEX_MODE {
 	TRIANGLES,
 	QUADS

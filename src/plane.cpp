@@ -125,6 +125,40 @@ void Plane::draw(int positionLocation)
     glDisableVertexAttribArray(positionLocation);
 }
 
+// for debugging textures
+void Plane::draw(int positionLocation, int texCoordsLocation)
+{
+    glEnableVertexAttribArray(positionLocation);
+    glEnableVertexAttribArray(texCoordsLocation);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glVertexAttribPointer((GLuint)positionLocation, 2, GL_FLOAT, GL_FALSE, 0, 0); 
+
+	glBindBuffer(GL_ARRAY_BUFFER, tbo);
+    glVertexAttribPointer((GLuint)texCoordsLocation, 2, GL_FLOAT, GL_FALSE, 0, 0); 
+	
+	//if(wireframe)
+	//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//else
+	//	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+
+	if (indexingMode == INDEX_MODE::TRIANGLES)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, t_ibo);
+		//glPatchParameteri(GL_PATCH_VERTICES, 3);
+		//glDrawElements(GL_PATCHES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+	}
+	else
+	{
+		glPatchParameteri(GL_PATCH_VERTICES, NUM_QUADS);
+		glDrawArrays(GL_PATCHES, 0, divx*divy);
+	}
+
+    glDisableVertexAttribArray(positionLocation);
+	glDisableVertexAttribArray(texCoordsLocation);
+}
+
 // clean up code
 void Plane::deleteVAOs()
 {
@@ -149,4 +183,9 @@ void Plane::toggleIndexingMode()
 int Plane::getIndexMode()
 {
 	return indexingMode;
+}
+
+void Plane::setIndexMode(int mode)
+{
+	indexingMode = mode;
 }

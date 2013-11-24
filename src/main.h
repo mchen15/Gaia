@@ -38,6 +38,7 @@ int frame;
 int timebase;
 static float fps = 0;
 
+const char *attributeWithTexLocation[] = {"Position", "Texcoord"};
 const char *attributeLocation[] = {"Position"};
 
 void setUniforms();

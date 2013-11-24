@@ -9,6 +9,7 @@ float gridSpacing = 1;
 float lodFactor = 1;
 
 const char* heightmapPath = "../../textures/earthbump1024.png";
+//const char* heightmapPath = "../../textures/random.png";
 const char* vertShaderPath = "../../shaders/static_heightmap.vert";
 const char* tessCtrlShaderPath = "../../shaders/static_heightmap.tc";
 const char* tessEvalShadePath = "../../shaders/static_heightmap.te";

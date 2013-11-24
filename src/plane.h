@@ -15,7 +15,9 @@ public:
 	GLuint getT_IBO() {return t_ibo;}	
 
 	int getIndexMode();
+	void setIndexMode(int mode);
 	void draw(int positionLocation);
+	void draw(int positionLocation, int texCoordsLocation);
 	void toggleWireframe();
 	void toggleIndexingMode();
 	~Plane();
