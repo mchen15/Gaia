@@ -173,20 +173,20 @@ void keyboard(unsigned char key, int x, int y)
 			plane->toggleIndexingMode();
 			break;
 		case ('w'):
-			cam->setPosition( cam->getPosition()+ vec3(0,0.1,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(0,0.1,0));
+			cam->setPosition( cam->getPosition()+ vec3(0,5,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(0,5,0));
 			break;
 		case ('s'):
-			cam->setPosition( cam->getPosition()- vec3(0,0.1,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(0,0.1,0));
+			cam->setPosition( cam->getPosition()- vec3(0,5,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(0,5,0));
 			break;
 		case ('a'):
-			cam->setPosition( cam->getPosition()- vec3(0.1,0,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(0.1,0,0));
+			cam->setPosition( cam->getPosition()- vec3(5,0,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(5,0,0));
 			break;
 		case ('d'):
-			cam->setPosition( cam->getPosition()+vec3(0.1,0,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(0.1,0,0));
+			cam->setPosition( cam->getPosition()+vec3(5,0,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(5,0,0));
 			break;
 	}
 }
