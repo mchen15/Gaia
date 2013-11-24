@@ -22,3 +22,4 @@ void main(){
     gl_Position = u_pvm * vec4(texcoord*tSize, height*u_heightScale, 1.0);
     depth = gl_Position.z;
 }
+       
