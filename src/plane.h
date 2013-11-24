@@ -30,6 +30,7 @@ private:
 	GLuint vbo;
 	GLuint tbo;
 	GLuint t_ibo; // with triangle indexing
+	GLuint q_ibo;
 	bool wireframe;
 	int indexingMode;
 	void initVAO();

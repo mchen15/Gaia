@@ -16,7 +16,7 @@ uniform mat4 u_pvm;
 void main()
 {	
 	//vec2 tSize = textureSize(u_heightMap,0)*u_texScale;
-	//vec2 div = tSize*1.0/128.0;
+	//vec2 div = tSize*1.0/32.0;
 
 	//teGlobalUV = tcPosition[0].xy+ gl_TessCoord.st/div;
 
@@ -29,16 +29,26 @@ void main()
 
 	//gl_Position = u_pvm*res;
 
-	vec2 texSize = u_texScale*textureSize(u_heightMap,0);
-	float numPatchesX = u_numPatches.x;
-	float numPatchesY = u_numPatches.y;
-	vec2 patchLocalSize = vec2(1.0/numPatchesX*texSize.x, 1.0/numPatchesY*texSize.y);
-	vec2 patchLocalUnit = vec2(1.0/patchLocalSize.x, 1.0/patchLocalSize.y);
-	teGlobalUV = tcPosition[0].xy+gl_TessCoord.xy*patchLocalUnit;
-	vec2 worldPos = teGlobalUV*u_texScale*u_gridSpacing;
-	
-	//tePosition = vec3( worldPos.x,worldPos.y,texture(u_heightMap,teGlobalUV).r*u_heightScale);
-	tePosition = vec3( worldPos.x,worldPos.y,0.0);
+	//vec2 texSize = u_texScale*textureSize(u_heightMap,0);
+	//float numPatchesX = u_numPatches.x-1;
+	//float numPatchesY = u_numPatches.y-1;
+	//vec2 patchLocalSize = vec2(1.0/numPatchesX, 1.0/numPatchesY);
+	//vec2 patchLocalUnit = vec2(1.0/patchLocalSize.x, 1.0/patchLocalSize.y);
+	//teGlobalUV = tcPosition[0].xy+gl_TessCoord.xy*patchLocalUnit;
+	//vec2 worldPos = teGlobalUV*texSize*u_gridSpacing;
+	//
+	////tePosition = vec3( worldPos.x,worldPos.y,texture(u_heightMap,teGlobalUV).r*u_heightScale);
+	//tePosition = vec3( worldPos.x,worldPos.y,0.0);
+
+	//gl_Position = u_pvm*vec4(tePosition,1.0);
+
+	float patchLen = 1.0/32.0;
+
+	vec2 offset = gl_TessCoord.st*patchLen;
+
+	teGlobalUV = tcPosition[0].xy+ offset;
+
+	tePosition = vec3(teGlobalUV*textureSize(u_heightMap,0)*u_gridSpacing,0);
 
 	gl_Position = u_pvm*vec4(tePosition,1.0);
 }

@@ -90,6 +90,10 @@
     <None Include="..\..\shaders\static_heightmap.tc" />
     <None Include="..\..\shaders\static_heightmap.te" />
     <None Include="..\..\shaders\static_heightmap.vert" />
+    <None Include="..\..\shaders\static_quad_heightmap.frag" />
+    <None Include="..\..\shaders\static_quad_heightmap.tc" />
+    <None Include="..\..\shaders\static_quad_heightmap.te" />
+    <None Include="..\..\shaders\static_quad_heightmap.vert" />
     <None Include="..\..\shaders\tessNoise.tc" />
     <None Include="..\..\shaders\tessNoise.te" />
   </ItemGroup>

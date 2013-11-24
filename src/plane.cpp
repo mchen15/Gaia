@@ -12,8 +12,8 @@
 Plane::Plane(glm::vec2 l, glm::vec2 u, int subdivisionsX, int subdivisionsY)
 	:lCorner(l),
 	 uCorner(u),
-	 divx(subdivisionsX),
-	 divy(subdivisionsY),
+	 divx(subdivisionsX+1),
+	 divy(subdivisionsY+1),
 	 wireframe(false),
 	 indexingMode(INDEX_MODE::QUADS)
 {
@@ -37,7 +37,7 @@ void Plane::initVAO()
     GLfloat *vertices  = new GLfloat[2*num_verts];
     GLfloat *texcoords = new GLfloat[2*num_verts]; 
     GLuint *indices    = new GLuint[6*num_faces];
-	
+	GLuint *qIndices    = new GLuint[4*num_faces];
 	//Texture co-ordinates
 	glm::vec2 texL(0.0,0.0);
 	glm::vec2 texU(1.0,1.0);
@@ -75,12 +75,19 @@ void Plane::initVAO()
             indices[6*(i+(j*fw_1)) + 3] = divx*(j+1) + i;
             indices[6*(i+(j*fw_1)) + 4] = divx*(j+1) + i + 1;
             indices[6*(i+(j*fw_1)) + 5] = divx*j + i + 1;
+
+            qIndices[4*(i+(j*fw_1))    ] = divx*j + i;
+            qIndices[4*(i+(j*fw_1)) + 1] = divx*j + i + 1;
+            qIndices[4*(i+(j*fw_1)) + 3] = divx*(j+1) + i;
+            qIndices[4*(i+(j*fw_1)) + 2] = divx*(j+1) + i + 1;		
+
         }
     }
 
     glGenBuffers(1, &vbo);
     glGenBuffers(1, &tbo);
     glGenBuffers(1, &t_ibo);
+	glGenBuffers(1, &q_ibo);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, 2*num_verts*sizeof(GLfloat), vertices, GL_STATIC_DRAW);
@@ -91,9 +98,13 @@ void Plane::initVAO()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, t_ibo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*num_faces*sizeof(GLuint), indices, GL_STATIC_DRAW);
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, q_ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*num_faces*sizeof(GLuint), qIndices, GL_STATIC_DRAW);
+
     delete[] vertices;
     delete[] texcoords;
     delete[] indices;
+	delete[] qIndices;
 }
 
 void Plane::draw(int positionLocation)
@@ -115,6 +126,13 @@ void Plane::draw(int positionLocation)
 		glPatchParameteri(GL_PATCH_VERTICES, 3);
 		//glDrawElements(GL_PATCHES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
 		glDrawElements(GL_TRIANGLES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+	}
+	if (indexingMode == INDEX_MODE::QUADS)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, q_ibo);
+		glPatchParameteri(GL_PATCH_VERTICES, 4);
+		//glDrawElements(GL_PATCHES, 6*divx*divy,  GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_PATCHES, 4*(divx-1)*(divy-1),  GL_UNSIGNED_INT, 0);
 	}
 	else
 	{

@@ -204,7 +204,7 @@ void initTextures()
 
 void initScene()
 {
-	vec3 camPosition = vec3(0, -3, 1);
+	vec3 camPosition = vec3(0, -2, 4);
 	vec3 lookAtPoint = vec3(0,0,0);
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
@@ -230,6 +230,7 @@ void initShader() {
 #if ENABLE_TEXCOORDS
 	curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
 #else
+	//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
 	curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 #endif
 	
