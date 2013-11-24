@@ -44,7 +44,7 @@ void display(void)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
 
-#if ENABLE_TEXCOORDS
+#if ENABLE_TEXCOORDS == 1
 	plane->setIndexMode(INDEX_MODE::TRIANGLES);
 	plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
 #else
@@ -143,35 +143,6 @@ void setUniforms()
 	}
 }
 
-void mouse(int button, int state, int x, int y)
-{
-    if (state == GLUT_DOWN) {
-        mouse_buttons |= 1<<button;
-    } else if (state == GLUT_UP) {
-        mouse_buttons = 0;
-    }
-
-    mouse_old_x = x;
-    mouse_old_y = y;
-}
-
-void motion(int x, int y)
-{
-    float dx, dy;
-    dx = (float)(x - mouse_old_x);
-    dy = (float)(y - mouse_old_y);
-
-    if (mouse_buttons & 1<<GLUT_RIGHT_BUTTON) {
-        cam->adjust(0,0,dx,0,0,0);;
-    }
-    else {
-        cam->adjust(-dx*0.2f,-dy*0.2f,0,0,0,0);
-    }
-
-    mouse_old_x = x;
-    mouse_old_y = y;
-}
-
 void keyboard(unsigned char key, int x, int y) 
 {
 	switch(key) 
@@ -179,7 +150,7 @@ void keyboard(unsigned char key, int x, int y)
 		case(27):
 			exit(0);
 			break;
-		case('w'):
+		case('n'):
 			plane->toggleWireframe();
 			break;
 		case ('1'):
@@ -201,6 +172,22 @@ void keyboard(unsigned char key, int x, int y)
 		case ('m'):
 			plane->toggleIndexingMode();
 			break;
+		case ('w'):
+			cam->setPosition( cam->getPosition()+ vec3(0,0.1,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(0,0.1,0));
+			break;
+		case ('s'):
+			cam->setPosition( cam->getPosition()- vec3(0,0.1,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(0,0.1,0));
+			break;
+		case ('a'):
+			cam->setPosition( cam->getPosition()- vec3(0.1,0,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(0.1,0,0));
+			break;
+		case ('d'):
+			cam->setPosition( cam->getPosition()+vec3(0.1,0,0));
+			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(0.1,0,0));
+			break;
 	}
 }
 
@@ -217,8 +204,8 @@ void initTextures()
 
 void initScene()
 {
-	vec3 camPosition = vec3(0, -2, 1.2);
-	vec3 lookAtPoint = camPosition + vec3(0, 1, 0);
+	vec3 camPosition = vec3(0, -3, 1);
+	vec3 lookAtPoint = vec3(0,0,0);
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
 	float nearPlane = 0.01f;
@@ -246,7 +233,7 @@ void initShader() {
 	curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 #endif
 	
-
+	//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 }
 
 void clearScene()
@@ -283,8 +270,8 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(display);
     glutReshapeFunc(reshape);	
     glutKeyboardFunc(keyboard);
-    glutMouseFunc(mouse);
-    glutMotionFunc(motion);
+    //glutMouseFunc(mouse);
+    //glutMotionFunc(motion);
 
     glutMainLoop();
 	clearScene();
