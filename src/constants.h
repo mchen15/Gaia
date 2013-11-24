@@ -22,6 +22,7 @@ extern float gridSpacing;		// how far away each grid is
 extern float lodFactor;
 extern float tessLevelInner;
 extern float tessLevelOuter;
+
 // paths
 const extern char* heightmapPath;
 const extern char* vertShaderPath;

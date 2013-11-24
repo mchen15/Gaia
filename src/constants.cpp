@@ -3,12 +3,12 @@
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(64, 64);
 float texScale = 1;
-float heightScale = 1;
+float heightScale = 200;
 vec3 lightPosWorld = vec3(0, 0, 10);
 float gridSpacing = 1;
 float lodFactor = 1;
-float tessLevelInner = 1;
-float tessLevelOuter = 1;
+float tessLevelInner = 3;
+float tessLevelOuter = 3;
 
 const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";

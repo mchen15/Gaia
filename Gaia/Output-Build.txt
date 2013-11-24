@@ -1,0 +1,5 @@
+﻿11/24/2013 2:39:38 AM: The parameter is incorrect. (Exception from HRESULT: 0x80070057 (E_INVALIDARG))
+   at EnvDTE.Properties.Item(Object index)
+   at MadsKristensen.EditorExtensions.ProjectHelpers.GetRootFolder()
+   at EnvDTE.Properties.Item(Object index)
+   at MadsKristensen.EditorExtensions.ProjectHelpers.GetRootFolder()

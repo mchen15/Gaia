@@ -119,7 +119,8 @@ void setUniforms()
 	if (uniformLocation != -1)
 	{
 		mat4 imv = glm::inverse(view * model);
-		glUniformMatrix4fv(uniformLocation,1, GL_TRUE, &imv[0][0]);
+		//glUniformMatrix4fv(uniformLocation,1, GL_TRUE, &imv[0][0]);
+		glUniformMatrix4fv(uniformLocation,1, GL_FALSE, &inverse_transposed[0][0]);
 	}
 
 	uniformLocation = glGetUniformLocation(curr_prog,U_LIGHTPOSWORLDID);

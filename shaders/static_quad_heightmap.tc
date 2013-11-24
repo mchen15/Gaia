@@ -68,6 +68,13 @@
             }
 
         }
+		
+		gl_TessLevelInner[0] = u_tessLevelInner;
+        gl_TessLevelInner[1] = u_tessLevelInner;
+        gl_TessLevelOuter[0] = u_tessLevelOuter;
+        gl_TessLevelOuter[1] = u_tessLevelOuter;
+        gl_TessLevelOuter[2] = u_tessLevelOuter;
+        gl_TessLevelOuter[3] = u_tessLevelOuter;
 
         gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
     }
