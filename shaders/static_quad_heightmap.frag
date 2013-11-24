@@ -30,8 +30,8 @@ void main(){
 
 	// compute normal
 
-	//vec2 stepSize = 1.0 / u_numPatches;
-	vec2 stepSize = 1.0 / textureSize(u_heightMap, 0);
+	vec2 stepSize = 1.0 / u_numPatches;
+	//vec2 stepSize = 1.0 / textureSize(u_heightMap, 0);
 
 	float h21 = sampleHeight(vec2(texcoord.s + stepSize.s, texcoord.t));
 	float h01 = sampleHeight(vec2(texcoord.s - stepSize.s, texcoord.t));
@@ -60,9 +60,9 @@ void main(){
 	
 	vec3 color = vec3(0,0,0);
 	// hard coded for now
-	if (slopeX.y < 0.1 && slopeY.y < 0.1)
+	if (slopeX.z < 0.1 && slopeY.z < 0.1 )
 		color = vec3(1.0,1.0,1.0);
-	else if (slopeX.y >= 0.1 && slopeY.y >= 0.1 && slopeX.y <= 1.2 && slopeY.y <= 1.2)
+	else if (slopeX.z >= 0.1 && slopeY.z >= 0.1 && slopeX.z <= 2.2 && slopeY.z <= 2.2)
 		color = vec3(0.82,0.411,0.11);
 	else 
 		color = vec3(0.19, 0.9, 0.19);
@@ -74,7 +74,7 @@ void main(){
 
 
 	fragment = vec4(color,1.0);
-	fragment = vec4(diff1, 0, 0, 1.0);
+	//fragment = vec4(diff1, 0, 0, 1.0);
 	//fragment = vec4(diff2, 0, 0, 1.0);
 	//fragment = vec4(avgSlope, 0, 0, 1.0);
 

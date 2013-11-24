@@ -6,11 +6,12 @@
 using glm::vec2;
 using glm::vec3;
 
-#define ENABLE_TEXCOORDS 0;
+#define ENABLE_TEXCOORDS 0
 
 enum INDEX_MODE {
 	TRIANGLES,
-	QUADS
+	QUADS,
+	CORNER
 };
 
 extern int NUM_QUADS;
@@ -29,6 +30,12 @@ const extern char* vertShaderPath;
 const extern char* fragShaderPath;
 const extern char* tessCtrlShaderPath;
 const extern char* tessEvalShadePath;
+
+
+const extern char* vertQuadShaderPath;
+const extern char* tessQuadCtrlShaderPath;
+const extern char* tessQuadEvalShadePath; 
+const extern char* fragQuadShaderPath;
 
 // uniform ids
 extern char* U_FARID;

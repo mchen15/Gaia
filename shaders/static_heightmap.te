@@ -42,9 +42,9 @@ void main()
 
 	//gl_Position = u_pvm*vec4(tePosition,1.0);
 
-	float patchLen = 1.0/32.0;
+	//float patchLen = 1.0/32.0;
 
-	vec2 offset = gl_TessCoord.st*patchLen;
+	vec2 offset = gl_TessCoord.st*u_numPatches;
 
 	teGlobalUV = tcPosition[0].xy+ offset;
 

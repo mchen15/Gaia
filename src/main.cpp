@@ -44,7 +44,7 @@ void display(void)
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
 
-#if ENABLE_TEXCOORDS == 1
+#if ENABLE_TEXCOORDS 
 	plane->setIndexMode(INDEX_MODE::TRIANGLES);
 	plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
 #else
@@ -120,7 +120,7 @@ void setUniforms()
 	{
 		mat4 imv = glm::inverse(view * model);
 		//glUniformMatrix4fv(uniformLocation,1, GL_TRUE, &imv[0][0]);
-		glUniformMatrix4fv(uniformLocation,1, GL_FALSE, &inverse_transposed[0][0]);
+		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &inverse_transposed[0][0]);
 	}
 
 	uniformLocation = glGetUniformLocation(curr_prog,U_LIGHTPOSWORLDID);
@@ -189,6 +189,9 @@ void keyboard(unsigned char key, int x, int y)
 			cam->setPosition( cam->getPosition()+vec3(5,0,0));
 			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(5,0,0));
 			break;
+		case ('r'):
+			initShader();
+			break;
 	}
 }
 
@@ -205,8 +208,15 @@ void initTextures()
 
 void initScene()
 {
+	// camera set up for quads rendering using 2nd technique
 	vec3 camPosition = vec3(0, -200,100);
 	vec3 lookAtPoint = vec3(512,512,0);
+
+	// camera set up for lower corner technique
+	//vec3 camPosition = vec3(0, -3, 500);
+	//vec3 lookAtPoint = vec3(0,0,0);
+
+
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
 	float nearPlane = 0.01f;
@@ -229,10 +239,14 @@ void initShader() {
 	std::cout << "Creating program." << std::endl;
 
 #if ENABLE_TEXCOORDS
+	plane->setIndexMode(INDEX_MODE::TRIANGLES);
 	curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
 #else
+	//plane->setIndexMode(INDEX_MODE::CORNER);
 	//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
-	curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
+
+	plane->setIndexMode(INDEX_MODE::QUADS);
+	curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
 #endif
 	
 	//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);

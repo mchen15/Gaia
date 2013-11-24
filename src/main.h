@@ -40,6 +40,7 @@ static float fps = 0;
 const char *attributeWithTexLocation[] = {"Position", "Texcoord"};
 const char *attributeLocation[] = {"Position"};
 
+void initShader();
 void setUniforms();
 void reshape(int w, int h);
 void display(void);

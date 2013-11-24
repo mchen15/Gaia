@@ -13,10 +13,16 @@ float tessLevelOuter = 3;
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 const char* heightmapPath = "../../textures/test1024.png";
-const char* vertShaderPath = "../../shaders/static_quad_heightmap.vert";
-const char* tessCtrlShaderPath = "../../shaders/static_quad_heightmap.tc";
-const char* tessEvalShadePath = "../../shaders/static_quad_heightmap.te"; 
-const char* fragShaderPath = "../../shaders/static_quad_heightmap.frag";
+
+const char* vertShaderPath = "../../shaders/static_heightmap.vert";
+const char* tessCtrlShaderPath = "../../shaders/static_heightmap.tc";
+const char* tessEvalShadePath = "../../shaders/static_heightmap.te"; 
+const char* fragShaderPath = "../../shaders/static_heightmap.frag";
+
+const char* vertQuadShaderPath = "../../shaders/static_quad_heightmap.vert";
+const char* tessQuadCtrlShaderPath = "../../shaders/static_quad_heightmap.tc";
+const char* tessQuadEvalShadePath = "../../shaders/static_quad_heightmap.te"; 
+const char* fragQuadShaderPath = "../../shaders/static_quad_heightmap.frag";
 
 //const char* heightmapPath = "D:/Dropbox/UPenn/CIS-565 (GPU Programming)/Assignments/Project7-FinalProject/Gaia/textures/heightmap.png";
 
