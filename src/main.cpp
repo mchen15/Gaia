@@ -325,7 +325,6 @@ void initShader() {
 	}
 	else
 	{
-
 		if (enableTexcoords)
 		{
 			plane->setIndexMode(INDEX_MODE::TRIANGLES);
@@ -353,6 +352,8 @@ void drawQuad()
 {
 	glBindVertexArray(vertex_array);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+
+	
 
     glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_SHORT,0);
 
@@ -385,20 +386,26 @@ void initQuad()
     //Allocate vbos for data
     glGenBuffers(1,&(vbo_data));
     glGenBuffers(1,&(vbo_indices));
+	glGenBuffers(1,&(texcoord_data));
+
+	glEnableVertexAttribArray(quad_attributes::POSITION);
+    glEnableVertexAttribArray(quad_attributes::TEXCOORD);
 
     //Upload vertex data
     glBindBuffer(GL_ARRAY_BUFFER, vbo_data);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-    //Use of strided data, Array of Structures instead of Structures of Arrays
-    glVertexAttribPointer(quad_attributes::POSITION, 3, GL_FLOAT, GL_FALSE,sizeof(vec3),0);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec3), verts, GL_STATIC_DRAW);
+	glVertexAttribPointer(quad_attributes::POSITION, 3, GL_FLOAT, GL_FALSE,sizeof(vec3),0); 
+
+	//Upload texture coordinates data
+	glBindBuffer(GL_ARRAY_BUFFER, texcoord_data);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec2), texcoords, GL_STATIC_DRAW);
     glVertexAttribPointer(quad_attributes::TEXCOORD, 2, GL_FLOAT, GL_FALSE,sizeof(vec2),0);
-    glEnableVertexAttribArray(quad_attributes::POSITION);
-    glEnableVertexAttribArray(quad_attributes::TEXCOORD);
 
     //indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLushort), indices, GL_STATIC_DRAW);
     num_indices = 6;
+
     //Unplug Vertex Array
     glBindVertexArray(0);
 }

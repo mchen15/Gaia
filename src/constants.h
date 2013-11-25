@@ -22,7 +22,8 @@ extern float lodFactor;
 extern float tessLevelInner;
 extern float tessLevelOuter;
 extern bool genNormalMap;		// true if we want to generate normal map manually
-extern bool enableTexcoords;	// texcoords will be used as an input attribute in the shaders
+extern bool enableTexcoords;	// texcoords will be used as an input attribute in the shaders (used for pass.vert &
+								// pass.frag)
 
 // paths
 const extern char* heightmapColorPath;	// temporarily load a color map
