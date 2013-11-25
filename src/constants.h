@@ -60,5 +60,5 @@ extern char* U_LIGHTPOSWORLDID;
 extern char* U_LODFACTOR;
 extern char* U_NORMALMAPID;
 extern char* U_DIFFUSEMAPID;
-
+extern char* U_TOGGLENORMALID;
 #endif

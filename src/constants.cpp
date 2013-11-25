@@ -54,3 +54,4 @@ char* U_LIGHTPOSWORLDID = "u_lightPosWorld";
 char* U_LODFACTOR = "u_lodFactor";
 char* U_NORMALMAPID = "u_normalMap";
 char* U_DIFFUSEMAPID = "u_diffuseMap";
+char* U_TOGGLENORMALID = "u_toggleNormal";
