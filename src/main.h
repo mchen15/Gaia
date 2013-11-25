@@ -68,6 +68,7 @@ unsigned int vbo_indices;
 unsigned int num_indices;
 //Don't need these to get it working, but needed for deallocation
 unsigned int vbo_data;
+unsigned int texcoord_data;
 
 void initQuad();
 
