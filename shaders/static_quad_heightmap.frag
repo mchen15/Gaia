@@ -12,7 +12,9 @@ uniform mat4 u_mvInvTrans;
 uniform vec2 u_numPatches;
 uniform float u_gridSpacing;
 
-vec3 incident = normalize(vec3(1.0, 5.2, 0.5));
+uniform int u_toggleNormal;
+
+vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
 vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 
 float sampleHeight(vec2 coord)
@@ -28,6 +30,29 @@ vec3 sampleNormal(vec2 coord)
 vec3 sampleDiffuse(vec2 coord)
 {
 	return texture(u_diffuseMap, coord).rgb;
+}
+
+vec3 getNormalSobel()
+{
+	const ivec3 off = ivec3(-1.0,0.0,1.0);
+	vec2 tSize = 1.0/textureSize(u_heightMap,0);
+	float topLeft = sampleHeight( vec2( texcoord + tSize*off.xz));
+	float top = sampleHeight( vec2 (texcoord + tSize*off.yz));
+	float topRight = sampleHeight( vec2( texcoord + tSize*off.zz));
+	float left = sampleHeight( vec2( texcoord + tSize*off.xy));
+	float right = sampleHeight( vec2( texcoord + tSize*off.zy));
+	float bottomLeft = sampleHeight( vec2( texcoord + tSize*off.xx));
+	float bottom = sampleHeight( vec2( texcoord + tSize*off.yx));
+	float bottomRight = sampleHeight( vec2( texcoord + tSize*off.zx));
+
+
+	float dx = (topLeft + 2.0*left+ bottomLeft) - (topRight + 2.0*right+bottomRight) ;
+	float dy = (topLeft + 2.0*top+ topRight) - (bottomLeft + 2.0*bottom+bottomRight);
+	float dz = 4.0;
+
+	vec3 normal = normalize ( vec3(dx,dy,dz));
+	return normal;
+
 }
 
 void main(){
@@ -71,13 +96,12 @@ void main(){
 	vec3 normal  = normalize(u_mvInvTrans * vec4(normalize(cross(slopeX, slopeY)), 0.0)).xyz;
 	
 	// using normal map
-	normal = sampleNormal(texcoord);
 
+	if (u_toggleNormal == 0)
+		normal = getNormalSobel();
+	else
+		normal = sampleNormal(texcoord);
 	vec3 color = sampleDiffuse(texcoord);
-
-	
-
-
 
 
 	float intensity = max(dot(incident, normal), 0.0);
