@@ -6,8 +6,6 @@
 using glm::vec2;
 using glm::vec3;
 
-#define ENABLE_TEXCOORDS 0
-
 enum INDEX_MODE {
 	TRIANGLES,
 	QUADS,
@@ -23,6 +21,8 @@ extern float gridSpacing;		// how far away each grid is
 extern float lodFactor;
 extern float tessLevelInner;
 extern float tessLevelOuter;
+extern bool genNormalMap;		// true if we want to generate normal map manually
+extern bool enableTexcoords;	// texcoords will be used as an input attribute in the shaders
 
 // paths
 const extern char* heightmapColorPath;	// temporarily load a color map
@@ -33,8 +33,8 @@ const extern char* vertShaderPath;
 const extern char* fragShaderPath;
 const extern char* tessCtrlShaderPath;
 const extern char* tessEvalShadePath;
-
-
+const extern char* nmapVertShaderPath;
+const extern char* nmapFragShaderPath;
 const extern char* vertQuadShaderPath;
 const extern char* tessQuadCtrlShaderPath;
 const extern char* tessQuadEvalShadePath; 

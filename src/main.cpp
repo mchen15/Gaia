@@ -50,12 +50,22 @@ void display(void)
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 
-#if ENABLE_TEXCOORDS 
-	plane->setIndexMode(INDEX_MODE::TRIANGLES);
-	plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
-#else
-	plane->draw(triangle_attributes::POSITION);
-#endif
+	if (genNormalMap)
+	{
+		drawQuad();
+	}
+	else
+	{
+		if (enableTexcoords)
+		{
+			plane->setIndexMode(INDEX_MODE::TRIANGLES);
+			plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
+		}
+		else 
+		{
+			plane->draw(triangle_attributes::POSITION);
+		}
+	}
 
 	glutPostRedisplay();
     glutSwapBuffers();
@@ -308,24 +318,89 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-#if ENABLE_TEXCOORDS
-	plane->setIndexMode(INDEX_MODE::TRIANGLES);
-	curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
-#else
-	//plane->setIndexMode(INDEX_MODE::CORNER);
-	//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
 
-	plane->setIndexMode(INDEX_MODE::QUADS);
-	curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
-#endif
-	
-	//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
+	if (genNormalMap)
+	{
+		curr_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
+	}
+	else
+	{
+
+		if (enableTexcoords)
+		{
+			plane->setIndexMode(INDEX_MODE::TRIANGLES);
+			curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
+		}
+		else
+		{
+			//plane->setIndexMode(INDEX_MODE::CORNER);
+			//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
+
+			plane->setIndexMode(INDEX_MODE::QUADS);
+			curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
+		}
+		//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
+	}
 }
 
 void clearScene()
 {
 	delete plane;
 	delete cam;
+}
+
+void drawQuad()
+{
+	glBindVertexArray(vertex_array);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+
+    glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_SHORT,0);
+
+    glBindVertexArray(0);
+}
+
+void initQuad() 
+{
+
+	vec3 verts[] = {
+		vec3(-1,1,0),
+		vec3(-1,-1,0),
+		vec3(1,-1,0),
+		vec3(1,1,0) };
+
+	vec2 texcoords[] = {
+		vec2(0,1),
+		vec2(0,0),
+		vec2(1,0),
+		vec2(1,1) };
+
+    unsigned short indices[] = {0,1,2,0,2,3};
+
+    //Allocate vertex array
+    //Vertex arrays encapsulate a set of generic vertex attributes and the buffers they are bound too
+    //Different vertex array per mesh.
+    glGenVertexArrays(1, &(vertex_array));
+    glBindVertexArray(vertex_array);
+
+    //Allocate vbos for data
+    glGenBuffers(1,&(vbo_data));
+    glGenBuffers(1,&(vbo_indices));
+
+    //Upload vertex data
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_data);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+    //Use of strided data, Array of Structures instead of Structures of Arrays
+    glVertexAttribPointer(quad_attributes::POSITION, 3, GL_FLOAT, GL_FALSE,sizeof(vec3),0);
+    glVertexAttribPointer(quad_attributes::TEXCOORD, 2, GL_FLOAT, GL_FALSE,sizeof(vec2),0);
+    glEnableVertexAttribArray(quad_attributes::POSITION);
+    glEnableVertexAttribArray(quad_attributes::TEXCOORD);
+
+    //indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(GLushort), indices, GL_STATIC_DRAW);
+    num_indices = 6;
+    //Unplug Vertex Array
+    glBindVertexArray(0);
 }
 
 int main(int argc, char* argv[])
@@ -350,6 +425,9 @@ int main(int argc, char* argv[])
     cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << endl;
     cout << "OpenGL version " << glGetString(GL_VERSION) << " supported" << endl;
 	
+	if (genNormalMap)
+		initQuad();
+
 	initTextures();
 	initScene();
 	initShader();
