@@ -352,8 +352,7 @@ void drawQuad()
 {
 	glBindVertexArray(vertex_array);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
-
-	
+		
 
     glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_SHORT,0);
 
@@ -393,12 +392,12 @@ void initQuad()
 
     //Upload vertex data
     glBindBuffer(GL_ARRAY_BUFFER, vbo_data);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vec3), verts, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 	glVertexAttribPointer(quad_attributes::POSITION, 3, GL_FLOAT, GL_FALSE,sizeof(vec3),0); 
 
 	//Upload texture coordinates data
 	glBindBuffer(GL_ARRAY_BUFFER, texcoord_data);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vec2), texcoords, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texcoords), texcoords, GL_STATIC_DRAW);
     glVertexAttribPointer(quad_attributes::TEXCOORD, 2, GL_FLOAT, GL_FALSE,sizeof(vec2),0);
 
     //indices
