@@ -18,8 +18,11 @@ float sampleHeight(vec2 texcoord)
 void main(void)
 {	
 
-	if ( u_toggleNormal == 0)
+	vec3 normal= vec3(0.0);
+
+	if( u_toggleNormal== 0)
 	{
+
 	vec2 tSize = 1.0/textureSize(u_heightMap,0);
 
 	float xnext = sampleHeight(vec2(v_Texcoord.s+tSize.s,v_Texcoord.t));
@@ -28,7 +31,7 @@ void main(void)
 	float yprev = sampleHeight(vec2(v_Texcoord.s,v_Texcoord.t-tSize.t));
 	vec3 ddx = vec3(2.0*tSize.x, 0.0, xnext-xprev);
 	vec3 ddy = vec3(0.0, 2.0*tSize.y, ynext-yprev);
-	vec3 normal = cross ( normalize(ddx), normalize(ddy));
+	normal = cross ( normalize(ddx), normalize(ddy));
 
 	const ivec3 off = ivec3(-1.0,0.0,1.0);
 
@@ -48,12 +51,12 @@ void main(void)
 
 
 	normal = normalize ( vec3(dx,dy,dz));
-	//normal = cross ( normalize(dx), normalize(dy));
 	}
+	//normal = cross ( normalize(dx), normalize(dy));
 
 	else
 	{
-		normal = texture(u_normalMap, texCoord).xyz;
+		normal = texture(u_normalMap, v_Texcoord).xyz;
 	}
 
 	color = vec4(normal.xyz,1.0);
