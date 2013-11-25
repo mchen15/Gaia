@@ -156,10 +156,10 @@ void setUniforms()
 	    glUniform1i(uniformLocation,0);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_LODFACTOR);
+	uniformLocation = glGetUniformLocation(curr_prog,U_PIXELSPEREDGE);
 	if (uniformLocation != -1)
 	{
-		glUniform1f(uniformLocation, lodFactor);
+		glUniform1f(uniformLocation, pixelsPerEdge);
 	}
 
 	uniformLocation = glGetUniformLocation(curr_prog,U_NORMALMAPID);
@@ -239,13 +239,13 @@ void keyboard(unsigned char key, int x, int y)
 			toggleNormalVal = !toggleNormalVal;
 			break;
 		case('5'):
-			lodFactor++;
-			cout << "Lod Factor = " << lodFactor << endl;;
+			pixelsPerEdge++;
+			cout << "Lod Factor = " << pixelsPerEdge << endl;;
 			break;
 		case('6'):
-			if (lodFactor > 0)
-				lodFactor--;
-			cout << "Lod Factor = " << lodFactor  << endl;;
+			if (pixelsPerEdge > 0)
+				pixelsPerEdge--;
+			cout << "Lod Factor = " << pixelsPerEdge  << endl;;
 			break;
 
 	}

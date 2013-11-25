@@ -18,7 +18,7 @@ extern float texScale;
 extern float heightScale;
 extern vec3 lightPosWorld;
 extern float gridSpacing;		// how far away each grid is
-extern float lodFactor;
+extern float pixelsPerEdge;
 extern float tessLevelInner;
 extern float tessLevelOuter;
 extern bool genNormalMap;		// true if we want to generate normal map manually
@@ -57,7 +57,7 @@ extern char* U_HEIGHTMAPID;
 extern char* U_MVINVTRANSID;
 extern char* U_PVMID;
 extern char* U_LIGHTPOSWORLDID;
-extern char* U_LODFACTOR;
+extern char* U_PIXELSPEREDGE;
 extern char* U_NORMALMAPID;
 extern char* U_DIFFUSEMAPID;
 extern char* U_TOGGLENORMALID;

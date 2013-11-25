@@ -4,7 +4,7 @@
 
     uniform vec2 screen_size = vec2(1280,720);
     uniform mat4 u_pvm;
-    uniform float lod_factor=20.0;
+    uniform float u_pixelsPerEdge=20.0;
     
 	uniform sampler2D u_heightMap;
 	uniform float u_gridSpacing;
@@ -42,11 +42,11 @@
 
 		vec4 projected = project(highPoint-midPoint);
 		vec2 projectedSS = screen_space(projected);
-		return clamp(length(projectedSS)/lod_factor,1,64);
+		return clamp(length(projectedSS)/u_pixelsPerEdge,1,64);
 	}
 
     float level(vec2 v0, vec2 v1){
-        return clamp(distance(v0, v1)/lod_factor, 1, 64);
+        return clamp(distance(v0, v1)/u_pixelsPerEdge, 1, 64);
     }
 
     void main(){
