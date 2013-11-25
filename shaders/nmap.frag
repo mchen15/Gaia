@@ -22,5 +22,24 @@ void main(void)
 	vec3 ddx = (2.0, 0.0, xnext-xprev);
 	vec3 ddy = (0.0, 2.0, ynext-yprev);
 	vec3 normal = cross ( normalize(ddx), normalize(ddy));
+
+	//const ivec3 off(-1.0,0.0,1.0);
+
+	//float topLeft = sampleHeight( vec2( v_Texcoord + tSize*off.xz));
+	//float top = sampleHeight( vec2 (v_Texcoord + tSize*off.yz));
+	//float topRight = sampleHeight( vec2( v_Texcoord + tSize*off.zz));
+	//float left = sampleHeight( vec2( v_Texcoord + tSize*off.xy));
+	//float right = sampleHeight( vec2( v_Texcoord + tSize*off.zy));
+	//float bottomLeft = sampleHeight( vec2( v_Texcoord + tSize*off.xx));
+	//float bottom = sampleHeight( vec2( v_Texcoord + tSize*off.yx));
+	//float bottomRight = sampleHeight( vec2( v_Texcoord + tSize*off.zx));
+
+
+	//float dx = (topRight + 2.0*right+bottomRight) - (topLeft + 2.0*left+ bottomLeft);
+	//float dy = (bottomLeft + 2.0*bottom+bottomRight) - (topLeft + 2.0*top+ topRight);
+	//float dz = sqrt(1- dx*dx - dy*dy);
+	//normal = normalize ( vec3(dx,dy,dz));
+
+
 	color = vec4(normal.xyz,1.0);
 }
