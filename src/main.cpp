@@ -200,7 +200,8 @@ void keyboard(unsigned char key, int x, int y)
 			std::cout<<"Inner: "<<tessLevelInner<<std::endl;
 			break;
 		case ('2'):
-			tessLevelInner--;
+			if (tessLevelInner > 0)
+				tessLevelInner--;
 			std::cout<<"Inner: "<<tessLevelInner<<std::endl;
 			break;
 		case ('3'):
@@ -208,7 +209,8 @@ void keyboard(unsigned char key, int x, int y)
 			std::cout<<"Outer: "<<tessLevelOuter<<std::endl;
 			break;
 		case ('4'):
-			tessLevelOuter--;
+			if (tessLevelOuter > 0)
+				tessLevelOuter--;
 			std::cout<<"Outer: "<<tessLevelOuter<<std::endl;
 			break;
 		case ('m'):
@@ -235,6 +237,15 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case ('t'):
 			toggleNormalVal = !toggleNormalVal;
+			break;
+		case('5'):
+			lodFactor++;
+			cout << "Lod Factor = " << lodFactor << endl;;
+			break;
+		case('6'):
+			if (lodFactor > 0)
+				lodFactor--;
+			cout << "Lod Factor = " << lodFactor  << endl;;
 			break;
 
 	}
