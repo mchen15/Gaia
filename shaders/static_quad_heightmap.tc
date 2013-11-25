@@ -2,9 +2,9 @@
 
      layout(vertices = 4) out;
 
-    uniform vec2 screen_size = vec2(1280,720);
+    uniform vec2 u_screen_size;
     uniform mat4 u_pvm;
-    uniform float u_pixelsPerEdge=20.0;
+    uniform float u_pixelsPerEdge;
     
 	uniform sampler2D u_heightMap;
 	uniform float u_gridSpacing;
@@ -28,7 +28,7 @@
 
 
     vec2 screen_space(vec4 vertex){
-        return (clamp(vertex.xy, -1.3, 1.3)+1) * (screen_size*0.5);
+        return (clamp(vertex.xy, -1.3, 1.3)+1) * (u_screen_size*0.5);
     }
 
 	float sphericalLevel(vec4 v0World, vec4 v1World)
@@ -95,12 +95,12 @@
             //}
         }
 
-		//gl_TessLevelInner[0] = 1;
-  //      gl_TessLevelInner[1] = 1;
-  //      gl_TessLevelOuter[0] = 1;
-  //      gl_TessLevelOuter[1] = 1;
-  //      gl_TessLevelOuter[2] = 1;
-  //      gl_TessLevelOuter[3] = 1;
+		//gl_TessLevelInner[0] = 64;
+  //      gl_TessLevelInner[1] = 64;
+  //      gl_TessLevelOuter[0] = 64;
+  //      gl_TessLevelOuter[1] = 64;
+  //      gl_TessLevelOuter[2] = 64;
+  //      gl_TessLevelOuter[3] = 64;
 
         gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
     }

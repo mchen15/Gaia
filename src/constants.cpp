@@ -1,16 +1,21 @@
 #include "constants.h"
 
+// Program flow switches
+bool genNormalMap = false;
+bool enableTexcoords = false;
+
+
+
 int NUM_QUADS = 1;
-vec2 SUBDIV = vec2(32, 32);
+vec2 SUBDIV = vec2(128, 128);
 float texScale = 1;
 float heightScale = 200;
 vec3 lightPosWorld = vec3(0, 0, 10);
 float gridSpacing = 1;
-float pixelsPerEdge = 20;
+float pixelsPerEdge = 1;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
-bool genNormalMap = false;
-bool enableTexcoords = false;
+
 
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
@@ -55,3 +60,4 @@ char* U_PIXELSPEREDGE = "u_pixelsPerEdge";
 char* U_NORMALMAPID = "u_normalMap";
 char* U_DIFFUSEMAPID = "u_diffuseMap";
 char* U_TOGGLENORMALID = "u_toggleNormal";
+char* U_SCREENSIZEID = "u_screen_size";

@@ -183,6 +183,13 @@ void setUniforms()
 	{
 		glUniform1i(uniformLocation, toggleNormalVal);
 	}
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_SCREENSIZEID);
+	if (uniformLocation != -1)
+	{
+		vec2 screen_size = vec2((float)width, (float)height);
+		glUniform2fv(uniformLocation, 1, &screen_size[0]);
+	}
 }
 
 void keyboard(unsigned char key, int x, int y) 

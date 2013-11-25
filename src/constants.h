@@ -61,4 +61,5 @@ extern char* U_PIXELSPEREDGE;
 extern char* U_NORMALMAPID;
 extern char* U_DIFFUSEMAPID;
 extern char* U_TOGGLENORMALID;
+extern char* U_SCREENSIZEID;
 #endif
