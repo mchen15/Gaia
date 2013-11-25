@@ -59,7 +59,7 @@ void setUniforms();
 void reshape(int w, int h);
 void display(void);
 void initTextures();
-
+void drawQuad();
 
 
 // quad for outputting normal map

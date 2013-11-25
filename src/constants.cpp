@@ -10,6 +10,7 @@ float lodFactor = 1;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 bool genNormalMap = true;
+bool enableTexcoords = false;
 
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
