@@ -444,6 +444,10 @@ int main(int argc, char* argv[])
 	if (genNormalMap)
 		initQuad();
 
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+
 	initTextures();
 	initScene();
 	initShader();
