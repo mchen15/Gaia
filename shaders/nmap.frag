@@ -3,7 +3,10 @@
 in vec2 v_Texcoord;
 uniform sampler2D u_heightMap;
 uniform sampler2D u_diffuseMap;
+uniform sampler2D u_normalMap;
 uniform float u_heightScale;
+
+uniform int u_toggleNormal;
 
 out vec4 color;
 
@@ -14,6 +17,9 @@ float sampleHeight(vec2 texcoord)
 
 void main(void)
 {	
+
+	if ( u_toggleNormal == 0)
+	{
 	vec2 tSize = 1.0/textureSize(u_heightMap,0);
 
 	float xnext = sampleHeight(vec2(v_Texcoord.s+tSize.s,v_Texcoord.t));
@@ -43,6 +49,12 @@ void main(void)
 
 	normal = normalize ( vec3(dx,dy,dz));
 	//normal = cross ( normalize(dx), normalize(dy));
+	}
+
+	else
+	{
+		normal = texture(u_normalMap, texCoord).xyz;
+	}
 
 	color = vec4(normal.xyz,1.0);
 	//color = vec4(texture(u_diffuseMap,v_Texcoord).rgb,1);
