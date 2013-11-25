@@ -12,7 +12,11 @@ float tessLevelOuter = 3;
 
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
-const char* heightmapPath = "../../textures/test1024.png";
+//const char* heightmapPath = "../../textures/test2.png";
+//const char* heightmapPath = "../../textures/test1024.png";
+const char* heightmapPath = "../../textures/terrain_heights.jpg";
+const char* normalmapPath = "../../textures/terrain_normals.jpg";
+const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
 
 const char* vertShaderPath = "../../shaders/static_heightmap.vert";
 const char* tessCtrlShaderPath = "../../shaders/static_heightmap.tc";
@@ -43,3 +47,5 @@ char* U_MVINVTRANSID = "u_mvInvTrans";
 char* U_PVMID = "u_pvm";
 char* U_LIGHTPOSWORLDID = "u_lightPosWorld";
 char* U_LODFACTOR = "u_lodFactor";
+char* U_NORMALMAPID = "u_normalMap";
+char* U_DIFFUSEMAPID = "u_diffuseMap";

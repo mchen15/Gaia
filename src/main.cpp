@@ -43,6 +43,12 @@ void display(void)
 		
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+			
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 
 #if ENABLE_TEXCOORDS 
 	plane->setIndexMode(INDEX_MODE::TRIANGLES);
@@ -145,6 +151,22 @@ void setUniforms()
 	{
 		glUniform1f(uniformLocation, lodFactor);
 	}
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_NORMALMAPID);
+	if (uniformLocation !=-1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+		glUniform1i(uniformLocation, 1);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_DIFFUSEMAPID);
+	if (uniformLocation !=-1)
+	{
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
+		glUniform1i(uniformLocation, 2);
+	}
 }
 
 void keyboard(unsigned char key, int x, int y) 
@@ -236,12 +258,28 @@ void initTextures()
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glBindTexture(GL_TEXTURE_2D, 0);
+
+	normalmap_tex = (unsigned int)SOIL_load_OGL_texture(normalmapPath,0,0,0);
+    glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+	diffusemap_tex = (unsigned int)SOIL_load_OGL_texture(diffusemapPath,0,0,0);
+    glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void initScene()
 {
 	// camera set up for quads rendering using 2nd technique
-	vec3 camPosition = vec3(0, -200,100);
+	vec3 camPosition = vec3(0, -200,400);
 	vec3 lookAtPoint = vec3(512,512,0);
 
 	// camera set up for lower corner technique
@@ -252,7 +290,7 @@ void initScene()
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
 	float nearPlane = 0.01f;
-	float farPlane = 1500.0f;
+	float farPlane = 5000.0f;
 
 	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
 	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches

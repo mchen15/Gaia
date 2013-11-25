@@ -4,7 +4,7 @@
 
     uniform vec2 screen_size = vec2(1280,720);
     uniform mat4 u_pvm;
-    uniform float lod_factor=4.0;
+    uniform float lod_factor=20.0;
     
 	uniform sampler2D u_heightMap;
 	uniform float u_gridSpacing;
@@ -95,12 +95,12 @@
             //}
         }
 
-		gl_TessLevelInner[0] = 1;
-        gl_TessLevelInner[1] = 1;
-        gl_TessLevelOuter[0] = 1;
-        gl_TessLevelOuter[1] = 1;
-        gl_TessLevelOuter[2] = 1;
-        gl_TessLevelOuter[3] = 1;
+		//gl_TessLevelInner[0] = 1;
+  //      gl_TessLevelInner[1] = 1;
+  //      gl_TessLevelOuter[0] = 1;
+  //      gl_TessLevelOuter[1] = 1;
+  //      gl_TessLevelOuter[2] = 1;
+  //      gl_TessLevelOuter[3] = 1;
 
         gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
     }

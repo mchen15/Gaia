@@ -5,17 +5,29 @@ in float depth;
 out vec4 fragment;
 
 uniform sampler2D u_heightMap;
+uniform sampler2D u_normalMap;
+uniform sampler2D u_diffuseMap;
 uniform float u_heightScale; 
 uniform mat4 u_mvInvTrans;
 uniform vec2 u_numPatches;
 uniform float u_gridSpacing;
 
-vec3 incident = normalize(vec3(1.0, 0.2, 0.5));
+vec3 incident = normalize(vec3(1.0, 5.2, 0.5));
 vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 
 float sampleHeight(vec2 coord)
 {
 	return u_heightScale*texture(u_heightMap, coord).r;
+}
+
+vec3 sampleNormal(vec2 coord)
+{
+	return texture(u_normalMap, coord).xyz;
+}
+
+vec3 sampleDiffuse(vec2 coord)
+{
+	return texture(u_diffuseMap, coord).rgb;
 }
 
 void main(){
@@ -38,8 +50,8 @@ void main(){
 	float h12 = sampleHeight(vec2(texcoord.s, texcoord.t + stepSize.t));
 	float h10 = sampleHeight(vec2(texcoord.s, texcoord.t - stepSize.t));
 
-	h21 = h01;
-	h12 = h10;
+	//h21 = h01;
+	//h12 = h10;
 
 	float diff1 = h21 - h01;
 	float diff2 = h12 - h10;
@@ -58,18 +70,18 @@ void main(){
 
 	vec3 normal  = normalize(u_mvInvTrans * vec4(normalize(cross(slopeX, slopeY)), 0.0)).xyz;
 	
-	vec3 color = vec3(0,0,0);
+	// using normal map
+	normal = sampleNormal(texcoord);
 
-	// hard coded for now
-	if (slopeX.z < 0.1 && slopeY.z < 0.1 )
-		color = vec3(1.0,1.0,1.0);
-	else if (slopeX.z >= 0.1 && slopeY.z >= 0.1 && slopeX.z <= 2.2 && slopeY.z <= 2.2)
-		color = vec3(0.82,0.411,0.11);
-	else 
-		color = vec3(0.19, 0.9, 0.19);
+	vec3 color = sampleDiffuse(texcoord);
 
-	//float intensity = max(dot(incident, normal), 0.0);
-	//color = color * intensity * light.xyz;
+	
+
+
+
+
+	float intensity = max(dot(incident, normal), 0.0);
+	color = color * intensity * light.xyz;
 
 	float avgSlope = (diff1 + diff2) / 2.0;
 
@@ -80,6 +92,6 @@ void main(){
 	//fragment = vec4(avgSlope, 0, 0, 1.0);
 
 	//fragment = vec4(slopeY, 1.0);
-	fragment = vec4(normal, 1.0);
+	//fragment = vec4(normal, 1.0);
 	//fragment = vec4(1,1,1,1);
 }

@@ -26,6 +26,8 @@ extern float tessLevelOuter;
 
 // paths
 const extern char* heightmapColorPath;	// temporarily load a color map
+const extern char* normalmapPath;
+const extern char* diffusemapPath;
 const extern char* heightmapPath;
 const extern char* vertShaderPath;
 const extern char* fragShaderPath;
@@ -55,5 +57,7 @@ extern char* U_MVINVTRANSID;
 extern char* U_PVMID;
 extern char* U_LIGHTPOSWORLDID;
 extern char* U_LODFACTOR;
+extern char* U_NORMALMAPID;
+extern char* U_DIFFUSEMAPID;
 
 #endif

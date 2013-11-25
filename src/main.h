@@ -29,7 +29,8 @@ Camera* cam;
 Plane* plane;
 GLuint curr_prog;
 GLuint heightmap_tex;
-
+GLuint normalmap_tex;
+GLuint diffusemap_tex;
 
 int mouse_buttons = 0;
 int mouse_old_x = 0;
