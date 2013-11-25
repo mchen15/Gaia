@@ -47,6 +47,7 @@ int width;
 int height;
 int frame;
 int timebase;
+int toggleNormalVal = 0;
 static float fps = 0;
 
 const char *attributeWithTexLocation[] = {"Position", "Texcoord"};

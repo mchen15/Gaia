@@ -177,6 +177,12 @@ void setUniforms()
 		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 		glUniform1i(uniformLocation, 2);
 	}
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_TOGGLENORMALID);
+	if (uniformLocation != -1)
+	{
+		glUniform1i(uniformLocation, toggleNormalVal);
+	}
 }
 
 void keyboard(unsigned char key, int x, int y) 
@@ -227,6 +233,10 @@ void keyboard(unsigned char key, int x, int y)
 		case ('r'):
 			initShader();
 			break;
+		case ('t'):
+			toggleNormalVal = !toggleNormalVal;
+			break;
+
 	}
 }
 
