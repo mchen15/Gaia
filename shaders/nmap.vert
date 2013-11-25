@@ -10,7 +10,9 @@ void main(void) {
     //vec4 camera = u_View * world;
 	//vPositionCamSpace = camera.xyz;
 	//vPosition = Position.xyz;
-	v_Texcoord = Texcoord;
+	//v_Texcoord = Texcoord;
+	v_Texcoord = Position.xy*0.5 + 0.5;
+	v_Texcoord.y = 1-v_Texcoord.y;
 	gl_Position = vec4(Position.xyz,1.0);
 
 }

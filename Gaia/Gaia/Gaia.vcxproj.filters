@@ -60,6 +60,12 @@
     <None Include="..\..\shaders\static_quad_heightmap.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\shaders\nmap.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\nmap.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\main.h">

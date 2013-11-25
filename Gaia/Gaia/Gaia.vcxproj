@@ -82,6 +82,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\shaders\nmap.frag" />
+    <None Include="..\..\shaders\nmap.vert" />
     <None Include="..\..\shaders\pass.frag" />
     <None Include="..\..\shaders\pass.tc" />
     <None Include="..\..\shaders\pass.te" />
