@@ -83,6 +83,9 @@
     <ClInclude Include="..\..\src\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="fboUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -98,6 +101,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fboUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

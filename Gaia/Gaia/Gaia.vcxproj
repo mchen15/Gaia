@@ -105,6 +105,7 @@
     <ClInclude Include="..\..\src\glslUtility.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\plane.h" />
+    <ClInclude Include="fboUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\camera.cpp" />
@@ -112,6 +113,7 @@
     <ClCompile Include="..\..\src\glslUtility.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />
+    <ClCompile Include="fboUtility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
