@@ -84,7 +84,7 @@ void display(void)
 		// Testing fbo: bind the default framebuffer to render to screen
 		//glEnable(GL_BLEND);
 		//glBlendFunc(GL_ONE, GL_ONE);
-		unbindTextures();
+		//unbindTextures();
 		glUseProgram(fbo_test_prog);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
