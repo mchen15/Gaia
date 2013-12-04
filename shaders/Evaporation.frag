@@ -1,8 +1,15 @@
 #version 400
 
-out vec4 out_Flux; // f_l, f_r, f_t, f_b
+uniform sampler2D u_terrainAttrTex;
+uniform float u_deltaT;
+uniform float u_Ke = 0.001;
+
+in vec2 texcoord;
+out vec4 out_terrainAttr;
 
 void main (void)
 {
-	out_Flux = vec4(1,0,0,0);
+	out_terrainAttr = texture( u_terrainAttrTex, texcoord);
+	out_terrainAttr.g = out_terrainAttr.g* ( 1.0 - u_Ke*u_deltaT);
 }
+

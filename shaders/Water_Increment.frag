@@ -1,5 +1,10 @@
 #version 400
 
+// u_terrainAttrTex Channels
+// r: terrain height
+// g: water height
+// b: sedimentation
+// a: <placeholder for d1 to be used while extracing velocity from flux>
 uniform sampler2D u_terrainAttrTex;
 uniform float deltaT;
 
