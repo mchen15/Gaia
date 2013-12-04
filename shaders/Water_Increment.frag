@@ -1,8 +1,14 @@
 #version 400
 
-out vec4 out_Flux; // f_l, f_r, f_t, f_b
+uniform sampler2D u_terrainAttrTex;
+uniform float deltaT;
+
+in vec2 texcoord;
+out vec4 out_terrainAttr;
 
 void main (void)
 {
-	out_Flux = vec4(1,0,0,0);
+	float rainRate = 1.0;
+	out_terrainAttr = texture(u_terrainAttrTex,texcoord.st).rgba;
+	out_terrainAttr.g += rainRate*deltaT;
 }
