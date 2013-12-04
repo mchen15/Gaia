@@ -82,12 +82,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\shaders\Erosion_Deposition.frag" />
+    <None Include="..\..\shaders\Erosion_Deposition.vert" />
+    <None Include="..\..\shaders\Evaporation.frag" />
+    <None Include="..\..\shaders\Evaporation.vert" />
+    <None Include="..\..\shaders\fbo_test.frag" />
+    <None Include="..\..\shaders\fbo_test.vert" />
+    <None Include="..\..\shaders\Flow_Sim.frag" />
+    <None Include="..\..\shaders\Flow_Sim.vert" />
     <None Include="..\..\shaders\nmap.frag" />
     <None Include="..\..\shaders\nmap.vert" />
     <None Include="..\..\shaders\pass.frag" />
     <None Include="..\..\shaders\pass.tc" />
     <None Include="..\..\shaders\pass.te" />
     <None Include="..\..\shaders\pass.vert" />
+    <None Include="..\..\shaders\Sediment_Transport.frag" />
+    <None Include="..\..\shaders\Sediment_Transport.vert" />
     <None Include="..\..\shaders\static_heightmap.frag" />
     <None Include="..\..\shaders\static_heightmap.tc" />
     <None Include="..\..\shaders\static_heightmap.te" />
@@ -96,24 +106,28 @@
     <None Include="..\..\shaders\static_quad_heightmap.tc" />
     <None Include="..\..\shaders\static_quad_heightmap.te" />
     <None Include="..\..\shaders\static_quad_heightmap.vert" />
+    <None Include="..\..\shaders\Terrain_Initialization.frag" />
+    <None Include="..\..\shaders\Terrain_Initialization.vert" />
     <None Include="..\..\shaders\tessNoise.tc" />
     <None Include="..\..\shaders\tessNoise.te" />
+    <None Include="..\..\shaders\Water_Increment.frag" />
+    <None Include="..\..\shaders\Water_Increment.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\camera.h" />
     <ClInclude Include="..\..\src\constants.h" />
+    <ClInclude Include="..\..\src\fboUtility.h" />
     <ClInclude Include="..\..\src\glslUtility.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\plane.h" />
-    <ClInclude Include="fboUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\camera.cpp" />
     <ClCompile Include="..\..\src\constants.cpp" />
+    <ClCompile Include="..\..\src\fboUtility.cpp" />
     <ClCompile Include="..\..\src\glslUtility.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />
-    <ClCompile Include="fboUtility.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

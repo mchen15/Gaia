@@ -16,54 +16,102 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{28b67d91-9ead-4928-b478-9fcb0cd981e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Erosion">
+      <UniqueIdentifier>{c4c4a5df-a3ed-4995-ac60-73f6635e0ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Terrain Tessellation">
+      <UniqueIdentifier>{ac5d7ae0-b901-42cb-8735-067dae251efb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\shaders\pass.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.tc">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.te">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\tessNoise.tc">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\tessNoise.te">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.tc">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.te">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.vert">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_quad_heightmap.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_quad_heightmap.tc">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_quad_heightmap.te">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\static_quad_heightmap.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\shaders\nmap.frag">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Terrain Tessellation</Filter>
     </None>
     <None Include="..\..\shaders\nmap.vert">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.frag">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.tc">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.te">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.vert">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.frag">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.tc">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.te">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.vert">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_quad_heightmap.frag">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_quad_heightmap.tc">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_quad_heightmap.te">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\static_quad_heightmap.vert">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\tessNoise.tc">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\tessNoise.te">
+      <Filter>Shaders\Terrain Tessellation</Filter>
+    </None>
+    <None Include="..\..\shaders\Erosion_Deposition.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Erosion_Deposition.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Evaporation.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Evaporation.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Sediment_Transport.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Sediment_Transport.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Water_Increment.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Water_Increment.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Terrain_Initialization.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Terrain_Initialization.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\fbo_test.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\fbo_test.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
@@ -83,7 +131,7 @@
     <ClInclude Include="..\..\src\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fboUtility.h">
+    <ClInclude Include="..\..\src\fboUtility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -103,7 +151,7 @@
     <ClCompile Include="..\..\src\constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="fboUtility.cpp">
+    <ClCompile Include="..\..\src\fboUtility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

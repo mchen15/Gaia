@@ -32,6 +32,16 @@ void updateFPS()
 	glutSetWindowTitle(title);
 }
 
+// Given buf (index of the FBO array that we have created), this function will bind FBO[buf] to the current OpenGL contex
+void bindFBO(GLuint framebuf) {
+	glDisable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0); //Bad mojo to unbind the framebuffer using the texture
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuf);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+}
+
+
 void display(void)
 {
 	updateFPS();
@@ -54,10 +64,19 @@ void display(void)
 	{
 		drawQuad();
 	}
+	//else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
+	//{
+	//	// initialization: responsible for filling 
+	//	bindFBO(initTerrainFBO->getFBOHandle());
+	//	drawQuad();
+
+	//	// 
+	//}
 	else
 	{
 		if (enableTexcoords)
 		{
+			// using pass shaders
 			plane->setIndexMode(INDEX_MODE::TRIANGLES);
 			plane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
 		}
@@ -335,6 +354,82 @@ void initScene()
 	//plane = new Plane(vec2(-10), vec2(10), 10, 10);
 }
 
+void setUpInitializationFBO()
+{
+	// setting up texture handles: flux, terrainAttr, velocity
+	vector<GLuint> fboTex;
+	fboTex.push_back(flux_tex);
+	fboTex.push_back(terrainattr_tex);
+	fboTex.push_back(velocity_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_flux");
+	fboOutNames.push_back("out_terrainAttr");
+	fboOutNames.push_back("out_velocity");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	attachLocations.push_back(GL_COLOR_ATTACHMENT1);
+	attachLocations.push_back(GL_COLOR_ATTACHMENT2);
+
+	// getting the outputs
+	initTerrainFBO = new FrameBufferObject(width, height, terrain_init_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void initErosionTextures()
+{
+	glGenTextures(1, &flux_tex);
+	glGenTextures(1, &terrainattr_tex);
+	glGenTextures(1, &velocity_tex);
+
+	glBindTexture(GL_TEXTURE_2D, flux_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+}
+
+void initErosionFBO()
+{
+	// Initialization
+	setUpInitializationFBO();
+
+	// Water Increment
+
+	// Erosion Deposition
+
+	// Sediment Transport
+
+	// Evaporation
+
+}
+
+void deleteErosionFBO()
+{
+	delete initTerrainFBO;
+}
+
+void initErosionShaders()
+{
+	fbo_test_prog = glslUtility::createProgram(vertFboTestPath, NULL, NULL, NULL, fragFboTestPath, attributeWithTexLocation, 2);
+	terrain_init_prog = glslUtility::createProgram(vertTerrainTexInitPath, NULL, NULL, NULL, fragTerrainTexInitPath, attributeLocation, 1);
+}
 
 void initShader() {
 	
@@ -370,6 +465,9 @@ void initShader() {
 	}
 }
 
+
+
+
 void clearScene()
 {
 	delete plane;
@@ -380,10 +478,7 @@ void drawQuad()
 {
 	glBindVertexArray(vertex_array);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
-		
-
     glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_SHORT,0);
-
     glBindVertexArray(0);
 }
 
@@ -466,8 +561,11 @@ int main(int argc, char* argv[])
 	glEnable(GL_DEPTH_TEST);
 
 	initTextures();
+	initErosionTextures();
 	initScene();
 	initShader();
+	initErosionShaders();
+	initErosionFBO();
 	glutDisplayFunc(display);
     glutReshapeFunc(reshape);	
     glutKeyboardFunc(keyboard);

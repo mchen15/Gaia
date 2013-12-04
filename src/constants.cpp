@@ -2,6 +2,7 @@
 
 // Program flow switches
 bool genNormalMap = false;
+bool enableErosion = true;
 bool enableTexcoords = false;
 
 
@@ -37,6 +38,12 @@ const char* fragQuadShaderPath = "../../shaders/static_quad_heightmap.frag";
 
 const char* nmapVertShaderPath = "../../shaders/nmap.vert";
 const char* nmapFragShaderPath = "../../shaders/nmap.frag";
+
+const char* vertTerrainTexInitPath = "../../shaders/Terrain_Initialization.vert";
+const char* fragTerrainTexInitPath = "../../shaders/Terrain_Initialization.frag";
+
+const char* vertFboTestPath = "../../shaders/fbo_test.vert";
+const char* fragFboTestPath = "../../shaders/fbo_test.frag";
 
 //const char* heightmapPath = "D:/Dropbox/UPenn/CIS-565 (GPU Programming)/Assignments/Project7-FinalProject/Gaia/textures/heightmap.png";
 

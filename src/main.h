@@ -13,11 +13,13 @@
 #include "plane.h"
 #include "glslUtility.h"
 #include "constants.h"
+#include "fboUtility.h"
 
 using std::cout;
 using std::endl;
 using glm::vec3;
 using glm::vec2;
+using std::vector;
 
 namespace triangle_attributes {
     enum {
@@ -35,10 +37,23 @@ namespace quad_attributes {
 
 Camera* cam;
 Plane* plane;
+
+// shader programs
 GLuint curr_prog;
+GLuint fbo_test_prog;
+GLuint terrain_init_prog;
+
+// textures
 GLuint heightmap_tex;
 GLuint normalmap_tex;
 GLuint diffusemap_tex;
+GLuint flux_tex;
+GLuint terrainattr_tex;
+GLuint velocity_tex;
+
+
+// FBOs
+FrameBufferObject* initTerrainFBO;
 
 int mouse_buttons = 0;
 int mouse_old_x = 0;
@@ -61,7 +76,10 @@ void reshape(int w, int h);
 void display(void);
 void initTextures();
 void drawQuad();
-
+void initErosionFBO();
+void initErosionTextures();
+void deleteErosionFBO();
+void setUpInitializationFBO();
 
 // quad for outputting normal map
 unsigned int vertex_array;

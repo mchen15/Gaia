@@ -21,9 +21,12 @@ extern float gridSpacing;		// how far away each grid is
 extern float pixelsPerEdge;
 extern float tessLevelInner;
 extern float tessLevelOuter;
+
 extern bool genNormalMap;		// true if we want to generate normal map manually
 extern bool enableTexcoords;	// texcoords will be used as an input attribute in the shaders (used for pass.vert &
 								// pass.frag)
+extern bool enableErosion;
+
 
 // paths
 const extern char* heightmapColorPath;	// temporarily load a color map
@@ -40,6 +43,16 @@ const extern char* vertQuadShaderPath;
 const extern char* tessQuadCtrlShaderPath;
 const extern char* tessQuadEvalShadePath; 
 const extern char* fragQuadShaderPath;
+
+const extern char* vertTerrainTexInitPath;
+const extern char* fragTerrainTexInitPath;
+
+const extern char* vertFboTestPath;
+const extern char* fragFboTestPath;
+
+
+
+
 
 // uniform ids
 extern char* U_FARID;
