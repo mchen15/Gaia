@@ -13,7 +13,7 @@ out vec4 out_flux;
 
 vec2 texSize = textureSize(u_terrainAttrTex,0);
 float gravity = -9.8;
-
+const float EPSILON = 0.000001;
 
 float getFluxDelta(int offsetX, int offsetY)
 {
@@ -33,16 +33,28 @@ float getFluxDelta(int offsetX, int offsetY)
 
 void main (void)
 {
-	vec4 out_flux = texture(u_fluxTex,0).rgba;
-
+	vec4 out_flux = texture(u_fluxTex,0).xyzw;
 	//Flux left
-	out_flux.r = max(0, flux.r+getFluxDelta(-1,0));
+	out_flux.x = max(0, flux.x+getFluxDelta(-1,0));
 	//Flux right
-	out_flux.g = max(0,flux.g+getFluxDelta(1,0));
+	out_flux.y = max(0,flux.y+getFluxDelta(1,0));
 	// Flux top
-	out_flux.b = max(0,flux.b+getFluxDelta(0,1));
+	out_flux.z = max(0,flux.z+getFluxDelta(0,1));
 	//Flux bottom
-	out_flux.a = max(0,flux.a+getFluxDelta(0,-1));
+	out_flux.w = max(0,flux.w+getFluxDelta(0,-1));
+
+	//boundary conditions
+	//if( texcoord.s <= 0 + EPSILON)
+	//	out_flux.x = 0.0;
+
+	//else if (texcoord.s >= 1 - EPSILON)
+	//	out_flux.y = 0.0;
+
+	//if (texcoord.t <= 0+EPSILON)
+	//	out_flux.z = 0.0;
+
+	//else if (texcoord.t >= 1-EPSILON)
+	//	out_flux.w = 0.0;
 
 	float scaleFactor = min( 1.0, 
 		(texture(u_terrainAttrTex,texcoord).g*u_gridSpacingX*u_gridSpacingY) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );
