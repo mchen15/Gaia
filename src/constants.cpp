@@ -68,3 +68,6 @@ char* U_NORMALMAPID = "u_normalMap";
 char* U_DIFFUSEMAPID = "u_diffuseMap";
 char* U_TOGGLENORMALID = "u_toggleNormal";
 char* U_SCREENSIZEID = "u_screen_size";
+char* U_TERRAINATTRTEXID = "u_terrainAttrTex";
+char* U_FLUXTEXID = "u_fluxTex";
+char* U_VELOCITYTEXID = "u_velocityTex";

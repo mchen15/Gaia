@@ -35,45 +35,97 @@ void updateFPS()
 // Given buf (index of the FBO array that we have created), this function will bind FBO[buf] to the current OpenGL contex
 void bindFBO(GLuint framebuf) {
 	glDisable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 0); //Bad mojo to unbind the framebuffer using the texture
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuf);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 }
 
+void unbindTextures()
+{
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
 
 void display(void)
 {
 	updateFPS();
 
-    glUseProgram(curr_prog);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	setUniforms();
-		
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-			
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, normalmap_tex);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 
 	if (genNormalMap)
 	{
+		glUseProgram(curr_prog);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		setCurrProgUniforms();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 		drawQuad();
 	}
-	//else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
-	//{
-	//	// initialization: responsible for filling 
-	//	bindFBO(initTerrainFBO->getFBOHandle());
-	//	drawQuad();
+	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
+	{
+		// initialization of flex_tex, velocity_tex, and terrainattr_tex
+		
+		bindFBO(initTerrainFBO->getFBOHandle());
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glUseProgram(terrain_init_prog);
+		drawQuad();
 
-	//	// 
-	//}
+		// Testing fbo: bind the default framebuffer to render to screen
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_ONE, GL_ONE);
+		unbindTextures();
+		glUseProgram(fbo_test_prog);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_TEXTURE_2D);
+
+		// setting up uniforms (e.g. input textures)
+		GLint uniformLocation = -1;
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, flux_tex);
+		uniformLocation = glGetUniformLocation(fbo_test_prog, U_FLUXTEXID);
+		glUniform1i(uniformLocation, 3);
+		
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+		uniformLocation = glGetUniformLocation(fbo_test_prog, U_TERRAINATTRTEXID);
+		glUniform1i(uniformLocation, 4);
+
+		glActiveTexture(GL_TEXTURE5);
+		glBindTexture(GL_TEXTURE_2D, velocity_tex);
+		uniformLocation = glGetUniformLocation(fbo_test_prog, U_VELOCITYTEXID);
+		glUniform1i(uniformLocation, 5);
+
+		drawQuad();
+
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+	}
 	else
 	{
+		glUseProgram(curr_prog);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		setCurrProgUniforms();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 		if (enableTexcoords)
 		{
 			// using pass shaders
@@ -90,7 +142,7 @@ void display(void)
     glutSwapBuffers();
 }
 
-void setUniforms()
+void setCurrProgUniforms()
 {
 	mat4 model(1.0f);
 	mat4 view = cam->getView();
@@ -260,6 +312,7 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case ('r'):
 			initShader();
+			initErosionShaders();
 			break;
 		case ('t'):
 			toggleNormalVal = !toggleNormalVal;
@@ -441,7 +494,6 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-
 	if (genNormalMap)
 	{
 		curr_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
@@ -554,12 +606,9 @@ int main(int argc, char* argv[])
     cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << endl;
     cout << "OpenGL version " << glGetString(GL_VERSION) << " supported" << endl;
 	
-	if (genNormalMap)
-		initQuad();
-
-
 	glEnable(GL_DEPTH_TEST);
 
+	initQuad();
 	initTextures();
 	initErosionTextures();
 	initScene();

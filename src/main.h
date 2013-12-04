@@ -71,15 +71,17 @@ const char *attributeLocation[] = {"Position"};
 void mouse(int button, int state, int x, int y);
 void motion(int x, int y);
 void initShader();
-void setUniforms();
+void setCurrProgUniforms();
 void reshape(int w, int h);
 void display(void);
 void initTextures();
 void drawQuad();
 void initErosionFBO();
+void initErosionShaders();
 void initErosionTextures();
 void deleteErosionFBO();
 void setUpInitializationFBO();
+void unbindTextures();
 
 // quad for outputting normal map
 unsigned int vertex_array;

@@ -69,7 +69,8 @@ void FrameBufferObject::initFBO()
 
 	for (int j = 0; j < shaderOut.size(); ++j)
 	{
-		loc.push_back(glGetFragDataLocation(shaderProg, (const GLchar*)shaderOut[j]));
+		GLint location = glGetFragDataLocation(shaderProg, (const GLchar*)shaderOut[j]);
+		loc.push_back(location);
 	}
 	
 	int numTextures = textures.size();
@@ -96,4 +97,6 @@ void FrameBufferObject::initFBO()
 		printf("GL_FRAMEBUFFER_COMPLETE FAILED\n");
 		checkFrameBufferStatus(FBOstatus);
 	}
+
+	delete drawBufs;
 }
