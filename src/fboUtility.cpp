@@ -4,6 +4,7 @@ FrameBufferObject::FrameBufferObject()
 {
 	width = 800;
 	height = 800;
+	FBOHandle = -1;
 	initFBO();
 }
 
@@ -18,6 +19,7 @@ FrameBufferObject::FrameBufferObject(int w, int h, GLuint shader, vector<GLuint>
 	if (outNames.size() != texAttachLocations.size())
 		cout << "FrameBufferObject::FrameBufferObj: WARNING: number of shader output texture names is not equal to number of  attach locations" << endl;
 
+	FBOHandle = 0;
 	initFBO();
 }
 
@@ -87,7 +89,8 @@ void FrameBufferObject::initFBO()
 	for (int m = 0; m < numTextures; ++m)
 	{
 		glBindTexture(GL_TEXTURE_2D, textures[m]);
-		glFramebufferTexture(GL_FRAMEBUFFER, drawBufs[loc[m]], textures[m], 0);
+		//glFramebufferTexture(GL_FRAMEBUFFER, drawBufs[loc[m]], textures[m], 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, drawBufs[loc[m]], GL_TEXTURE_2D, textures[m], 0);
 	}
 
 	FBOstatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);

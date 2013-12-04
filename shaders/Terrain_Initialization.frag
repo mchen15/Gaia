@@ -1,9 +1,11 @@
 #version 400
 
+in vec3 fs_Position;
 
-out vec4 out_flux;			// f_l, f_r, f_t, f_b
-out vec4 out_terrainAttr;
-out vec4 out_velocity;
+// using layout to enforce the location of each out
+layout (location = 0) out vec4 out_flux;
+layout (location = 1) out vec4 out_terrainAttr;
+layout (location = 2) out vec4 out_velocity;
 
 void main (void)
 {

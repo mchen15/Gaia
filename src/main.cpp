@@ -32,7 +32,7 @@ void updateFPS()
 	glutSetWindowTitle(title);
 }
 
-// Given buf (index of the FBO array that we have created), this function will bind FBO[buf] to the current OpenGL contex
+// Given buf (index of the FBO array that we have created), this function will bind framebuf to the current OpenGL contex
 void bindFBO(GLuint framebuf) {
 	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -74,15 +74,16 @@ void display(void)
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
 		// initialization of flex_tex, velocity_tex, and terrainattr_tex
-		
+		unbindTextures();
 		bindFBO(initTerrainFBO->getFBOHandle());
+		//glBindFramebuffer(GL_FRAMEBUFFER, initTerrainFBO->getFBOHandle());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glUseProgram(terrain_init_prog);
 		drawQuad();
 
 		// Testing fbo: bind the default framebuffer to render to screen
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_ONE, GL_ONE);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_ONE, GL_ONE);
 		unbindTextures();
 		glUseProgram(fbo_test_prog);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -108,7 +109,7 @@ void display(void)
 
 		drawQuad();
 
-		glDisable(GL_BLEND);
+//		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 	}
 	else
