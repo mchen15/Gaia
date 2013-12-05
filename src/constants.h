@@ -27,6 +27,14 @@ extern bool enableTexcoords;	// texcoords will be used as an input attribute in 
 								// pass.frag)
 extern bool enableErosion;
 
+//EROSION
+
+extern float deltaT;
+extern float virtualPipeArea;
+extern float virtualPipeLength;
+extern float Kc;
+extern float Ks;
+extern float Ke;
 
 // paths
 const extern char* heightmapColorPath;	// temporarily load a color map
@@ -93,7 +101,14 @@ extern char* U_TOGGLENORMALID;
 extern char* U_SCREENSIZEID;
 extern char* U_TERRAINATTRTEXID;
 extern char* U_FLUXTEXID;
-extern char* U_VELOCITYTEXID;
-
-
+extern char* U_TERRAINATTRTEXID;
+extern char* U_DELTATID;
+extern char* U_FLUXTEXID;
+extern char* U_VELTEXID;
+extern char* U_VIRTUALPIPEAREAID;
+extern char* U_VIRTUALPIPELENGTHID;
+extern char* U_KCID;
+extern char* U_KSID;
+extern char* U_KEID;
+extern char* U_UP;
 #endif

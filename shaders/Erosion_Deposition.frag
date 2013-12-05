@@ -1,11 +1,12 @@
 #version 400
 
 uniform vec3 u_up;
-uniform sampler2D u_normalMap;
 uniform sampler2D u_terrainAttrTex;
+uniform sampler2D u_velTex;
+uniform sampler2D u_normalMap;
 uniform float u_Kc = 0.001;
 uniform float u_Ks = 0.001;
-uniform sampler2D u_velTex;
+
 
 in vec2 texcoord;
 out vec4 out_terrainAttr;

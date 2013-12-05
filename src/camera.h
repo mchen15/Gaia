@@ -31,6 +31,7 @@ public:
 	glm::vec3 getPosition() { return position;}
 	void setLookAtPoint(glm::vec3 pt) { lookAtPoint = pt;}
 	glm::vec3 getLookAtPoint(){ return lookAtPoint;}
+	glm::vec3 getUp() { return up;}
 	void adjust(float dx, float dy, float dz, float tx, float ty, float tz);
 	
 private:

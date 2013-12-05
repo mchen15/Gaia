@@ -151,6 +151,188 @@ void display(void)
     glutSwapBuffers();
 }
 
+void setWaterIncProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_DELTATID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,deltaT);
+}
+
+void setFlowFluxProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(flow_flux_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(flow_flux_prog,U_FLUXTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, flux_tex);
+	    glUniform1i(uniformLocation,1);
+	}
+	uniformLocation = glGetUniformLocation(flow_flux_prog,U_DELTATID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,deltaT);
+	uniformLocation = glGetUniformLocation(flow_flux_prog,U_VIRTUALPIPEAREAID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,virtualPipeArea);
+	uniformLocation = glGetUniformLocation(flow_flux_prog,U_VIRTUALPIPELENGTHID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,virtualPipeLength);
+	uniformLocation = glGetUniformLocation(flow_flux_prog,U_GRIDSPACINGID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,gridSpacing);
+}
+
+void setFlowWaterHeightProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(flow_water_height_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(flow_water_height_prog,U_FLUXTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, flux_tex);
+	    glUniform1i(uniformLocation,1);
+	}
+	uniformLocation = glGetUniformLocation(flow_water_height_prog,U_DELTATID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,deltaT);
+	uniformLocation = glGetUniformLocation(flow_water_height_prog,U_GRIDSPACINGID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,gridSpacing);
+}
+
+void setFlowVelProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(flow_vel_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(flow_vel_prog,U_FLUXTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, flux_tex);
+	    glUniform1i(uniformLocation,1);
+	}
+	uniformLocation = glGetUniformLocation(flow_vel_prog,U_VELTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	    glUniform1i(uniformLocation,2);
+	}
+	uniformLocation = glGetUniformLocation(flow_vel_prog,U_DELTATID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,deltaT);
+	uniformLocation = glGetUniformLocation(flow_vel_prog,U_GRIDSPACINGID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,gridSpacing);
+}
+
+void setErosionDepoProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_VELTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	    glUniform1i(uniformLocation,1);
+	}
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_NORMALMAPID);
+	if (uniformLocation !=-1)
+	{
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+		glUniform1i(uniformLocation, 2);
+	}
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_KCID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,Kc);
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_KSID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,Ks);	
+
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_UP);
+	if (uniformLocation != -1)
+	{
+		glUniform3fv(uniformLocation, 1, &cam->getUp()[0]);
+	}
+
+}
+
+void setSedimentTransProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(sediment_trans_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(sediment_trans_prog,U_VELTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	    glUniform1i(uniformLocation,1);
+	}
+	uniformLocation = glGetUniformLocation(sediment_trans_prog,U_DELTATID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,deltaT);
+}
+
+void setEvapoProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(evapo_prog,U_TERRAINATTRTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	    glUniform1i(uniformLocation,0);
+	}
+	uniformLocation = glGetUniformLocation(evapo_prog,U_DELTATID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,deltaT);
+	uniformLocation = glGetUniformLocation(evapo_prog,U_KEID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,Ke);
+}
+
 void setCurrProgUniforms()
 {
 	mat4 model(1.0f);

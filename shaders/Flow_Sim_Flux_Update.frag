@@ -5,8 +5,7 @@ uniform sampler2D u_fluxTex;
 uniform float u_deltaT;
 uniform float u_virtualPipeArea = 1.0;
 uniform float u_virtualPipeLength = 1.0;
-uniform float u_gridSpacingX = 1.0;
-uniform float u_gridSpacingY = 1.0;
+uniform float u_gridSpacing = 1.0;
 
 in vec2 texcoord;
 out vec4 out_flux;
@@ -57,7 +56,7 @@ void main (void)
 	//	out_flux.w = 0.0;
 
 	float scaleFactor = min( 1.0, 
-		(texture(u_terrainAttrTex,texcoord).g*u_gridSpacingX*u_gridSpacingY) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );
+		(texture(u_terrainAttrTex,texcoord).g*u_gridSpacing*u_gridSpacing) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );
 	
 	out_flux = scaleFactor*out_flux;
 }
