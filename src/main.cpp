@@ -55,6 +55,18 @@ void terrainInit()
 	bindFBO(initTerrainFBO->getFBOHandle());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(terrain_init_prog);
+	
+	// setting up uniforms (e.g. input textures)
+	GLint uniformLocation = -1;
+
+	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTSCALEID);
+	glUniform1f(uniformLocation, 1.0f);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTMAPID);
+	glUniform1i(uniformLocation, 0);	
+
 	drawQuad();
 }
 
@@ -950,7 +962,7 @@ void deleteErosionFBO()
 void initErosionShaders()
 {
 	fbo_test_prog = glslUtility::createProgram(vertFboTestPath, NULL, NULL, NULL, fragFboTestPath, attributeWithTexLocation, 2);
-	terrain_init_prog = glslUtility::createProgram(vertTerrainTexInitPath, NULL, NULL, NULL, fragTerrainTexInitPath, attributeLocation, 1);
+	terrain_init_prog = glslUtility::createProgram(vertTerrainTexInitPath, NULL, NULL, NULL, fragTerrainTexInitPath, attributeWithTexLocation, 2);
 	erosion_depo_prog = glslUtility::createProgram(vertErosDepoPath, NULL, NULL, NULL, fragErosDepoPath, attributeWithTexLocation, 2);
 	evapo_prog = glslUtility::createProgram(vertEvapPath, NULL, NULL, NULL, fragEvapPath, attributeWithTexLocation, 2);
 	flow_flux_prog = glslUtility::createProgram(vertFlowSimFluxPath, NULL, NULL, NULL, fragFlowSimFluxPath, attributeWithTexLocation, 2);
