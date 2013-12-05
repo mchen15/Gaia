@@ -834,9 +834,6 @@ void initShader() {
 	}
 }
 
-
-
-
 void clearScene()
 {
 	delete plane;
@@ -853,7 +850,6 @@ void drawQuad()
 
 void initQuad() 
 {
-
 	vec3 verts[] = {
 		vec3(-1,1,0),
 		vec3(-1,-1,0),
