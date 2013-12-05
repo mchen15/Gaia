@@ -415,30 +415,6 @@ void initScene()
 	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
 	//plane = new Plane(vec2(-10), vec2(10), 10, 10);
 }
-
-void setUpInitializationFBO()
-{
-	// setting up texture handles: flux, terrainAttr, velocity
-	vector<GLuint> fboTex;
-	fboTex.push_back(flux_tex);
-	fboTex.push_back(terrainattr_tex);
-	fboTex.push_back(velocity_tex);
-
-	// setting up the output variable names used in the shader
-	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_flux");
-	fboOutNames.push_back("out_terrainAttr");
-	fboOutNames.push_back("out_velocity");
-
-	vector<GLenum> attachLocations;
-	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
-	attachLocations.push_back(GL_COLOR_ATTACHMENT1);
-	attachLocations.push_back(GL_COLOR_ATTACHMENT2);
-
-	// getting the outputs
-	initTerrainFBO = new FrameBufferObject(width, height, terrain_init_prog, fboTex, fboOutNames, attachLocations);
-}
-
 void initErosionTextures()
 {
 	glGenTextures(1, &flux_tex);
@@ -467,37 +443,187 @@ void initErosionTextures()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
 }
 
+void setUpInitializationFBO()
+{
+	// setting up texture handles: flux, terrainAttr, velocity
+	vector<GLuint> fboTex;
+	fboTex.push_back(flux_tex);
+	fboTex.push_back(terrainattr_tex);
+	fboTex.push_back(velocity_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_flux");
+	fboOutNames.push_back("out_terrainAttr");
+	fboOutNames.push_back("out_velocity");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	attachLocations.push_back(GL_COLOR_ATTACHMENT1);
+	attachLocations.push_back(GL_COLOR_ATTACHMENT2);
+
+	// getting the outputs
+	initTerrainFBO = new FrameBufferObject(width, height, terrain_init_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpWaterIncFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttr");
+	
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	waterIncFBO = new FrameBufferObject(width, height, water_inc_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpFlowSimFluxFBO()
+{
+	// setting up texture handles: flux
+	vector<GLuint> fboTex;
+	fboTex.push_back(flux_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_flux");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	flowSimFluxFBO = new FrameBufferObject(width, height, flow_flux_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpFlowSimWaterHeightFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttrTex");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	flowWatHeightFBO = new FrameBufferObject(width, height, flow_water_height_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpFlowSimVelocityFBO()
+{
+	// setting up texture handles: vel
+	vector<GLuint> fboTex;
+	fboTex.push_back(velocity_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_vel");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	flowSimVelFBO = new FrameBufferObject(width, height, flow_vel_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpErosionDepoFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttrTex");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	erosDepoFBO = new FrameBufferObject(width, height, erosion_depo_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpSedTransFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttrTex");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	sedTransFBO = new FrameBufferObject(width, height, sediment_trans_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpEvapFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttrTex");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	evapFBO = new FrameBufferObject(width, height, evapo_prog, fboTex, fboOutNames, attachLocations);
+}
+
 void initErosionFBO()
 {
 	// Initialization
 	setUpInitializationFBO();
 
 	// Water Increment
+	setUpWaterIncFBO();
+
+	// Flow Sim
+	setUpFlowSimFluxFBO();
+	//setUpFlowSimWaterHeightFBO();
+	//setUpFlowSimVelocityFBO();
 
 	// Erosion Deposition
+	//setUpErosionDepoFBO();
 
 	// Sediment Transport
+	//setUpSedTransFBO();
 
 	// Evaporation
-
+	//setUpEvapFBO();
 }
 
 void deleteErosionFBO()
 {
 	delete initTerrainFBO;
+	delete erosDepoFBO;
+	delete evapFBO;
+	delete flowSimFluxFBO;
+	delete flowSimVelFBO;
+	delete flowWatHeightFBO;
+	delete sedTransFBO;
+	delete waterIncFBO;
 }
 
 void initErosionShaders()
 {
 	fbo_test_prog = glslUtility::createProgram(vertFboTestPath, NULL, NULL, NULL, fragFboTestPath, attributeWithTexLocation, 2);
 	terrain_init_prog = glslUtility::createProgram(vertTerrainTexInitPath, NULL, NULL, NULL, fragTerrainTexInitPath, attributeLocation, 1);
-	erosion_depo_prog;
-	evapo_prog;
-	flow_flux_prog;
-	flow_vel_prog;
-	flow_water_height_prog;
-	sediment_trans_prog;
-	water_inc_prog;
+	erosion_depo_prog = glslUtility::createProgram(vertErosDepoPath, NULL, NULL, NULL, fragErosDepoPath, attributeWithTexLocation, 2);
+	evapo_prog = glslUtility::createProgram(vertEvapPath, NULL, NULL, NULL, fragEvapPath, attributeWithTexLocation, 2);
+	flow_flux_prog = glslUtility::createProgram(vertFlowSimFluxPath, NULL, NULL, NULL, fragFlowSimFluxPath, attributeWithTexLocation, 2);
+	flow_vel_prog = glslUtility::createProgram(vertFlowSimVelPath, NULL, NULL, NULL, fragFlowSimVelPath, attributeWithTexLocation, 2);
+	flow_water_height_prog = glslUtility::createProgram(vertFlowSimWatHeightPath, NULL, NULL, NULL, fragFlowSimFluxPath, attributeWithTexLocation, 2);
+	sediment_trans_prog = glslUtility::createProgram(vertSedTransPath, NULL, NULL, NULL, fragSedTransPath, attributeWithTexLocation, 2);
+	water_inc_prog = glslUtility::createProgram(vertWatIncPath, NULL, NULL, NULL, fragWatIncPath, attributeWithTexLocation, 2);
 }
 
 void initShader() {

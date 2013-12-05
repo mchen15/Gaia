@@ -62,6 +62,13 @@ GLuint velocity_tex;
 
 // FBOs
 FrameBufferObject* initTerrainFBO;
+FrameBufferObject* erosDepoFBO;
+FrameBufferObject* evapFBO;
+FrameBufferObject* flowSimFluxFBO;
+FrameBufferObject* flowSimVelFBO;
+FrameBufferObject* flowWatHeightFBO;
+FrameBufferObject* sedTransFBO;
+FrameBufferObject* waterIncFBO;
 
 int mouse_buttons = 0;
 int mouse_old_x = 0;
@@ -90,6 +97,13 @@ void initErosionTextures();
 void deleteErosionFBO();
 void setUpInitializationFBO();
 void unbindTextures();
+void setUpWaterIncFBO();
+void setUpFlowSimFluxFBO();
+void setUpFlowSimWaterHeightFBO();
+void setUpFlowSimVelocityFBO();
+void setUpErosionDepoFBO();
+void setUpSedTransFBO();
+void setUpEvapFBO();
 
 // quad for outputting normal map
 unsigned int vertex_array;

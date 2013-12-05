@@ -44,20 +44,20 @@ const char* fragTerrainTexInitPath = "../../shaders/Terrain_Initialization.frag"
 const char* vertFboTestPath = "../../shaders/fbo_test.vert";
 const char* fragFboTestPath = "../../shaders/fbo_test.frag";
 
-const char* vertTerrainTexInitPath;
-const char* fragTerrainTexInitPath;
-const char* vertErosDepoPath;
-const char* fragErosDepoPath;
-const char* vertEvapPath;
-const char* fragEvapPath;
-const char* vertFlowSimFluxPath;
-const char* fragFlowSimFluxPath;
-const char* vertFlowSimVelPath;
-const char* fragFlowSimVelPath;
-const char* vertFlowSimWatHeightPath;
-const char* fragFlowSimWatHeightPath;
-const char* vertWatIncPath;
-const char* fragWatIncPath;
+const char* vertErosDepoPath = "../../shaders/Erosion_Deposition.vert";
+const char* fragErosDepoPath = "../../shaders/Erosion_Deposition.frag";
+const char* vertEvapPath = "../../shaders/Evaporation.vert";
+const char* fragEvapPath = "../../shaders/Evaporation.frag";
+const char* vertFlowSimFluxPath = "../../shaders/Flow_Sim_Flux_Update.vert";
+const char* fragFlowSimFluxPath = "../../shaders/Flow_Sim_Flux_Update.frag";
+const char* vertFlowSimVelPath = "../../shaders/Flow_Sim_Velocity_Field_Update.vert";
+const char* fragFlowSimVelPath = "../../shaders/Flow_Sim_Velocity_Field_Update.frag";
+const char* vertFlowSimWatHeightPath = "../../shaders/Flow_Sim_Water_Height_Update.vert";
+const char* fragFlowSimWatHeightPath = "../../shaders/Flow_Sim_Water_Height_Update.frag";
+const char* vertSedTransPath = "../../shaders/Sediment_Transport.vert";
+const char* fragSedTransPath = "../../shaders/Sediment_Transport.frag";
+const char* vertWatIncPath = "../../shaders/Water_Increment.vert";
+const char* fragWatIncPath = "../../shaders/Water_Increment.frag";
 
 // uniform ids
 char* U_FARID = "u_Far";

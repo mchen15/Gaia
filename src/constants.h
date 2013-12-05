@@ -57,6 +57,8 @@ const extern char* vertFlowSimVelPath;
 const extern char* fragFlowSimVelPath;
 const extern char* vertFlowSimWatHeightPath;
 const extern char* fragFlowSimWatHeightPath;
+const extern char* vertSedTransPath;
+const extern char* fragSedTransPath;
 const extern char* vertWatIncPath;
 const extern char* fragWatIncPath;
 
