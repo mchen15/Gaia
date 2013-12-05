@@ -4,7 +4,7 @@ uniform sampler2D u_terrainAttrTex;
 uniform sampler2D u_velTex;
 uniform float u_deltaT; 
 
-in vec2 texcoord;
+in vec2 v_Texcoord;
 out vec4 out_terrainAttr;
 
 vec2 texSize = textureSize(u_terrainAttrTex,0).xy;
@@ -21,12 +21,12 @@ vec2 convertWorldCoordToTex(vec2 world)
 
 void main (void)
 {
-	vec2 worldPos = convertTexCoordToWorld(texcoord.st);
-	vec2 prevFrameWorldPos = worldPos - u_deltaT*( texture(u_velTex,texcoord).xy);
+	vec2 worldPos = convertTexCoordToWorld(v_Texcoord.st);
+	vec2 prevFrameWorldPos = worldPos - u_deltaT*( texture(u_velTex,v_Texcoord).xy);
 
 	vec2 prevFrameTexCoord = convertWorldCoordToTex(prevFrameWorldPos);
 
-	out_terrainAttr = texture(u_terrainAttrTex,texcoord).rgba;
+	out_terrainAttr = texture(u_terrainAttrTex,v_Texcoord).rgba;
 	out_terrainAttr.b = texture(u_terrainAttrTex, prevFrameTexCoord).b;
 }
 

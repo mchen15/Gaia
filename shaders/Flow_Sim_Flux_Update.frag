@@ -7,7 +7,7 @@ uniform float u_virtualPipeArea = 1.0;
 uniform float u_virtualPipeLength = 1.0;
 uniform float u_gridSpacing = 1.0;
 
-in vec2 texcoord;
+in vec2 v_Texcoord;
 out vec4 out_flux;
 
 vec2 texSize = textureSize(u_terrainAttrTex,0);
@@ -17,10 +17,10 @@ const float EPSILON = 0.000001;
 float getFluxDelta(int offsetX, int offsetY)
 {
 	
-	vec2 neighbourTexcoord = vec2(texcoord.s+ offsetX/texSize.s, texcoord.t + offsetY/texSize.t);
+	vec2 neighbourTexcoord = vec2(v_Texcoord.s + offsetX / texSize.s, v_Texcoord.t + offsetY / texSize.t);
 
-	float terrainHeight = texture(u_terrainAttrTex,texcoord).r;
-	float waterHeight = texture(u_terrainAttrTex,texcoord).g;
+	float terrainHeight = texture(u_terrainAttrTex, v_Texcoord).r;
+	float waterHeight = texture(u_terrainAttrTex, v_Texcoord).g;
 	
 	float neighbourTerrainHeight = texture(u_terrainAttrTex, neighbourTexcoord).r;
 	float neighbourWaterHeight = texture(u_terrainAttrTex, neighbourTexcoord).g;
@@ -32,7 +32,7 @@ float getFluxDelta(int offsetX, int offsetY)
 
 void main (void)
 {
-	out_flux = texture(u_fluxTex,texcoord).xyzw;
+	out_flux = texture(u_fluxTex,v_Texcoord).xyzw;
 	//Flux left
 	out_flux.x = max(0, out_flux.x+getFluxDelta(-1,0));
 	//Flux right
@@ -43,20 +43,20 @@ void main (void)
 	out_flux.w = max(0,out_flux.w+getFluxDelta(0,-1));
 
 	//boundary conditions
-	//if( texcoord.s <= 0 + EPSILON)
+	//if( v_Texcoord.s <= 0 + EPSILON)
 	//	out_flux.x = 0.0;
 
-	//else if (texcoord.s >= 1 - EPSILON)
+	//else if (v_Texcoord.s >= 1 - EPSILON)
 	//	out_flux.y = 0.0;
 
-	//if (texcoord.t <= 0+EPSILON)
+	//if (v_Texcoord.t <= 0+EPSILON)
 	//	out_flux.z = 0.0;
 
-	//else if (texcoord.t >= 1-EPSILON)
+	//else if (v_Texcoord.t >= 1-EPSILON)
 	//	out_flux.w = 0.0;
 
 	float scaleFactor = min( 1.0, 
-		(texture(u_terrainAttrTex,texcoord).g*u_gridSpacing*u_gridSpacing) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );
+		(texture(u_terrainAttrTex,v_Texcoord).g*u_gridSpacing*u_gridSpacing) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );
 	
 	out_flux = scaleFactor*out_flux;
 }

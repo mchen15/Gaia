@@ -265,7 +265,7 @@ void display(void)
 		terrainInit();
 
 		// Water Increment
-		//waterInc();
+		waterInc();
 
 		// Flow Sim
 		//flowSimFlux();

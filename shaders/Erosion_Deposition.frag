@@ -8,16 +8,16 @@ uniform float u_Kc = 0.001;
 uniform float u_Ks = 0.001;
 
 
-in vec2 texcoord;
+in vec2 v_Texcoord;
 out vec4 out_terrainAttr;
 
 
 void main (void)
 {
-	float alpha = acos( dot( normalize(u_up), normalize( texture(u_normalMap, texcoord).xyz)));
-	float C = u_Kc * sin(alpha)* length( texture(u_velTex,texcoord).xy);
+	float alpha = acos( dot( normalize(u_up), normalize( texture(u_normalMap, v_Texcoord).xyz)));
+	float C = u_Kc * sin(alpha)* length( texture(u_velTex,v_Texcoord).xy);
 
-	out_terrainAttr = texture(u_terrainAttrTex,texcoord).rgba;
+	out_terrainAttr = texture(u_terrainAttrTex,v_Texcoord).rgba;
 
 	if ( C > out_terrainAttr.b)
 	{
