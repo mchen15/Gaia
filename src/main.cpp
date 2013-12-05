@@ -713,7 +713,7 @@ void setUpErosionDepoFBO()
 
 	// setting up the output variable names used in the shader
 	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_terrainAttrTex");
+	fboOutNames.push_back("out_terrainAttr");
 
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
@@ -729,7 +729,7 @@ void setUpSedTransFBO()
 
 	// setting up the output variable names used in the shader
 	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_terrainAttrTex");
+	fboOutNames.push_back("out_terrainAttr");
 
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
@@ -745,7 +745,7 @@ void setUpEvapFBO()
 
 	// setting up the output variable names used in the shader
 	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_terrainAttrTex");
+	fboOutNames.push_back("out_terrainAttr");
 
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
@@ -764,16 +764,16 @@ void initErosionFBO()
 	// Flow Sim
 	setUpFlowSimFluxFBO();
 	setUpFlowSimWaterHeightFBO();
-	//setUpFlowSimVelocityFBO();
+	setUpFlowSimVelocityFBO();
 
 	// Erosion Deposition
-	//setUpErosionDepoFBO();
+	setUpErosionDepoFBO();
 
 	// Sediment Transport
-	//setUpSedTransFBO();
+	setUpSedTransFBO();
 
 	// Evaporation
-	//setUpEvapFBO();
+	setUpEvapFBO();
 }
 
 void deleteErosionFBO()
