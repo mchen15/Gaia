@@ -44,9 +44,23 @@ const extern char* tessQuadCtrlShaderPath;
 const extern char* tessQuadEvalShadePath; 
 const extern char* fragQuadShaderPath;
 
+// erosion shader paths
 const extern char* vertTerrainTexInitPath;
 const extern char* fragTerrainTexInitPath;
+const extern char* vertErosDepoPath;
+const extern char* fragErosDepoPath;
+const extern char* vertEvapPath;
+const extern char* fragEvapPath;
+const extern char* vertFlowSimFluxPath;
+const extern char* fragFlowSimFluxPath;
+const extern char* vertFlowSimVelPath;
+const extern char* fragFlowSimVelPath;
+const extern char* vertFlowSimWatHeightPath;
+const extern char* fragFlowSimWatHeightPath;
+const extern char* vertWatIncPath;
+const extern char* fragWatIncPath;
 
+// debugging shader paths
 const extern char* vertFboTestPath;
 const extern char* fragFboTestPath;
 

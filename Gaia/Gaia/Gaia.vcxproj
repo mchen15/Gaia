@@ -88,8 +88,12 @@
     <None Include="..\..\shaders\Evaporation.vert" />
     <None Include="..\..\shaders\fbo_test.frag" />
     <None Include="..\..\shaders\fbo_test.vert" />
-    <None Include="..\..\shaders\Flow_Sim.frag" />
-    <None Include="..\..\shaders\Flow_Sim.vert" />
+    <None Include="..\..\shaders\Flow_Sim_Flux_Update.frag" />
+    <None Include="..\..\shaders\Flow_Sim_Flux_Update.vert" />
+    <None Include="..\..\shaders\Flow_Sim_Velocity_Field_Update.frag" />
+    <None Include="..\..\shaders\Flow_Sim_Velocity_Field_Update.vert" />
+    <None Include="..\..\shaders\Flow_Sim_Water_Height_Update.frag" />
+    <None Include="..\..\shaders\Flow_Sim_Water_Height_Update.vert" />
     <None Include="..\..\shaders\nmap.frag" />
     <None Include="..\..\shaders\nmap.vert" />
     <None Include="..\..\shaders\pass.frag" />

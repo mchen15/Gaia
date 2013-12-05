@@ -42,6 +42,14 @@ Plane* plane;
 GLuint curr_prog;
 GLuint fbo_test_prog;
 GLuint terrain_init_prog;
+GLuint erosion_depo_prog;
+GLuint evapo_prog;
+GLuint flow_flux_prog;
+GLuint flow_vel_prog;
+GLuint flow_water_height_prog;
+GLuint sediment_trans_prog;
+GLuint water_inc_prog;
+
 
 // textures
 GLuint heightmap_tex;
