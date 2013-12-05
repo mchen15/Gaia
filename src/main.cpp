@@ -82,13 +82,6 @@ void display(void)
 		drawQuad();
 
 
-
-
-
-
-
-
-
 		// Testing fbo: bind the default framebuffer to render to screen
 		//glEnable(GL_BLEND);
 		//glBlendFunc(GL_ONE, GL_ONE);
@@ -112,7 +105,7 @@ void display(void)
 
 		glActiveTexture(GL_TEXTURE5);
 		glBindTexture(GL_TEXTURE_2D, velocity_tex);
-		uniformLocation = glGetUniformLocation(fbo_test_prog, U_VELOCITYTEXID);
+		uniformLocation = glGetUniformLocation(fbo_test_prog, U_VELTEXID);
 		glUniform1i(uniformLocation, 5);
 
 		drawQuad();
