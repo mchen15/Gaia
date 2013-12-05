@@ -46,13 +46,12 @@ void unbindTextures()
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void display(void)
 {
 	updateFPS();
-
 
 	if (genNormalMap)
 	{
@@ -73,6 +72,7 @@ void display(void)
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
+		// ------------------------------------------------------------------
 		// initialization of flex_tex, velocity_tex, and terrainattr_tex
 		unbindTextures();
 		bindFBO(initTerrainFBO->getFBOHandle());
@@ -81,10 +81,18 @@ void display(void)
 		glUseProgram(terrain_init_prog);
 		drawQuad();
 
+
+
+
+
+
+
+
+
 		// Testing fbo: bind the default framebuffer to render to screen
 		//glEnable(GL_BLEND);
 		//glBlendFunc(GL_ONE, GL_ONE);
-		//unbindTextures();
+		unbindTextures();
 		glUseProgram(fbo_test_prog);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -483,6 +491,13 @@ void initErosionShaders()
 {
 	fbo_test_prog = glslUtility::createProgram(vertFboTestPath, NULL, NULL, NULL, fragFboTestPath, attributeWithTexLocation, 2);
 	terrain_init_prog = glslUtility::createProgram(vertTerrainTexInitPath, NULL, NULL, NULL, fragTerrainTexInitPath, attributeLocation, 1);
+	erosion_depo_prog;
+	evapo_prog;
+	flow_flux_prog;
+	flow_vel_prog;
+	flow_water_height_prog;
+	sediment_trans_prog;
+	water_inc_prog;
 }
 
 void initShader() {

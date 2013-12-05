@@ -84,12 +84,6 @@
     <None Include="..\..\shaders\Evaporation.vert">
       <Filter>Shaders\Erosion</Filter>
     </None>
-    <None Include="..\..\shaders\Flow_Sim.frag">
-      <Filter>Shaders\Erosion</Filter>
-    </None>
-    <None Include="..\..\shaders\Flow_Sim.vert">
-      <Filter>Shaders\Erosion</Filter>
-    </None>
     <None Include="..\..\shaders\Sediment_Transport.frag">
       <Filter>Shaders\Erosion</Filter>
     </None>
@@ -113,6 +107,24 @@
     </None>
     <None Include="..\..\shaders\fbo_test.vert">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim_Flux_Update.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim_Flux_Update.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim_Velocity_Field_Update.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim_Velocity_Field_Update.vert">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim_Water_Height_Update.frag">
+      <Filter>Shaders\Erosion</Filter>
+    </None>
+    <None Include="..\..\shaders\Flow_Sim_Water_Height_Update.vert">
+      <Filter>Shaders\Erosion</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

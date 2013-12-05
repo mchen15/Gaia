@@ -6,7 +6,6 @@ bool enableErosion = true;
 bool enableTexcoords = false;
 
 
-
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(128, 128);
 float texScale = 1;
@@ -45,7 +44,20 @@ const char* fragTerrainTexInitPath = "../../shaders/Terrain_Initialization.frag"
 const char* vertFboTestPath = "../../shaders/fbo_test.vert";
 const char* fragFboTestPath = "../../shaders/fbo_test.frag";
 
-//const char* heightmapPath = "D:/Dropbox/UPenn/CIS-565 (GPU Programming)/Assignments/Project7-FinalProject/Gaia/textures/heightmap.png";
+const char* vertTerrainTexInitPath;
+const char* fragTerrainTexInitPath;
+const char* vertErosDepoPath;
+const char* fragErosDepoPath;
+const char* vertEvapPath;
+const char* fragEvapPath;
+const char* vertFlowSimFluxPath;
+const char* fragFlowSimFluxPath;
+const char* vertFlowSimVelPath;
+const char* fragFlowSimVelPath;
+const char* vertFlowSimWatHeightPath;
+const char* fragFlowSimWatHeightPath;
+const char* vertWatIncPath;
+const char* fragWatIncPath;
 
 // uniform ids
 char* U_FARID = "u_Far";
