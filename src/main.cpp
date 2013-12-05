@@ -49,6 +49,183 @@ void unbindTextures()
 	//glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void terrainInit()
+{
+	unbindTextures();
+	bindFBO(initTerrainFBO->getFBOHandle());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glUseProgram(terrain_init_prog);
+	drawQuad();
+}
+
+void renderToScreen()
+{
+	unbindTextures();
+	glUseProgram(fbo_test_prog);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_TEXTURE_2D);
+
+	// setting up uniforms (e.g. input textures)
+	GLint uniformLocation = -1;
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, flux_tex);
+	uniformLocation = glGetUniformLocation(fbo_test_prog, U_FLUXTEXID);
+	glUniform1i(uniformLocation, 3);
+
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(fbo_test_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 4);
+
+	glActiveTexture(GL_TEXTURE5);
+	glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	uniformLocation = glGetUniformLocation(fbo_test_prog, U_VELTEXID);
+	glUniform1i(uniformLocation, 5);
+
+	drawQuad();
+}
+
+void waterInc()
+{
+	unbindTextures();
+	glUseProgram(water_inc_prog);
+	bindFBO(waterIncFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(water_inc_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	drawQuad();
+}
+
+void flowSimFlux()
+{
+	unbindTextures();
+	glUseProgram(flow_flux_prog);
+	bindFBO(flowSimFluxFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, flux_tex);
+	uniformLocation = glGetUniformLocation(flow_flux_prog, U_FLUXTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(flow_flux_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 1);
+
+	drawQuad();
+}
+
+void flowSimVel()
+{
+	unbindTextures();
+	glUseProgram(flow_vel_prog);
+	bindFBO(flowSimVelFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, flux_tex);
+	uniformLocation = glGetUniformLocation(flow_vel_prog, U_FLUXTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(flow_vel_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 1);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	uniformLocation = glGetUniformLocation(flow_vel_prog, U_VELTEXID);
+	glUniform1i(uniformLocation, 2);
+
+	drawQuad();
+}
+
+void flowSimWaterHeight()
+{
+	unbindTextures();
+	glUseProgram(flow_water_height_prog);
+	bindFBO(flowWatHeightFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(flow_water_height_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, flux_tex);
+	uniformLocation = glGetUniformLocation(flow_water_height_prog, U_FLUXTEXID);
+	glUniform1i(uniformLocation, 1);
+
+	drawQuad();
+}
+
+void erosionDeposition()
+{
+	unbindTextures();
+	glUseProgram(erosion_depo_prog);
+	bindFBO(erosDepoFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, flux_tex);
+	uniformLocation = glGetUniformLocation(erosion_depo_prog, U_FLUXTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(erosion_depo_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 1);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	uniformLocation = glGetUniformLocation(erosion_depo_prog, U_VELTEXID);
+	glUniform1i(uniformLocation, 2);
+
+	drawQuad();
+}
+
+void sedimentTransport()
+{
+	unbindTextures();
+	glUseProgram(sediment_trans_prog);
+	bindFBO(sedTransFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(sediment_trans_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, velocity_tex);
+	uniformLocation = glGetUniformLocation(sediment_trans_prog, U_VELTEXID);
+	glUniform1i(uniformLocation, 1);
+
+	drawQuad();
+}
+
+void evaporation()
+{
+	unbindTextures();
+	glUseProgram(evapo_prog);
+	bindFBO(evapFBO->getFBOHandle());
+	GLint uniformLocation = -1;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+	uniformLocation = glGetUniformLocation(evapo_prog, U_TERRAINATTRTEXID);
+	glUniform1i(uniformLocation, 0);
+
+	drawQuad();
+}
+
 void display(void)
 {
 	updateFPS();
@@ -72,46 +249,28 @@ void display(void)
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
-		// ------------------------------------------------------------------
 		// initialization of flex_tex, velocity_tex, and terrainattr_tex
-		unbindTextures();
-		bindFBO(initTerrainFBO->getFBOHandle());
-		//glBindFramebuffer(GL_FRAMEBUFFER, initTerrainFBO->getFBOHandle());
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glUseProgram(terrain_init_prog);
-		drawQuad();
+		terrainInit();
 
+		// Water Increment
+		waterInc();
 
-		// Testing fbo: bind the default framebuffer to render to screen
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_ONE, GL_ONE);
-		unbindTextures();
-		glUseProgram(fbo_test_prog);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_TEXTURE_2D);
+		// Flow Sim
+		flowSimFlux();
+		flowSimWaterHeight();
+		flowSimVel();
 
-		// setting up uniforms (e.g. input textures)
-		GLint uniformLocation = -1;
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, flux_tex);
-		uniformLocation = glGetUniformLocation(fbo_test_prog, U_FLUXTEXID);
-		glUniform1i(uniformLocation, 3);
+		// Erosion Deposition
+		erosionDeposition();
+
+		// Sediment Transport
+		sedimentTransport();
+
+		// Evaporation
+		evaporation();
 		
-		glActiveTexture(GL_TEXTURE4);
-		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-		uniformLocation = glGetUniformLocation(fbo_test_prog, U_TERRAINATTRTEXID);
-		glUniform1i(uniformLocation, 4);
-
-		glActiveTexture(GL_TEXTURE5);
-		glBindTexture(GL_TEXTURE_2D, velocity_tex);
-		uniformLocation = glGetUniformLocation(fbo_test_prog, U_VELTEXID);
-		glUniform1i(uniformLocation, 5);
-
-		drawQuad();
-
-//		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
+		// Testing fbo: bind the default framebuffer to render to screen
+		renderToScreen();
 	}
 	else
 	{

@@ -9,7 +9,7 @@ layout (location = 2) out vec4 out_velocity;
 
 void main (void)
 {
-	out_flux = vec4(1,0,0,1);
-	out_terrainAttr = vec4(0,1,0,1);
-	out_velocity = vec4(0,0,1,1);
+	out_flux = vec4(0,0,0,1);
+	out_terrainAttr = vec4(0,0,0,1);
+	out_velocity = vec4(0,0,0,1);
 }

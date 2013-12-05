@@ -33,6 +33,11 @@ void main(void)
 	//fragColor = vec4(terrainColor.rgb, 1.0);
 	
 	fragColor = terrainColor + fluxColor + velocityColor;
+	
+	fragColor = terrainColor;
+	fragColor = fluxColor;
+	fragColor = velocityColor;
+	
 	//fragColor = vec4(fs_Texcoord, 0, 1);
 	//fragColor = vec4(1, 1, 1, 1);
 }
