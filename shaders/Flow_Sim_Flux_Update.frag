@@ -32,7 +32,7 @@ float getFluxDelta(int offsetX, int offsetY)
 
 void main (void)
 {
-	vec4 out_flux = texture(u_fluxTex,texcoord).xyzw;
+	out_flux = texture(u_fluxTex,texcoord).xyzw;
 	//Flux left
 	out_flux.x = max(0, out_flux.x+getFluxDelta(-1,0));
 	//Flux right
