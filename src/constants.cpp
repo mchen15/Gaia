@@ -16,7 +16,12 @@ float pixelsPerEdge = 1;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 
-
+float deltaT = 0.05;
+float virtualPipeLength = 1.0;
+float virtualPipeArea = virtualPipeLength*virtualPipeLength;
+float Kc = 0.001;
+float Ks = 0.001;
+float Ke = 0.001;
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
@@ -83,6 +88,9 @@ char* U_SCREENSIZEID = "u_screen_size";
 char* U_TERRAINATTRTEXID = "u_terrainAttrTex";
 char* U_DELTATID = "u_deltaT";
 char* U_FLUXTEXID = "u_fluxTex";
-char* U_VELOCITYTEXID = "u_velTex";
+char* U_VELTEXID = "u_velTex";
 char* U_VIRTUALPIPEAREAID = "u_virtualPipeArea";
 char* U_VIRTUALPIPELENGTHID = "u_virtualPipeLength";
+char* U_KCID = "u_Kc";
+char* U_KSID = "u_Ks";
+char* U_KEID = "u_Ke";
