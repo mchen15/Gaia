@@ -7,11 +7,11 @@ uniform float u_deltaT;
 in vec2 texcoord;
 out vec4 out_terrainAttr;
 
-vec2 texSize = textureSize(u_terrainAttrTex).xy;
+vec2 texSize = textureSize(u_terrainAttrTex,0).xy;
 
 vec2 convertTexCoordToWorld(vec2 tex)
 {
-	return vec2(tex.u*texSize.x ,tex.v*texSize.y);
+	return vec2(tex.x*texSize.x ,tex.y*texSize.y);
 }
 
 vec2 convertWorldCoordToTex(vec2 world)
