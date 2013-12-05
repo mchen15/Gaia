@@ -265,21 +265,21 @@ void display(void)
 		terrainInit();
 
 		// Water Increment
-		waterInc();
+		//waterInc();
 
 		// Flow Sim
-		flowSimFlux();
-		flowSimWaterHeight();
-		flowSimVel();
+		//flowSimFlux();
+		//flowSimWaterHeight();
+		//flowSimVel();
 
 		// Erosion Deposition
-		erosionDeposition();
+		//erosionDeposition();
 
 		// Sediment Transport
-		sedimentTransport();
+		//sedimentTransport();
 
 		// Evaporation
-		evaporation();
+		//evaporation();
 		
 		// Testing fbo: bind the default framebuffer to render to screen
 		renderToScreen();
