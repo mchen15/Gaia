@@ -14,7 +14,7 @@ out vec4 out_terrainAttr;
 
 void main (void)
 {
-	alpha = acos( dot( normalize(u_up), normalize( texture(u_normalMap, texcoord).xyz)));
+	float alpha = acos( dot( normalize(u_up), normalize( texture(u_normalMap, texcoord).xyz)));
 	float C = u_Kc * sin(alpha)* length( texture(u_velTex,texcoord).xy);
 
 	out_terrainAttr = texture(u_terrainAttrTex,texcoord).rgba;
