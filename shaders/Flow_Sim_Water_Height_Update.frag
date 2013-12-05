@@ -46,5 +46,5 @@ void main (void)
 		                           - sampleFluxR(0,0) -sampleFluxT(0,0) - sampleFluxL(0,0) - sampleFluxB(0,0) );
 	out_terrainAttrTex = texture(u_terrainAttrTex,texcoord);
 	out_terrainAttrTex.a = out_terrainAttrTex.g; // save d1
-	out_terainAttrTex.g += deltaVolume/(u_gridSpacingX*u_gridSpacingY);
+	out_terrainAttrTex.g += deltaVolume / (u_gridSpacingX*u_gridSpacingY);
 }

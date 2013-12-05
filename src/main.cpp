@@ -763,7 +763,7 @@ void initErosionFBO()
 
 	// Flow Sim
 	setUpFlowSimFluxFBO();
-	//setUpFlowSimWaterHeightFBO();
+	setUpFlowSimWaterHeightFBO();
 	//setUpFlowSimVelocityFBO();
 
 	// Erosion Deposition
@@ -796,7 +796,7 @@ void initErosionShaders()
 	evapo_prog = glslUtility::createProgram(vertEvapPath, NULL, NULL, NULL, fragEvapPath, attributeWithTexLocation, 2);
 	flow_flux_prog = glslUtility::createProgram(vertFlowSimFluxPath, NULL, NULL, NULL, fragFlowSimFluxPath, attributeWithTexLocation, 2);
 	flow_vel_prog = glslUtility::createProgram(vertFlowSimVelPath, NULL, NULL, NULL, fragFlowSimVelPath, attributeWithTexLocation, 2);
-	flow_water_height_prog = glslUtility::createProgram(vertFlowSimWatHeightPath, NULL, NULL, NULL, fragFlowSimFluxPath, attributeWithTexLocation, 2);
+	flow_water_height_prog = glslUtility::createProgram(vertFlowSimWatHeightPath, NULL, NULL, NULL, fragFlowSimWatHeightPath, attributeWithTexLocation, 2);
 	sediment_trans_prog = glslUtility::createProgram(vertSedTransPath, NULL, NULL, NULL, fragSedTransPath, attributeWithTexLocation, 2);
 	water_inc_prog = glslUtility::createProgram(vertWatIncPath, NULL, NULL, NULL, fragWatIncPath, attributeWithTexLocation, 2);
 }
