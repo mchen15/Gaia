@@ -284,6 +284,13 @@ void setErosionDepoProgUniforms()
 	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_KSID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation,Ks);	
+
+	uniformLocation = glGetUniformLocation(erosion_depo_prog,U_UP);
+	if (uniformLocation != -1)
+	{
+		glUniform3fv(uniformLocation, 1, &cam->getUp()[0]);
+	}
+
 }
 
 void setSedimentTransProgUniforms()

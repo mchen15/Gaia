@@ -108,4 +108,5 @@ extern char* U_VIRTUALPIPELENGTHID;
 extern char* U_KCID;
 extern char* U_KSID;
 extern char* U_KEID;
+extern char* U_UP;
 #endif
