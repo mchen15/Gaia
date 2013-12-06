@@ -108,7 +108,7 @@ void setUpFlowSimVelocityFBO();
 void setUpErosionDepoFBO();
 void setUpSedTransFBO();
 void setUpEvapFBO();
-void setCopyTexProgUniforms();
+void setCopyTexProgUniforms(GLuint shader_prog);
 void setTerrainInitProgUniforms();
 void setWaterIncProgUniforms();
 void setFlowFluxProgUniforms();
