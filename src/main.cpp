@@ -795,6 +795,7 @@ void initErosionTextures()
 	glGenTextures(1, &flux_tex);
 	glGenTextures(1, &terrainattr_tex);
 	glGenTextures(1, &velocity_tex);
+	glGenTextures(1, &temp_tex);
 
 	glBindTexture(GL_TEXTURE_2D, flux_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -816,6 +817,30 @@ void initErosionTextures()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+
+	glBindTexture(GL_TEXTURE_2D, temp_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+}
+
+void setUpCopyFBO()
+{
+	// setting up texture handles: flux, terrainAttr, velocity
+	vector<GLuint> fboTex;
+	fboTex.push_back(temp_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_destTex");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	// getting the outputs
+	copyFBO = new FrameBufferObject(width, height, copy_tex_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpInitializationFBO()
@@ -955,6 +980,10 @@ void setUpEvapFBO()
 
 void initErosionFBO()
 {
+	//Copy FBO to be used for copying
+	//textures from source to destination
+	setUpCopyFBO();
+
 	// Initialization
 	setUpInitializationFBO();
 
@@ -978,6 +1007,7 @@ void initErosionFBO()
 
 void deleteErosionFBO()
 {
+	delete copyFBO;
 	delete initTerrainFBO;
 	delete erosDepoFBO;
 	delete evapFBO;

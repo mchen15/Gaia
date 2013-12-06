@@ -59,9 +59,11 @@ GLuint diffusemap_tex;
 GLuint flux_tex;
 GLuint terrainattr_tex;
 GLuint velocity_tex;
+GLuint temp_tex;
 
 
 // FBOs
+FrameBufferObject* copyFBO;
 FrameBufferObject* initTerrainFBO;
 FrameBufferObject* erosDepoFBO;
 FrameBufferObject* evapFBO;
