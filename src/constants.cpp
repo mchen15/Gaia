@@ -2,7 +2,7 @@
 
 // Program flow switches
 bool genNormalMap = false;
-bool enableErosion = true;
+bool enableErosion = false;
 bool enableTexcoords = false;
 
 

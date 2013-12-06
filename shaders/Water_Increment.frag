@@ -16,6 +16,7 @@ void main (void)
 	float rainRate = 1.0;
 	out_terrainAttr = texture(u_terrainAttrTex, v_Texcoord.st).rgba;
 	//out_terrainAttr.g += rainRate*deltaT;
+	out_terrainAttr.g += 0.0001;
 	//out_terrainAttr = vec4(v_Texcoord.x, v_Texcoord.y, 0, 1);
 	//out_terrainAttr = vec4(1, 0, 0, 1);
 }

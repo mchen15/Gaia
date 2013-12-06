@@ -39,7 +39,7 @@ Camera* cam;
 Plane* plane;
 
 // shader programs
-GLuint curr_prog;
+GLuint terrain_tess_prog;
 GLuint fbo_test_prog;
 GLuint terrain_init_prog;
 GLuint erosion_depo_prog;
@@ -117,6 +117,7 @@ void setFlowWaterHeightProgUniforms();
 void setErosionDepoProgUniforms();
 void setSedimentTransProgUniforms();
 void setEvapoProgUniforms();
+void renderTerrain();
 
 // quad for outputting normal map
 unsigned int vertex_array;

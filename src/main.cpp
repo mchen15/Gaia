@@ -55,23 +55,12 @@ void terrainInit()
 	bindFBO(initTerrainFBO->getFBOHandle());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glUseProgram(terrain_init_prog);
-	
-	// setting up uniforms (e.g. input textures)
-/*	GLint uniformLocation = -1;
-
-	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTSCALEID);
-	glUniform1f(uniformLocation, 1.0f);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTMAPID);
-	glUniform1i(uniformLocation, 0);*/	
 	setTerrainInitProgUniforms();
 
 	drawQuad();
 }
 
-void renderToScreen()
+void render2DTexture()
 {
 	unbindTextures();
 	glUseProgram(fbo_test_prog);
@@ -107,12 +96,6 @@ void waterInc()
 	unbindTextures();
 	glUseProgram(water_inc_prog);
 	bindFBO(waterIncFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(water_inc_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 0);
-
 	setWaterIncProgUniforms();
 	drawQuad();
 	
@@ -136,21 +119,10 @@ void flowSimFlux()
 	unbindTextures();
 	glUseProgram(flow_flux_prog);
 	bindFBO(flowSimFluxFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, flux_tex);
-	//uniformLocation = glGetUniformLocation(flow_flux_prog, U_FLUXTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(flow_flux_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 1);
 	setFlowFluxProgUniforms();
 	drawQuad();
 
-		//COPY
+	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
 	vector<GLuint> fboTex;
@@ -170,23 +142,6 @@ void flowSimVel()
 	unbindTextures();
 	glUseProgram(flow_vel_prog);
 	bindFBO(flowSimVelFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, flux_tex);
-	//uniformLocation = glGetUniformLocation(flow_vel_prog, U_FLUXTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(flow_vel_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 1);
-
-	//glActiveTexture(GL_TEXTURE2);
-	//glBindTexture(GL_TEXTURE_2D, velocity_tex);
-	//uniformLocation = glGetUniformLocation(flow_vel_prog, U_VELTEXID);
-	//glUniform1i(uniformLocation, 2);
-
 	setFlowVelProgUniforms();
 	drawQuad();
 
@@ -210,17 +165,6 @@ void flowSimWaterHeight()
 	unbindTextures();
 	glUseProgram(flow_water_height_prog);
 	bindFBO(flowWatHeightFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(flow_water_height_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, flux_tex);
-	//uniformLocation = glGetUniformLocation(flow_water_height_prog, U_FLUXTEXID);
-	//glUniform1i(uniformLocation, 1);
 	setFlowWaterHeightProgUniforms();
 	drawQuad();
 
@@ -244,23 +188,6 @@ void erosionDeposition()
 	unbindTextures();
 	glUseProgram(erosion_depo_prog);
 	bindFBO(erosDepoFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-	//
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, flux_tex);
-	//uniformLocation = glGetUniformLocation(erosion_depo_prog, U_FLUXTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(erosion_depo_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 1);
-
-	//glActiveTexture(GL_TEXTURE2);
-	//glBindTexture(GL_TEXTURE_2D, velocity_tex);
-	//uniformLocation = glGetUniformLocation(erosion_depo_prog, U_VELTEXID);
-	//glUniform1i(uniformLocation, 2);
-
 	setErosionDepoProgUniforms();
 	drawQuad();
 
@@ -284,18 +211,6 @@ void sedimentTransport()
 	unbindTextures();
 	glUseProgram(sediment_trans_prog);
 	bindFBO(sedTransFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(sediment_trans_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, velocity_tex);
-	//uniformLocation = glGetUniformLocation(sediment_trans_prog, U_VELTEXID);
-	//glUniform1i(uniformLocation, 1);
-
 	setSedimentTransProgUniforms();
 	drawQuad();
 
@@ -319,12 +234,6 @@ void evaporation()
 	unbindTextures();
 	glUseProgram(evapo_prog);
 	bindFBO(evapFBO->getFBOHandle());
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(evapo_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 0);
 	setEvapoProgUniforms();
 
 	drawQuad();
@@ -350,7 +259,7 @@ void display(void)
 
 	if (genNormalMap)
 	{
-		glUseProgram(curr_prog);
+		glUseProgram(terrain_tess_prog);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		setCurrProgUniforms();
@@ -367,11 +276,8 @@ void display(void)
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
-		// initialization of flex_tex, velocity_tex, and terrainattr_tex
-		terrainInit();
-
 		// Water Increment
-		waterInc();
+		//waterInc();
 		
 		// Flow Sim
 		//flowSimFlux();
@@ -388,11 +294,12 @@ void display(void)
 		//evaporation();
 		
 		// Testing fbo: bind the default framebuffer to render to screen
-		renderToScreen();
+		//render2DTexture();
+
 	}
 	else
 	{
-		glUseProgram(curr_prog);
+		glUseProgram(terrain_tess_prog);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		setCurrProgUniforms();
@@ -589,7 +496,6 @@ void setErosionDepoProgUniforms()
 	{
 		glUniform3fv(uniformLocation, 1, &cam->getUp()[0]);
 	}
-
 }
 
 void setSedimentTransProgUniforms()
@@ -632,6 +538,11 @@ void setEvapoProgUniforms()
 		glUniform1f(uniformLocation,Ke);
 }
 
+void renderTerrain()
+{
+
+}
+
 void setCurrProgUniforms()
 {
 	mat4 model(1.0f);
@@ -640,58 +551,58 @@ void setCurrProgUniforms()
   
 	GLint uniformLocation = -1;
 
-	uniformLocation = glGetUniformLocation(curr_prog, U_FARID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog, U_FARID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, cam->getFarPlane());
 
-	uniformLocation = glGetUniformLocation(curr_prog, U_NEARID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog, U_NEARID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, cam->getNearPlane());
 	
-	uniformLocation = glGetUniformLocation(curr_prog, U_TESSINNERID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog, U_TESSINNERID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, tessLevelInner);
 	
-	uniformLocation = glGetUniformLocation(curr_prog, U_TESSOUTERID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog, U_TESSOUTERID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, tessLevelOuter);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_MODELID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_MODELID);
 	if (uniformLocation != -1)
 		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&model[0][0]);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_VIEWID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_VIEWID);
 	if (uniformLocation != -1)
 		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&view[0][0]);
 	
-	uniformLocation = glGetUniformLocation(curr_prog,U_PERSPID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_PERSPID);
 	if (uniformLocation != -1)
 		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&persp[0][0]);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_TEXSCALEID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_TEXSCALEID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, texScale);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_NUMPATCHESID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_NUMPATCHESID);
 	if (uniformLocation != -1)
 		glUniform2fv(uniformLocation, 1, &SUBDIV[0]);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTSCALEID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_HEIGHTSCALEID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, heightScale);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_GRIDSPACINGID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_GRIDSPACINGID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, gridSpacing);
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_PVMID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_PVMID);
 	if (uniformLocation != -1)
 	{
 		mat4 mvp = persp * view * model;
 		glUniformMatrix4fv(uniformLocation,1,GL_FALSE,&mvp[0][0]);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_MVINVTRANSID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_MVINVTRANSID);
 	if (uniformLocation != -1)
 	{
 		mat4 imv = glm::inverse(view * model);
@@ -703,13 +614,13 @@ void setCurrProgUniforms()
 		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &imv[0][0]);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_LIGHTPOSWORLDID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_LIGHTPOSWORLDID);
 	if (uniformLocation != -1)
 	{
 		glUniform3fv(uniformLocation, 1, &lightPosWorld[0]);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTMAPID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_HEIGHTMAPID);
 	if (uniformLocation != -1)
 	{
 		glActiveTexture(GL_TEXTURE0);
@@ -717,13 +628,13 @@ void setCurrProgUniforms()
 	    glUniform1i(uniformLocation,0);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_PIXELSPEREDGE);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_PIXELSPEREDGE);
 	if (uniformLocation != -1)
 	{
 		glUniform1f(uniformLocation, pixelsPerEdge);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_NORMALMAPID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_NORMALMAPID);
 	if (uniformLocation !=-1)
 	{
 		glActiveTexture(GL_TEXTURE1);
@@ -731,7 +642,7 @@ void setCurrProgUniforms()
 		glUniform1i(uniformLocation, 1);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_DIFFUSEMAPID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_DIFFUSEMAPID);
 	if (uniformLocation !=-1)
 	{
 		glActiveTexture(GL_TEXTURE2);
@@ -739,13 +650,13 @@ void setCurrProgUniforms()
 		glUniform1i(uniformLocation, 2);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_TOGGLENORMALID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_TOGGLENORMALID);
 	if (uniformLocation != -1)
 	{
 		glUniform1i(uniformLocation, toggleNormalVal);
 	}
 
-	uniformLocation = glGetUniformLocation(curr_prog,U_SCREENSIZEID);
+	uniformLocation = glGetUniformLocation(terrain_tess_prog,U_SCREENSIZEID);
 	if (uniformLocation != -1)
 	{
 		vec2 screen_size = vec2((float)width, (float)height);
@@ -1171,6 +1082,7 @@ void initErosionShaders()
 	sediment_trans_prog = glslUtility::createProgram(vertSedTransPath, NULL, NULL, NULL, fragSedTransPath, attributeWithTexLocation, 2);
 	water_inc_prog = glslUtility::createProgram(vertWatIncPath, NULL, NULL, NULL, fragWatIncPath, attributeWithTexLocation, 2);
 	copy_tex_prog = glslUtility::createProgram(vertCopyPath, NULL, NULL, NULL, fragCopyPath, attributeWithTexLocation, 2);
+
 }
 
 void initShader() {
@@ -1185,24 +1097,24 @@ void initShader() {
 
 	if (genNormalMap)
 	{
-		curr_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
+		terrain_tess_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
 	}
 	else
 	{
 		if (enableTexcoords)
 		{
 			plane->setIndexMode(INDEX_MODE::TRIANGLES);
-			curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
+			terrain_tess_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
 		}
 		else
 		{
 			//plane->setIndexMode(INDEX_MODE::CORNER);
-			//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
+			//terrain_tess_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
 
 			plane->setIndexMode(INDEX_MODE::QUADS);
-			curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
+			terrain_tess_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
 		}
-		//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
+		//terrain_tess_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 	}
 }
 
@@ -1300,6 +1212,8 @@ int main(int argc, char* argv[])
 	initShader();
 	initErosionShaders();
 	initErosionFBO();
+	// initialization of flex_tex, velocity_tex, and terrainattr_tex
+	terrainInit();
 	glutDisplayFunc(display);
     glutReshapeFunc(reshape);	
     glutKeyboardFunc(keyboard);
