@@ -373,20 +373,38 @@ void display(void)
 		
 		// Flow Sim
 		flowSimFlux();
-		flowSimWaterHeight();
-		flowSimVel();
+		//flowSimWaterHeight();
+		//flowSimVel();
 
-		// Erosion Deposition
-		erosionDeposition();
+		//// Erosion Deposition
+		//erosionDeposition();
 
-		// Sediment Transport
-		sedimentTransport();
+		//// Sediment Transport
+		//sedimentTransport();
 
-		// Evaporation
-		evaporation();
+		//// Evaporation
+		//evaporation();
 		
 		// Testing fbo: bind the default framebuffer to render to screen
 		renderToScreen();
+		/*unbindTextures();
+		glUseProgram(curr_prog);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_TEXTURE_2D);
+
+		setCurrProgUniforms();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
+		plane->draw(triangle_attributes::POSITION);*/
+
 	}
 	else
 	{
@@ -437,7 +455,7 @@ void setTerrainInitProgUniforms()
 	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTSCALEID);
 	if (uniformLocation != -1)
 	{
-		glUniform1f(uniformLocation, 1.0f);
+		glUniform1f(uniformLocation, heightScale);
 	}
 	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTMAPID);
 	if (uniformLocation != -1)

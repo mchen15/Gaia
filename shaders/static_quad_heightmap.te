@@ -19,7 +19,7 @@ void main(){
     texcoord = position.xy;
     float height = texture(u_heightMap, texcoord).r;
 	vec2 tSize = textureSize(u_heightMap,0)*u_gridSpacing;
-    gl_Position = u_pvm * vec4(texcoord*tSize, height*u_heightScale, 1.0);
+    gl_Position = u_pvm * vec4(texcoord*tSize, height, 1.0);
 
     depth = gl_Position.z;
 }

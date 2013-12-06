@@ -29,15 +29,15 @@ void main(void)
 	vec4 fluxColor = sampleFluxTex(fs_Texcoord);
 	vec4 velocityColor = sampleVelocityTex(fs_Texcoord);
 	vec4 terrainColor = sampleTerrainAttrTex(fs_Texcoord);
-
+	terrainColor.r = terrainColor.r/200;
 	//fragColor = vec4(terrainColor.rgb, 1.0);
 	
 	//fragColor = terrainColor + fluxColor + velocityColor;
 	
 	//fragColor = terrainColor;
-	//fragColor = fluxColor;
+	fragColor = fluxColor;
 	//fragColor = velocityColor;
 	
 	//fragColor = vec4(fs_Texcoord, 0, 1);
-	fragColor = vec4(terrainColor.r, 0, 0, 1);
+	//fragColor = vec4(0,terrainColor.g, 0, 1);
 }
