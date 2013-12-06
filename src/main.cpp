@@ -127,7 +127,7 @@ void waterInc()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(water_inc_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -161,7 +161,7 @@ void flowSimFlux()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(flow_flux_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -201,7 +201,7 @@ void flowSimVel()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(flow_vel_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -235,7 +235,7 @@ void flowSimWaterHeight()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(flow_water_height_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -275,7 +275,7 @@ void erosionDeposition()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(erosion_depo_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -310,7 +310,7 @@ void sedimentTransport()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(copy_tex_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -340,7 +340,7 @@ void evaporation()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
-	setCopyTexProgUniforms(evapo_prog);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -421,10 +421,10 @@ void display(void)
     glutSwapBuffers();
 }
 
-void setCopyTexProgUniforms(GLuint shader_prog)
+void setCopyTexProgUniforms()
 {
 	GLint uniformLocation = -1;
-	uniformLocation = glGetUniformLocation(shader_prog, U_SOURCETEXID);
+	uniformLocation = glGetUniformLocation(copy_tex_prog, U_SOURCETEXID);
 	if (uniformLocation != -1)
 	{
 		glActiveTexture(GL_TEXTURE0);
