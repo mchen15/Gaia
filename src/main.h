@@ -105,6 +105,14 @@ void setUpFlowSimVelocityFBO();
 void setUpErosionDepoFBO();
 void setUpSedTransFBO();
 void setUpEvapFBO();
+void setTerrainInitProgUniforms();
+void setWaterIncProgUniforms();
+void setFlowFluxProgUniforms();
+void setFlowVelProgUniforms();
+void setFlowWaterHeightProgUniforms();
+void setErosionDepoProgUniforms();
+void setSedimentTransProgUniforms();
+void setEvapoProgUniforms();
 
 // quad for outputting normal map
 unsigned int vertex_array;
