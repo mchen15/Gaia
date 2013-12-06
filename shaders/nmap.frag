@@ -19,16 +19,23 @@ vec3 getNormalSobel()
 {
 	const ivec3 off = ivec3(-1.0,0.0,1.0);
 	vec2 tSize = 1.0/textureSize(u_heightMap,0);
-	float topLeft = sampleHeight( vec2( v_Texcoord + tSize*off.xz));
-	float top = sampleHeight( vec2 (v_Texcoord + tSize*off.yz));
-	float topRight = sampleHeight( vec2( v_Texcoord + tSize*off.zz));
-	float left = sampleHeight( vec2( v_Texcoord + tSize*off.xy));
-	float right = sampleHeight( vec2( v_Texcoord + tSize*off.zy));
-	float bottomLeft = sampleHeight( vec2( v_Texcoord + tSize*off.xx));
-	float bottom = sampleHeight( vec2( v_Texcoord + tSize*off.yx));
-	float bottomRight = sampleHeight( vec2( v_Texcoord + tSize*off.zx));
+	//float topLeft = sampleHeight( vec2( v_Texcoord + tSize*off.xz));
+	//float top = sampleHeight( vec2 (v_Texcoord + tSize*off.yz));
+	//float topRight = sampleHeight( vec2( v_Texcoord + tSize*off.zz));
+	//float left = sampleHeight( vec2( v_Texcoord + tSize*off.xy));
+	//float right = sampleHeight( vec2( v_Texcoord + tSize*off.zy));
+	//float bottomLeft = sampleHeight( vec2( v_Texcoord + tSize*off.xx));
+	//float bottom = sampleHeight( vec2( v_Texcoord + tSize*off.yx));
+	//float bottomRight = sampleHeight( vec2( v_Texcoord + tSize*off.zx));
 
-
+	float topLeft = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(-1,1));
+	float top = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(0,1));
+	float topRight = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(1,1));
+	float left = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(-1,0));
+	float right = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(1,0));
+	float bottomLeft = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(-1,-1));
+	float bottom = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(0,-1));
+	float bottomRight = u_heightScale*textureOffset(u_heightMap,v_Texcoord, ivec2(1,-1));
 	float dx = (topLeft + 2.0*left+ bottomLeft) - (topRight + 2.0*right+bottomRight) ;
 	float dy = (topLeft + 2.0*top+ topRight) - (bottomLeft + 2.0*bottom+bottomRight);
 	float dz = 4.0;
@@ -36,6 +43,23 @@ vec3 getNormalSobel()
 	vec3 normal = normalize ( vec3(dx,dy,dz));
 	return normal;
 
+}
+
+vec3 getNormalInternetWay()
+{
+	const vec2 size = vec2(2.0,0.0);
+	const ivec3 off = ivec3(-1,0,1);
+    vec4 wave = u_heightScale*texture(u_heightMap, v_Texcoord);
+    float s11 = wave.x;
+    float s01 = u_heightScale*textureOffset(u_heightMap, v_Texcoord, off.xy).x;
+    float s21 = u_heightScale*textureOffset(u_heightMap, v_Texcoord, off.zy).x;
+    float s10 = u_heightScale*textureOffset(u_heightMap, v_Texcoord, off.yx).x;
+    float s12 = u_heightScale*textureOffset(u_heightMap, v_Texcoord, off.yz).x;
+    vec3 va = normalize(vec3(size.xy,s21-s01));
+    vec3 vb = normalize(vec3(size.yx,s12-s10));
+    vec4 bump = vec4( cross(va,vb), s11 );
+
+	return bump.xyz;
 }
 
 vec3 getNormalCentralDifferences()
@@ -52,6 +76,8 @@ vec3 getNormalCentralDifferences()
 }
 
 
+
+
 void main(void)
 {	
 
@@ -60,6 +86,7 @@ void main(void)
 	if( u_toggleNormal== 0)
 	{
 		vec3 normal = getNormalSobel();
+		//vec3 normal = getNormalInternetWay();
 		colorNormal = normal*0.5+0.5;
 	}
 
