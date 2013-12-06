@@ -40,4 +40,5 @@ void main(void)
 	
 	//fragColor = vec4(fs_Texcoord, 0, 1);
 	//fragColor = vec4(0,terrainColor.g, 0, 1);
+
 }

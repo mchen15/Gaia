@@ -23,6 +23,7 @@ void main (void)
 
 	if( dist.x*dist.x + dist.y*dist.y < rainCircleRadiusSq)
 		out_terrainAttr.g += rainRate*u_deltaT;
+
 	//out_terrainAttr.g += 0.0001;
 	//out_terrainAttr = vec4(v_Texcoord.x, v_Texcoord.y, 0, 1);
 	//out_terrainAttr = vec4(1, 0, 0, 1);

@@ -76,6 +76,8 @@ vec3 getNormalCentralDifferences()
 }
 
 
+
+
 void main(void)
 {	
 
@@ -84,6 +86,7 @@ void main(void)
 	if( u_toggleNormal== 0)
 	{
 		vec3 normal = getNormalSobel();
+		//vec3 normal = getNormalInternetWay();
 		colorNormal = normal*0.5+0.5;
 	}
 
