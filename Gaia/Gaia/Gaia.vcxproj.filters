@@ -127,10 +127,10 @@
       <Filter>Shaders\Erosion</Filter>
     </None>
     <None Include="..\..\shaders\Copy_Texture.frag">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Erosion</Filter>
     </None>
     <None Include="..\..\shaders\Copy_Texture.vert">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Erosion</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

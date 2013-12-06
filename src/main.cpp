@@ -114,7 +114,20 @@ void waterInc()
 	//glUniform1i(uniformLocation, 0);
 
 	setWaterIncProgUniforms();
-	// testing changing of texture attachments
+	drawQuad();
+	
+	//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttr");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -135,7 +148,20 @@ void flowSimFlux()
 	//uniformLocation = glGetUniformLocation(flow_flux_prog, U_TERRAINATTRTEXID);
 	//glUniform1i(uniformLocation, 1);
 	setFlowFluxProgUniforms();
+	drawQuad();
 
+		//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(flux_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_flux");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -162,7 +188,20 @@ void flowSimVel()
 	//glUniform1i(uniformLocation, 2);
 
 	setFlowVelProgUniforms();
+	drawQuad();
 
+	//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(velocity_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_vel");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -183,7 +222,20 @@ void flowSimWaterHeight()
 	//uniformLocation = glGetUniformLocation(flow_water_height_prog, U_FLUXTEXID);
 	//glUniform1i(uniformLocation, 1);
 	setFlowWaterHeightProgUniforms();
+	drawQuad();
 
+	//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttr");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -211,6 +263,20 @@ void erosionDeposition()
 
 	setErosionDepoProgUniforms();
 	drawQuad();
+
+	//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttr");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
+	drawQuad();
 }
 
 void sedimentTransport()
@@ -232,6 +298,20 @@ void sedimentTransport()
 
 	setSedimentTransProgUniforms();
 	drawQuad();
+
+	//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttr");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
+	drawQuad();
 }
 
 void evaporation()
@@ -247,6 +327,20 @@ void evaporation()
 	//glUniform1i(uniformLocation, 0);
 	setEvapoProgUniforms();
 
+	drawQuad();
+
+	//COPY
+	glUseProgram(copy_tex_prog);
+	bindFBO( copyFBO->getFBOHandle());
+	vector<GLuint> fboTex;
+	fboTex.push_back(terrainattr_tex);
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_terrainAttr");
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
+	setCopyTexProgUniforms();
 	drawQuad();
 }
 
@@ -278,7 +372,7 @@ void display(void)
 
 		// Water Increment
 		waterInc();
-
+		
 		// Flow Sim
 		//flowSimFlux();
 		//flowSimWaterHeight();
@@ -325,6 +419,18 @@ void display(void)
 
 	glutPostRedisplay();
     glutSwapBuffers();
+}
+
+void setCopyTexProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(terrain_init_prog, U_SOURCETEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, temp_tex);
+		glUniform1i(uniformLocation, 0);	
+	}
 }
 
 void setTerrainInitProgUniforms()
