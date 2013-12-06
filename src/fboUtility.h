@@ -16,11 +16,12 @@ public:
 	FrameBufferObject();
 	FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
 	~FrameBufferObject();
+	void changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
 	GLuint getFBOHandle() { return FBOHandle; }
 
 private:
 	void checkFrameBufferStatus(GLenum framebufferStatus);
-	void initFBO();
+	void textureAttach();
 
 private:
 	int width;						// width and height of the output texture

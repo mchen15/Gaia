@@ -10,5 +10,8 @@ void main(void)
 {
 	fs_Position = Position;
 	fs_Texcoord = Texcoord;
+	fs_Texcoord.y = 1 - Texcoord.y;
+
+
 	gl_Position = vec4(Position, 1.0);	
 }

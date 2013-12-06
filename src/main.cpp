@@ -110,6 +110,10 @@ void waterInc()
 	uniformLocation = glGetUniformLocation(water_inc_prog, U_TERRAINATTRTEXID);
 	glUniform1i(uniformLocation, 0);
 
+
+	// testing changing of texture attachments
+
+
 	drawQuad();
 }
 
@@ -265,7 +269,7 @@ void display(void)
 		terrainInit();
 
 		// Water Increment
-		waterInc();
+		//waterInc();
 
 		// Flow Sim
 		//flowSimFlux();

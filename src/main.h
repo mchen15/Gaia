@@ -49,6 +49,7 @@ GLuint flow_vel_prog;
 GLuint flow_water_height_prog;
 GLuint sediment_trans_prog;
 GLuint water_inc_prog;
+GLuint copy_tex_prog;
 
 
 // textures

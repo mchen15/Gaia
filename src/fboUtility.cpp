@@ -5,7 +5,8 @@ FrameBufferObject::FrameBufferObject()
 	width = 800;
 	height = 800;
 	FBOHandle = -1;
-	initFBO();
+	glGenFramebuffers(1, &FBOHandle);
+	textureAttach();
 }
 
 FrameBufferObject::FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations) :
@@ -20,7 +21,8 @@ FrameBufferObject::FrameBufferObject(int w, int h, GLuint shader, vector<GLuint>
 		cout << "FrameBufferObject::FrameBufferObj: WARNING: number of shader output texture names is not equal to number of  attach locations" << endl;
 
 	FBOHandle = 0;
-	initFBO();
+	glGenFramebuffers(1, &FBOHandle);
+	textureAttach();
 }
 
 FrameBufferObject::~FrameBufferObject()
@@ -59,11 +61,9 @@ void FrameBufferObject::checkFrameBufferStatus(GLenum framebufferStatus)
 	}
 }
 
-void FrameBufferObject::initFBO()
+void FrameBufferObject::textureAttach()
 {
 	GLenum FBOstatus;
-
-	glGenFramebuffers(1, &FBOHandle);
 	glBindFramebuffer(GL_FRAMEBUFFER, FBOHandle);
 
 	glReadBuffer(GL_NONE);
@@ -74,10 +74,10 @@ void FrameBufferObject::initFBO()
 		GLint location = glGetFragDataLocation(shaderProg, (const GLchar*)shaderOut[j]);
 		loc.push_back(location);
 	}
-	
+
 	int numTextures = textures.size();
 	GLenum* drawBufs = new GLenum[numTextures];
-	
+
 	for (int k = 0; k < texAttachLoc.size(); ++k)
 	{
 		GLint location = loc[k];
@@ -102,4 +102,13 @@ void FrameBufferObject::initFBO()
 	}
 
 	delete drawBufs;
+}
+
+void FrameBufferObject::changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations)
+{
+	textures = tex;
+	shaderOut = outNames;
+	texAttachLoc = texAttachLocations;
+
+	textureAttach();
 }

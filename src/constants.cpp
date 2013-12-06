@@ -49,6 +49,8 @@ const char* fragTerrainTexInitPath = "../../shaders/Terrain_Initialization.frag"
 const char* vertFboTestPath = "../../shaders/fbo_test.vert";
 const char* fragFboTestPath = "../../shaders/fbo_test.frag";
 
+// todo copy shader paths to copy textures
+
 const char* vertErosDepoPath = "../../shaders/Erosion_Deposition.vert";
 const char* fragErosDepoPath = "../../shaders/Erosion_Deposition.frag";
 const char* vertEvapPath = "../../shaders/Evaporation.vert";
