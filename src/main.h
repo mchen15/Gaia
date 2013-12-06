@@ -94,6 +94,7 @@ void reshape(int w, int h);
 void display(void);
 void initTextures();
 void drawQuad();
+void attachTempTexToFBO(FrameBufferObject** fbo, GLuint shader_prog);
 void initErosionFBO();
 void initErosionShaders();
 void initErosionTextures();

@@ -866,6 +866,20 @@ void setUpInitializationFBO()
 	initTerrainFBO = new FrameBufferObject(width, height, terrain_init_prog, fboTex, fboOutNames, attachLocations);
 }
 
+void attachTempTexToFBO(FrameBufferObject** fbo, char* outName, GLuint shader_prog)
+{
+	vector<GLuint> fboTex;
+	fboTex.push_back(temp_tex);
+	
+	vector<char*> fboOutName;
+	fboOutName.push_back(outName); // This is used in Copy_Texture.vert / frag
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	*fbo = new FrameBufferObject(width, height, shader_prog, fboTex, fboOutName, attachLocations);
+}
+
 void setUpWaterIncFBO()
 {
 	// setting up texture handles: terrainAttr
@@ -987,22 +1001,44 @@ void initErosionFBO()
 	// Initialization
 	setUpInitializationFBO();
 
+
 	// Water Increment
-	setUpWaterIncFBO();
+	attachTempTexToFBO(&waterIncFBO, "out_terrainAttr", water_inc_prog);
 
 	// Flow Sim
-	setUpFlowSimFluxFBO();
-	setUpFlowSimWaterHeightFBO();
-	setUpFlowSimVelocityFBO();
+	attachTempTexToFBO(&flowSimFluxFBO, "out_flux", flow_flux_prog);
+	attachTempTexToFBO(&flowWatHeightFBO, "out_terrainAttrTex", flow_water_height_prog);
+	attachTempTexToFBO(&flowSimVelFBO, "out_vel", flow_vel_prog);
 
 	// Erosion Deposition
-	setUpErosionDepoFBO();
+	attachTempTexToFBO(&erosDepoFBO, "out_terrainAttr", erosion_depo_prog);
 
 	// Sediment Transport
-	setUpSedTransFBO();
+	attachTempTexToFBO(&sedTransFBO, "out_terrainAttr", sediment_trans_prog);
 
 	// Evaporation
-	setUpEvapFBO();
+	attachTempTexToFBO(&evapFBO, "out_terrainAttr", evapo_prog);
+
+	//////////////
+	// old
+
+
+	// Water Increment
+	//setUpWaterIncFBO();
+
+	// Flow Sim
+	//setUpFlowSimFluxFBO();
+	//setUpFlowSimWaterHeightFBO();
+	//setUpFlowSimVelocityFBO();
+
+	// Erosion Deposition
+	//setUpErosionDepoFBO();
+
+	// Sediment Transport
+	//setUpSedTransFBO();
+
+	// Evaporation
+	//setUpEvapFBO();
 }
 
 void deleteErosionFBO()
