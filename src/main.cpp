@@ -57,7 +57,7 @@ void terrainInit()
 	glUseProgram(terrain_init_prog);
 	
 	// setting up uniforms (e.g. input textures)
-	GLint uniformLocation = -1;
+/*	GLint uniformLocation = -1;
 
 	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTSCALEID);
 	glUniform1f(uniformLocation, 1.0f);
@@ -65,7 +65,8 @@ void terrainInit()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
 	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTMAPID);
-	glUniform1i(uniformLocation, 0);	
+	glUniform1i(uniformLocation, 0);*/	
+	setTerrainInitProgUniforms();
 
 	drawQuad();
 }
@@ -334,11 +335,13 @@ void setTerrainInitProgUniforms()
 	{
 		glUniform1f(uniformLocation, 1.0f);
 	}
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
 	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTMAPID);
-	glUniform1i(uniformLocation, 0);	
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, heightmap_tex);
+		glUniform1i(uniformLocation, 0);	
+	}
 }
 
 void setWaterIncProgUniforms()
