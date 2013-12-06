@@ -101,6 +101,7 @@ extern char* U_NORMALMAPID;
 extern char* U_DIFFUSEMAPID;
 extern char* U_TOGGLENORMALID;
 extern char* U_SCREENSIZEID;
+extern char* U_SOURCETEXID;
 extern char* U_TERRAINATTRTEXID;
 extern char* U_FLUXTEXID;
 extern char* U_TERRAINATTRTEXID;
