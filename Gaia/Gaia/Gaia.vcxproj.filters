@@ -126,6 +126,12 @@
     <None Include="..\..\shaders\Flow_Sim_Water_Height_Update.vert">
       <Filter>Shaders\Erosion</Filter>
     </None>
+    <None Include="..\..\shaders\Copy_Texture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\shaders\Copy_Texture.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\main.h">

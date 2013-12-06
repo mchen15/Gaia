@@ -999,6 +999,7 @@ void initErosionShaders()
 	flow_water_height_prog = glslUtility::createProgram(vertFlowSimWatHeightPath, NULL, NULL, NULL, fragFlowSimWatHeightPath, attributeWithTexLocation, 2);
 	sediment_trans_prog = glslUtility::createProgram(vertSedTransPath, NULL, NULL, NULL, fragSedTransPath, attributeWithTexLocation, 2);
 	water_inc_prog = glslUtility::createProgram(vertWatIncPath, NULL, NULL, NULL, fragWatIncPath, attributeWithTexLocation, 2);
+	copy_tex_prog = glslUtility::createProgram(vertCopyPath, NULL, NULL, NULL, fragCopyPath, attributeWithTexLocation, 2);
 }
 
 void initShader() {

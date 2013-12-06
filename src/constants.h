@@ -69,6 +69,8 @@ const extern char* vertSedTransPath;
 const extern char* fragSedTransPath;
 const extern char* vertWatIncPath;
 const extern char* fragWatIncPath;
+const extern char* vertCopyPath;
+const extern char* fragCopyPath;
 
 // debugging shader paths
 const extern char* vertFboTestPath;

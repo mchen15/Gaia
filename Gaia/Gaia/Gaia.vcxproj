@@ -82,6 +82,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\shaders\Copy_Texture.frag" />
+    <None Include="..\..\shaders\Copy_Texture.vert" />
     <None Include="..\..\shaders\Erosion_Deposition.frag" />
     <None Include="..\..\shaders\Erosion_Deposition.vert" />
     <None Include="..\..\shaders\Evaporation.frag" />

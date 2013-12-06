@@ -2,7 +2,7 @@
 
 
 uniform sampler2D u_sourceTex;
-
+in vec2 v_Texcoord;
 out vec4 out_destTex;
 
 
