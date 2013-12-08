@@ -52,12 +52,14 @@ void main (void)
 		float scaledDiff = u_Ks*(C - out_terrainAttr.b);
 		out_terrainAttr.r = out_terrainAttr.r - scaledDiff;
 		out_terrainAttr.b = out_terrainAttr.b + scaledDiff;
+		out_terrainAttr.r = max(0,out_terrainAttr.r);
 	}
 	else
 	{
 		float scaledDiff = u_Ks*(out_terrainAttr.b-C);
 		out_terrainAttr.r = out_terrainAttr.r + scaledDiff;
 		out_terrainAttr.b = out_terrainAttr.b - scaledDiff;
+		out_terrainAttr.b = max(0,out_terrainAttr.b);
 	}
 }
 
