@@ -13,7 +13,7 @@ out vec4 out_terrainAttr;
 
 
 vec2 rainCircleCenter = vec2(0.5,0.5);
-float rainCircleRadiusSq = 1.0*1.0;
+float rainCircleRadiusSq = 0.8*0.8;
 
 void main (void)
 {

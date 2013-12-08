@@ -11,5 +11,8 @@ void main (void)
 {
 	out_terrainAttr = texture(u_terrainAttrTex, v_Texcoord);
 	out_terrainAttr.g = out_terrainAttr.g* ( 1.0 - u_Ke*u_deltaT);
+	out_terrainAttr.g = max(0,out_terrainAttr.g);
+
+	out_terrainAttr.a = 1.0;
 }
 

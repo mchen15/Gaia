@@ -106,6 +106,7 @@ void main(){
 
 	
 	vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
+	color = vec3(0.54,0.27,0);
 	float intensity = max(dot(incident, normal), 0.0);
 	color = color * intensity * light.xyz;
 
