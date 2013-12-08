@@ -12,12 +12,12 @@ in vec2 v_Texcoord;
 out vec4 out_terrainAttr;
 
 
-vec2 rainCircleCenter = vec2(0.3,0.4);
-float rainCircleRadiusSq = 0.1*0.1;
+vec2 rainCircleCenter = vec2(0.5,0.5);
+float rainCircleRadiusSq = 1.0*1.0;
 
 void main (void)
 {
-	float rainRate = 0.001;
+	float rainRate = 1/16.0;
 	out_terrainAttr = texture(u_terrainAttrTex, v_Texcoord.st).rgba;
 	vec2 dist = v_Texcoord-rainCircleCenter;
 

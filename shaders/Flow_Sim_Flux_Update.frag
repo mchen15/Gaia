@@ -11,7 +11,7 @@ in vec2 v_Texcoord;
 out vec4 out_flux;
 
 vec2 texSize = textureSize(u_terrainAttrTex,0);
-float gravity = -9.8;
+const float gravity = 9.8;
 const float EPSILON = 0.000001;
 
 float getFluxDelta(int offsetX, int offsetY)
@@ -43,17 +43,17 @@ void main (void)
 	out_flux.w = max(0,out_flux.w+getFluxDelta(0,-1));
 
 	//boundary conditions
-	//if( v_Texcoord.s <= 0 + EPSILON)
-	//	out_flux.x = 0.0;
+	if( v_Texcoord.s <= 0 + EPSILON)
+		out_flux.x = 0.0;
 
-	//else if (v_Texcoord.s >= 1 - EPSILON)
-	//	out_flux.y = 0.0;
+	else if (v_Texcoord.s >= 1 - EPSILON)
+		out_flux.y = 0.0;
 
-	//if (v_Texcoord.t <= 0+EPSILON)
-	//	out_flux.z = 0.0;
+	if (v_Texcoord.t <= 0+EPSILON)
+		out_flux.z = 0.0;
 
-	//else if (v_Texcoord.t >= 1-EPSILON)
-	//	out_flux.w = 0.0;
+	else if (v_Texcoord.t >= 1-EPSILON)
+		out_flux.w = 0.0;
 
 	float scaleFactor = min( 1.0, 
 		(texture(u_terrainAttrTex,v_Texcoord).g*u_gridSpacing*u_gridSpacing) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );

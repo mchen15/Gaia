@@ -20,7 +20,7 @@ void main (void)
 {
 	vec4 height = u_heightScale * sampleHeightMap(fs_Texcoord);
 
-	out_flux = vec4(0,0,0,1);
+	out_flux = vec4(0,0,0,0);
 	out_terrainAttr = vec4(height.x,0,0,1);
 	out_velocity = vec4(0,0,0,1);
 }

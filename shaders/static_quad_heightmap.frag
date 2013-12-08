@@ -101,9 +101,11 @@ void main(){
 		normal = getNormalSobel();
 	else
 		normal = sampleNormal(texcoord);
-	vec3 color = sampleDiffuse(texcoord);
+	//vec3 color = sampleDiffuse(texcoord);
 
 
+	
+	vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
 	float intensity = max(dot(incident, normal), 0.0);
 	color = color * intensity * light.xyz;
 
@@ -111,6 +113,7 @@ void main(){
 
 
 	fragment = vec4(color,1.0);
+	
 	//fragment = vec4(diff1, 0, 0, 1.0);
 	//fragment = vec4(diff2, 0, 0, 1.0);
 	//fragment = vec4(avgSlope, 0, 0, 1.0);
