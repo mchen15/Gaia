@@ -47,5 +47,5 @@ void main (void)
 	out_terrainAttrTex.a = out_terrainAttrTex.g; // save d1
 	out_terrainAttrTex.g += deltaVolume / (u_gridSpacing*u_gridSpacing);
 
-	out_terrainAttr.g = max(0,out_terrainAttr.g);
+	out_terrainAttrTex.g = max(0,out_terrainAttrTex.g);
 }
