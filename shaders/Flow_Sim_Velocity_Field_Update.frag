@@ -45,8 +45,18 @@ void main (void)
 	float deltaWx =  (sampleFluxR(-1,0) - sampleFluxL(0,0) + sampleFluxR(0,0) - sampleFluxL(1,0))/2.0;
 	float deltaWy = (sampleFluxT(0,-1) - sampleFluxB(0,0) + sampleFluxT(0,0) - sampleFluxB(0,1))/2.0;
 	
-	float velX = deltaWx/ (u_gridSpacing*avHeight);
-	float velY = deltaWy/ (u_gridSpacing*avHeight);
+	float velX = 0.0;
+	float velY = 0.0;
+	if(avHeight == 0)
+	{
+		velX = 0.0;
+		velY = 0.0;
+	}
 
+	else
+	{
+	velX = deltaWx/ (u_gridSpacing*avHeight);
+	velY = deltaWy/ (u_gridSpacing*avHeight);
+	}
 	out_vel = vec4(velX,velY,0.0,1.0);
 }

@@ -376,13 +376,13 @@ void display(void)
 		flowSimWaterHeight();
 		flowSimVel();
 
-		// Erosion Deposition
+		//// Erosion Deposition
 		erosionDeposition();
 
-		// Sediment Transport
+		//// Sediment Transport
 		sedimentTransport();
 
-		// Evaporation
+		//// Evaporation
 		evaporation();
 		
 		// Testing fbo: bind the default framebuffer to render to screen

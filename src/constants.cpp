@@ -25,8 +25,8 @@ float Ke = 0.001;
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
-const char* heightmapPath = "../../textures/test1024.png";
-//const char* heightmapPath = "../../textures/terrain_heights.jpg";
+//const char* heightmapPath = "../../textures/test1024.png";
+const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
 

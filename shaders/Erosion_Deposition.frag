@@ -42,18 +42,20 @@ vec3 getNormalSobel()
 
 void main (void)
 {
-	float alpha = acos( dot( normalize(u_up), getNormalSobel() ));
+	float alpha = acos( clamp(dot( normalize(u_up), getNormalSobel()),0,1) );
 	float C = u_Kc * sin(alpha)* length( texture(u_velTex,v_Texcoord).xy);
 
 	out_terrainAttr = texture(u_terrainAttrTex,v_Texcoord).rgba;
 
-	if ( C > out_terrainAttr.b)
+	
+	if ( C >= out_terrainAttr.b)
 	{
 		float scaledDiff = u_Ks*(C - out_terrainAttr.b);
 		out_terrainAttr.r = out_terrainAttr.r - scaledDiff;
 		out_terrainAttr.b = out_terrainAttr.b + scaledDiff;
 		out_terrainAttr.r = max(0,out_terrainAttr.r);
 	}
+
 	else
 	{
 		float scaledDiff = u_Ks*(out_terrainAttr.b-C);
@@ -61,5 +63,6 @@ void main (void)
 		out_terrainAttr.b = out_terrainAttr.b - scaledDiff;
 		out_terrainAttr.b = max(0,out_terrainAttr.b);
 	}
+
 }
 

@@ -106,12 +106,27 @@ void main(){
 
 	
 	vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
-	color = vec3(0.54,0.27,0);
+	
 	float intensity = max(dot(incident, normal), 0.0);
 	color = color * intensity * light.xyz;
 
 	float avgSlope = (diff1 + diff2) / 2.0;
 
+
+	const float EPSILON = 0.01;
+	//boundary conditions
+	if( texcoord.s > 0 - EPSILON && texcoord.s < 0 + EPSILON || 
+	
+
+	(texcoord.s > 1 - EPSILON && texcoord.s < 1 + EPSILON) || 
+		
+
+	(texcoord.t > 0 - EPSILON && texcoord.t < 0 + EPSILON) || 
+		
+
+	(texcoord.t > 1 - EPSILON && texcoord.t < 1 + EPSILON) )
+		fragment =  vec4( 0,0,0,0);
+	else
 
 	fragment = vec4(color,1.0);
 	

@@ -56,8 +56,17 @@ void main (void)
 	else if (v_Texcoord.t > 1 - EPSILON && v_Texcoord.t < 1 + EPSILON)
 		out_flux.z = 0.0;
 
-	float scaleFactor = min( 1.0, 
+	float scaleFactor = 0.0;
+
+	if ( (out_flux.r+out_flux.g+out_flux.b+out_flux.a) < 0.1 )
+	{
+		scaleFactor = 0.0;
+	}
+	else 
+	{
+
+	scaleFactor = min( 1.0, 
 		(texture(u_terrainAttrTex,v_Texcoord).g*u_gridSpacing*u_gridSpacing) / ((out_flux.r+out_flux.g+out_flux.b+out_flux.a)*u_deltaT) );
-	
+	}
 	out_flux = scaleFactor*out_flux;
 }
