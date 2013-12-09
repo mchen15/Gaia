@@ -52,6 +52,9 @@ const char* fragFboTestPath = "../../shaders/fbo_test.frag";
 const char* vertCopyPath = "../../shaders/Copy_Texture.vert";
 const char* fragCopyPath = "../../shaders/Copy_Texture.frag";
 
+const char* vertSkyboxShaderPath = "../../shaders/skybox.vert";
+const char* vertSkyboxShaderPath = "../../shaders/skybox.frag";
+
 // todo copy shader paths to copy textures
 
 const char* vertErosDepoPath = "../../shaders/Erosion_Deposition.vert";
@@ -101,3 +104,4 @@ char* U_KCID = "u_Kc";
 char* U_KSID = "u_Ks";
 char* U_KEID = "u_Ke";
 char* U_UP = "u_up";
+char* U_CUBEMAPID = "u_cubemap";

@@ -51,6 +51,9 @@ const extern char* vertQuadShaderPath;
 const extern char* tessQuadCtrlShaderPath;
 const extern char* tessQuadEvalShadePath; 
 const extern char* fragQuadShaderPath;
+const extern char* vertSkyboxShaderPath;
+const extern char* fragSkyboxShaderPath;
+
 
 // erosion shader paths
 const extern char* vertTerrainTexInitPath;
@@ -75,10 +78,6 @@ const extern char* fragCopyPath;
 // debugging shader paths
 const extern char* vertFboTestPath;
 const extern char* fragFboTestPath;
-
-
-
-
 
 // uniform ids
 extern char* U_FARID;
@@ -114,4 +113,5 @@ extern char* U_KCID;
 extern char* U_KSID;
 extern char* U_KEID;
 extern char* U_UP;
+extern char* U_CUBEMAPID;
 #endif
