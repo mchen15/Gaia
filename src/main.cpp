@@ -432,7 +432,7 @@ void display(void)
 			plane->draw(triangle_attributes::POSITION);
 		}
 	}
-	
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 	glUseProgram(skybox_prog);
 	setSkyboxProgUniforms();
 	skybox->drawSkybox(triangle_attributes::POSITION);
@@ -654,7 +654,7 @@ void setEvapoProgUniforms()
 
 void setSkyboxProgUniforms()
 {
-	mat4 model = scale(mat4(1.0), vec3(1000, 1000, 1000));
+	mat4 model = scale(mat4(1.0), vec3(2000, 2000, 2000));
 	mat4 view = cam->getView();
 	mat4 project = cam->getPersp(width,height);
 
@@ -941,8 +941,10 @@ void initScene()
 	//plane = new Plane(vec2(-10), vec2(10), 10, 10);
 
 	vector<const char*> texNames;
-	texNames.push_back(cubeMapLeftImgPath);
+	
 	texNames.push_back(cubeMapRightImgPath);
+	texNames.push_back(cubeMapLeftImgPath);
+
 	texNames.push_back(cubeMapFrontImgPath);
 	texNames.push_back(cubeMapBackImgPath);
 	
