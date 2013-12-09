@@ -14,12 +14,14 @@
 #include "glslUtility.h"
 #include "constants.h"
 #include "fboUtility.h"
+#include "skybox.h"
 
 using std::cout;
 using std::endl;
 using glm::vec3;
 using glm::vec2;
 using std::vector;
+using glm::scale;
 
 namespace triangle_attributes {
     enum {
@@ -37,6 +39,7 @@ namespace quad_attributes {
 
 Camera* cam;
 Plane* plane;
+Skybox* skybox;
 
 // shader programs
 GLuint curr_prog;
@@ -50,7 +53,7 @@ GLuint flow_water_height_prog;
 GLuint sediment_trans_prog;
 GLuint water_inc_prog;
 GLuint copy_tex_prog;
-
+GLuint skybox_prog;
 
 // textures
 GLuint heightmap_tex;
@@ -90,6 +93,7 @@ void mouse(int button, int state, int x, int y);
 void motion(int x, int y);
 void initShader();
 void setCurrProgUniforms();
+void setSkyboxProgUniforms();
 void reshape(int w, int h);
 void display(void);
 void initTextures();
@@ -117,6 +121,7 @@ void setFlowWaterHeightProgUniforms();
 void setErosionDepoProgUniforms();
 void setSedimentTransProgUniforms();
 void setEvapoProgUniforms();
+void setSkyboxProgUniforms();
 
 // quad for outputting normal map
 unsigned int vertex_array;

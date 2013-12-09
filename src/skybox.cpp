@@ -1,6 +1,6 @@
 #include "skybox.h"
 
-Skybox::Skybox(vector<char*> texNames) :
+Skybox::Skybox(vector<const char*> texNames) :
 	textureNames(texNames)
 {
 	initSkybox();
@@ -71,5 +71,11 @@ void Skybox::setupVBO()
 
 void Skybox::drawSkybox(int positionLocation)
 {
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glEnableVertexAttribArray(positionLocation);
+	glVertexAttribPointer(positionLocation, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glDrawElements(GL_QUADS, 24, GL_UNSIGNED_SHORT, 0);
+	glDisableVertexAttribArray(positionLocation);
 }

@@ -30,6 +30,15 @@ const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
 
+
+const char* cubeMapUpImgPath = "../../textures/skybox/sunnyUp.png";
+const char* cubeMapDownImgPath = "../../textures/skybox/sunnyDown.png";
+const char* cubeMapLeftImgPath = "../../textures/skybox/sunnyLeft.png";
+const char* cubeMapRightImgPath = "../../textures/skybox/sunnyRight.png";
+const char* cubeMapFrontImgPath = "../../textures/skybox/sunnyFront.png";
+const char* cubeMapBackImgPath = "../../textures/skybox/sunnyBack.png";
+
+
 const char* vertShaderPath = "../../shaders/static_heightmap.vert";
 const char* tessCtrlShaderPath = "../../shaders/static_heightmap.tc";
 const char* tessEvalShadePath = "../../shaders/static_heightmap.te"; 
@@ -71,6 +80,7 @@ const char* vertSedTransPath = "../../shaders/Sediment_Transport.vert";
 const char* fragSedTransPath = "../../shaders/Sediment_Transport.frag";
 const char* vertWatIncPath = "../../shaders/Water_Increment.vert";
 const char* fragWatIncPath = "../../shaders/Water_Increment.frag";
+
 
 // uniform ids
 char* U_FARID = "u_Far";

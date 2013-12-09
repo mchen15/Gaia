@@ -8,6 +8,8 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
 #include "SOIL.h"
 #include "constants.h"
 
@@ -17,7 +19,7 @@ using std::endl;
 
 class Skybox {
 public:
-	Skybox(vector<char*> texNames);
+	Skybox(vector<const char*> texNames);
 	~Skybox();
 	
 	GLuint getTextureHandle() {return textureHandle;}
@@ -31,7 +33,7 @@ private:
 	int textureWidth;
 	int textureHeight;
 	GLuint textureHandle;
-	vector<char*> textureNames;
+	vector<const char*> textureNames;
 	GLuint vbo;
 	GLuint ibo;
 };

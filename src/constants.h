@@ -53,7 +53,12 @@ const extern char* tessQuadEvalShadePath;
 const extern char* fragQuadShaderPath;
 const extern char* vertSkyboxShaderPath;
 const extern char* fragSkyboxShaderPath;
-
+const extern char* cubeMapUpImgPath;
+const extern char* cubeMapDownImgPath;
+const extern char* cubeMapLeftImgPath;
+const extern char* cubeMapRightImgPath;
+const extern char* cubeMapFrontImgPath;
+const extern char* cubeMapBackImgPath;
 
 // erosion shader paths
 const extern char* vertTerrainTexInitPath;

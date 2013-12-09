@@ -392,7 +392,7 @@ void display(void)
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_TEXTURE_2D);
-
+		glEnable(GL_DEPTH_TEST);
 		setCurrProgUniforms();
 
 		glActiveTexture(GL_TEXTURE0);
@@ -432,6 +432,10 @@ void display(void)
 			plane->draw(triangle_attributes::POSITION);
 		}
 	}
+	
+	glUseProgram(skybox_prog);
+	setSkyboxProgUniforms();
+	skybox->drawSkybox(triangle_attributes::POSITION);
 
 	glutPostRedisplay();
     glutSwapBuffers();
@@ -646,6 +650,30 @@ void setEvapoProgUniforms()
 	uniformLocation = glGetUniformLocation(evapo_prog,U_KEID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation,Ke);
+}
+
+void setSkyboxProgUniforms()
+{
+	mat4 model = scale(mat4(1.0), vec3(1000, 1000, 1000));
+	mat4 view = cam->getView();
+	mat4 project = cam->getPersp(width,height);
+
+	GLint uniformLocation = glGetUniformLocation(skybox_prog,U_PVMID);
+	
+	if (uniformLocation != -1)
+	{
+		mat4 pvm = project * view * model;
+		glUniformMatrix4fv(uniformLocation, 1, false, &pvm[0][0]);
+	}
+
+	uniformLocation = glGetUniformLocation(skybox_prog, U_CUBEMAPID);
+
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->getTextureHandle());
+		glUniform1i(uniformLocation, 0);
+	}
 }
 
 void setCurrProgUniforms()
@@ -911,6 +939,17 @@ void initScene()
 	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
 	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
 	//plane = new Plane(vec2(-10), vec2(10), 10, 10);
+
+	vector<const char*> texNames;
+	texNames.push_back(cubeMapLeftImgPath);
+	texNames.push_back(cubeMapRightImgPath);
+	texNames.push_back(cubeMapFrontImgPath);
+	texNames.push_back(cubeMapBackImgPath);
+	
+	texNames.push_back(cubeMapUpImgPath);
+	texNames.push_back(cubeMapDownImgPath);
+
+	skybox = new Skybox(texNames);
 }
 void initErosionTextures()
 {
@@ -1221,6 +1260,8 @@ void initShader() {
 		}
 		//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 	}
+
+	skybox_prog = glslUtility::createProgram(vertSkyboxShaderPath, NULL, NULL, NULL, fragSkyboxShaderPath, attributeLocation, 1);
 }
 
 void clearScene()
