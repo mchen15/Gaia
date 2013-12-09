@@ -53,7 +53,7 @@ const char* vertCopyPath = "../../shaders/Copy_Texture.vert";
 const char* fragCopyPath = "../../shaders/Copy_Texture.frag";
 
 const char* vertSkyboxShaderPath = "../../shaders/skybox.vert";
-const char* vertSkyboxShaderPath = "../../shaders/skybox.frag";
+const char* fragSkyboxShaderPath = "../../shaders/skybox.frag";
 
 // todo copy shader paths to copy textures
 

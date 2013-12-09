@@ -104,6 +104,8 @@
     <None Include="..\..\shaders\pass.vert" />
     <None Include="..\..\shaders\Sediment_Transport.frag" />
     <None Include="..\..\shaders\Sediment_Transport.vert" />
+    <None Include="..\..\shaders\skybox.frag" />
+    <None Include="..\..\shaders\skybox.vert" />
     <None Include="..\..\shaders\static_heightmap.frag" />
     <None Include="..\..\shaders\static_heightmap.tc" />
     <None Include="..\..\shaders\static_heightmap.te" />
@@ -126,6 +128,7 @@
     <ClInclude Include="..\..\src\glslUtility.h" />
     <ClInclude Include="..\..\src\main.h" />
     <ClInclude Include="..\..\src\plane.h" />
+    <ClInclude Include="..\..\src\skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\camera.cpp" />
@@ -134,6 +137,7 @@
     <ClCompile Include="..\..\src\glslUtility.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />
+    <ClCompile Include="..\..\src\skybox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
