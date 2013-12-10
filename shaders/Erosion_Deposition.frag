@@ -6,7 +6,7 @@ uniform sampler2D u_velTex;
 uniform sampler2D u_normalMap;
 uniform float u_Kc = 0.001;
 uniform float u_Ks = 0.001;
-
+uniform float minAlpha = 0.05;
 
 in vec2 v_Texcoord;
 out vec4 out_terrainAttr;
@@ -43,6 +43,7 @@ vec3 getNormalSobel()
 void main (void)
 {
 	float alpha = acos( clamp(dot( normalize(u_up), getNormalSobel()),0,1) );
+	alpha = max(minAlpha,alpha);
 	float C = u_Kc * sin(alpha)* length( texture(u_velTex,v_Texcoord).xy);
 
 	out_terrainAttr = texture(u_terrainAttrTex,v_Texcoord).rgba;
