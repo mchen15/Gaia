@@ -22,38 +22,17 @@
     <Filter Include="Shaders\Terrain Tessellation">
       <UniqueIdentifier>{ac5d7ae0-b901-42cb-8735-067dae251efb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Normal">
+      <UniqueIdentifier>{94d66d5c-4561-4123-af3a-a24b89652d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Test">
+      <UniqueIdentifier>{cc301730-1ca7-4584-bda1-4e51ea70f6ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Rendering">
+      <UniqueIdentifier>{d31be426-7982-4cd3-a624-32ecd8ff30e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\shaders\nmap.frag">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\nmap.vert">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.frag">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.tc">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.te">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\pass.vert">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.frag">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.tc">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.te">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
-    <None Include="..\..\shaders\static_heightmap.vert">
-      <Filter>Shaders\Terrain Tessellation</Filter>
-    </None>
     <None Include="..\..\shaders\static_quad_heightmap.frag">
       <Filter>Shaders\Terrain Tessellation</Filter>
     </None>
@@ -102,12 +81,6 @@
     <None Include="..\..\shaders\Terrain_Initialization.vert">
       <Filter>Shaders\Erosion</Filter>
     </None>
-    <None Include="..\..\shaders\fbo_test.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="..\..\shaders\fbo_test.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="..\..\shaders\Flow_Sim_Flux_Update.frag">
       <Filter>Shaders\Erosion</Filter>
     </None>
@@ -132,11 +105,53 @@
     <None Include="..\..\shaders\Copy_Texture.vert">
       <Filter>Shaders\Erosion</Filter>
     </None>
+    <None Include="..\..\shaders\nmap.frag">
+      <Filter>Shaders\Normal</Filter>
+    </None>
+    <None Include="..\..\shaders\nmap.vert">
+      <Filter>Shaders\Normal</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.frag">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.vert">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.tc">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\pass.te">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.frag">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.vert">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.tc">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\static_heightmap.te">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\water.vert">
+      <Filter>Shaders\Rendering</Filter>
+    </None>
     <None Include="..\..\shaders\skybox.frag">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Rendering</Filter>
     </None>
     <None Include="..\..\shaders\skybox.vert">
-      <Filter>Shaders</Filter>
+      <Filter>Shaders\Rendering</Filter>
+    </None>
+    <None Include="..\..\shaders\water.frag">
+      <Filter>Shaders\Rendering</Filter>
+    </None>
+    <None Include="..\..\shaders\fbo_test.frag">
+      <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\fbo_test.vert">
+      <Filter>Shaders\Test</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

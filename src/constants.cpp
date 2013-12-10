@@ -2,8 +2,9 @@
 
 // Program flow switches
 bool genNormalMap = false;
-bool enableErosion = true;
+bool enableErosion = false;
 bool enableTexcoords = false;
+bool enableWaterTest = true;
 
 
 int NUM_QUADS = 1;
@@ -25,8 +26,8 @@ float Ke = 0.001;
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
-const char* heightmapPath = "../../textures/test1024.png";
-//const char* heightmapPath = "../../textures/terrain_heights.jpg";
+//const char* heightmapPath = "../../textures/test1024.png";
+const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
 
@@ -63,6 +64,9 @@ const char* fragCopyPath = "../../shaders/Copy_Texture.frag";
 
 const char* vertSkyboxShaderPath = "../../shaders/skybox.vert";
 const char* fragSkyboxShaderPath = "../../shaders/skybox.frag";
+
+const char* vertWaterPath = "../../shaders/water.vert";
+const char* fragWaterPath = "../../shaders/water.frag";
 
 // todo copy shader paths to copy textures
 

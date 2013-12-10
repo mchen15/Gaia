@@ -26,6 +26,7 @@ extern bool genNormalMap;		// true if we want to generate normal map manually
 extern bool enableTexcoords;	// texcoords will be used as an input attribute in the shaders (used for pass.vert &
 								// pass.frag)
 extern bool enableErosion;
+extern bool enableWaterTest;
 
 //EROSION
 
@@ -79,6 +80,9 @@ const extern char* vertWatIncPath;
 const extern char* fragWatIncPath;
 const extern char* vertCopyPath;
 const extern char* fragCopyPath;
+const extern char* vertWaterPath;
+const extern char* fragWaterPath;
+
 
 // debugging shader paths
 const extern char* vertFboTestPath;

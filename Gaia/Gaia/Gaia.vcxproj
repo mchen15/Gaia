@@ -118,6 +118,8 @@
     <None Include="..\..\shaders\Terrain_Initialization.vert" />
     <None Include="..\..\shaders\tessNoise.tc" />
     <None Include="..\..\shaders\tessNoise.te" />
+    <None Include="..\..\shaders\water.frag" />
+    <None Include="..\..\shaders\water.vert" />
     <None Include="..\..\shaders\Water_Increment.frag" />
     <None Include="..\..\shaders\Water_Increment.vert" />
   </ItemGroup>

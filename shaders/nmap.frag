@@ -75,8 +75,17 @@ vec3 getNormalCentralDifferences()
 	return normal;
 }
 
+vec3 getSimpleNormals() // still broken
+{
+	float x = dFdx(sampleHeight(vec2(v_Texcoord)));
+	float y = dFdy(sampleHeight(vec2(v_Texcoord)));
 
+	vec3 vx = vec3(x, 0, 0);
+	vec3 vy = vec3(0, 0, y);
 
+	vec3 normal = normalize(cross (vx, vy) + vec3(0,0.0,0));
+	return normal;
+}
 
 void main(void)
 {	
@@ -86,6 +95,7 @@ void main(void)
 	if( u_toggleNormal== 0)
 	{
 		vec3 normal = getNormalSobel();
+		normal = getSimpleNormals();
 		//vec3 normal = getNormalInternetWay();
 		colorNormal = normal*0.5+0.5;
 	}

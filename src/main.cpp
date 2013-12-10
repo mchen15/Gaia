@@ -404,7 +404,22 @@ void display(void)
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 		plane->draw(triangle_attributes::POSITION);
+	}
+	else if (enableWaterTest)
+	{
+		glUseProgram(water_shading_prog);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		mat4 model(1.0f);
+		mat4 view = cam->getView();
+		mat4 persp = cam->getPersp(float(width), float(height));
+
+		mat4 pvm = persp * view * model;
+		GLint uniformLocation = glGetUniformLocation(water_shading_prog, U_PVMID);
+		glUniformMatrix4fv(uniformLocation, 1,GL_FALSE ,&pvm[0][0]);
+		waterTestPlane->setIndexMode(INDEX_MODE::TRIANGLES);
+		waterTestPlane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
 	}
 	else
 	{
@@ -432,10 +447,14 @@ void display(void)
 			plane->draw(triangle_attributes::POSITION);
 		}
 	}
-	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-	glUseProgram(skybox_prog);
-	setSkyboxProgUniforms();
-	skybox->drawSkybox(triangle_attributes::POSITION);
+	
+	if (!genNormalMap)
+	{
+		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+		glUseProgram(skybox_prog);
+		setSkyboxProgUniforms();
+		skybox->drawSkybox(triangle_attributes::POSITION);
+	}
 
 	glutPostRedisplay();
     glutSwapBuffers();
@@ -938,7 +957,9 @@ void initScene()
 
 	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
 	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
-	//plane = new Plane(vec2(-10), vec2(10), 10, 10);
+	
+	if (enableWaterTest)
+		waterTestPlane = new Plane(vec2(0), vec2(1280, 720), 200, 100);
 
 	vector<const char*> texNames;
 	
@@ -1228,7 +1249,7 @@ void initErosionShaders()
 	sediment_trans_prog = glslUtility::createProgram(vertSedTransPath, NULL, NULL, NULL, fragSedTransPath, attributeWithTexLocation, 2);
 	water_inc_prog = glslUtility::createProgram(vertWatIncPath, NULL, NULL, NULL, fragWatIncPath, attributeWithTexLocation, 2);
 	copy_tex_prog = glslUtility::createProgram(vertCopyPath, NULL, NULL, NULL, fragCopyPath, attributeWithTexLocation, 2);
-
+	water_shading_prog = glslUtility::createProgram(vertWaterPath, NULL, NULL, NULL, fragWaterPath, attributeWithTexLocation, 2);
 }
 
 void initShader() {

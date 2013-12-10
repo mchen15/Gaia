@@ -39,6 +39,7 @@ namespace quad_attributes {
 
 Camera* cam;
 Plane* plane;
+Plane* waterTestPlane;
 Skybox* skybox;
 
 // shader programs
@@ -54,6 +55,7 @@ GLuint sediment_trans_prog;
 GLuint water_inc_prog;
 GLuint copy_tex_prog;
 GLuint skybox_prog;
+GLuint water_shading_prog;
 
 // textures
 GLuint heightmap_tex;

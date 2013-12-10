@@ -11,7 +11,8 @@ uniform float u_heightScale;
 uniform mat4 u_mvInvTrans;
 uniform vec2 u_numPatches;
 uniform float u_gridSpacing;
-
+uniform vec4 u_lightColor;
+uniform vec4 u_lightDirection;
 uniform int u_toggleNormal;
 
 vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
@@ -129,7 +130,7 @@ void main(){
 	else
 
 	fragment = vec4(color,1.0);
-	
+
 	//fragment = vec4(diff1, 0, 0, 1.0);
 	//fragment = vec4(diff2, 0, 0, 1.0);
 	//fragment = vec4(avgSlope, 0, 0, 1.0);
