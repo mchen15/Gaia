@@ -9,13 +9,17 @@ FrameBufferObject::FrameBufferObject()
 	textureAttach();
 }
 
-FrameBufferObject::FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations) :
+FrameBufferObject::FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations,
+		unsigned int quadVao, unsigned int quadIBO, unsigned int numQuadIndices) :
 	width(w),
 	height(h),
 	textures(tex),
 	shaderOut(outNames),
 	shaderProg(shader),
-	texAttachLoc(texAttachLocations)
+	texAttachLoc(texAttachLocations),
+	vertex_array(quadVao),
+	vbo_indices(quadIBO),
+	num_indices(numQuadIndices)
 {
 	if (outNames.size() != texAttachLocations.size())
 		cout << "FrameBufferObject::FrameBufferObj: WARNING: number of shader output texture names is not equal to number of  attach locations" << endl;
@@ -110,4 +114,12 @@ void FrameBufferObject::changeTextureAttachments(vector<GLuint> tex, vector<char
 	texAttachLoc = texAttachLocations;
 
 	textureAttach();
+}
+
+void FrameBufferObject::renderToTextureAttachments()
+{
+	glBindVertexArray(vertex_array);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
+	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_SHORT,0);
+	glBindVertexArray(0);
 }

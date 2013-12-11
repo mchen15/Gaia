@@ -15,6 +15,7 @@
 #include "constants.h"
 #include "fboUtility.h"
 #include "skybox.h"
+#include "normalFBO.h"
 
 using std::cout;
 using std::endl;
@@ -56,6 +57,7 @@ GLuint water_inc_prog;
 GLuint copy_tex_prog;
 GLuint skybox_prog;
 GLuint water_shading_prog;
+GLuint normalmap_prog;
 GLuint smooth_intermediate_prog;
 GLuint smooth_prog;
 
@@ -71,7 +73,7 @@ GLuint foammap_tex;
 GLuint smooth_intermediate_tex;
 
 //Smooth
-FrameBufferObject* normalsFBO;
+//FrameBufferObject* normalsFBO;
 FrameBufferObject* smooth1FBO;
 
 // FBOs
@@ -84,6 +86,7 @@ FrameBufferObject* flowSimVelFBO;
 FrameBufferObject* flowWatHeightFBO;
 FrameBufferObject* sedTransFBO;
 FrameBufferObject* waterIncFBO;
+NormalMapFBO* normalMapFBO;
 
 int mouse_buttons = 0;
 int mouse_old_x = 0;

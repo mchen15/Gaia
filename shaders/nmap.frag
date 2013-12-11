@@ -105,5 +105,6 @@ void main(void)
 		colorNormal = normal;
 	}
 
-	color = vec4(colorNormal,1.0);
+	out_Color = vec4(colorNormal,1.0);
+	//out_Color = texture(u_normalMap, v_Texcoord);
 }

@@ -13,10 +13,13 @@ class FrameBufferObject
 {
 public:
 	FrameBufferObject();
-	FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
+	FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations, 
+						unsigned int quadVao = 0, unsigned int quadIBO = 0,unsigned int numQuadIndices = 0);
 	~FrameBufferObject();
 	void changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
 	GLuint getFBOHandle() { return FBOHandle; }
+
+	void renderToTextureAttachments();
 
 protected:
 	void checkFrameBufferStatus(GLenum framebufferStatus);
@@ -32,6 +35,10 @@ protected:
 	vector<GLuint> textures;		// textures that have already been generated and will be used to store the outputs of this fbo
 	vector<char*> shaderOut;		// names of the output attributes that the shaders using this FBO will write to
 	vector<GLenum> texAttachLoc;	// attachment points for the textures (e.g. GL_COLOR_ATTACHMENTi)
+
+	unsigned int vertex_array; 
+	unsigned int vbo_indices;
+	unsigned int num_indices;
 };
 
 #endif

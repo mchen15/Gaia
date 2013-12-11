@@ -1,8 +1,10 @@
 #include "normalFBO.h"
 
-NormalMapFBO::NormalMapFBO(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations) :
-FrameBufferObject(w, h, shader, tex, outNames, texAttachLocations)
+NormalMapFBO::NormalMapFBO(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations,
+	unsigned int quadVao, unsigned int quadIBO,unsigned int numQuadIndices) :
+	FrameBufferObject(w, h, shader, tex, outNames, texAttachLocations, quadVao, quadIBO, numQuadIndices)
 {
+	toggleNormalVal = 0;
 }
 
 NormalMapFBO::~NormalMapFBO()
@@ -12,10 +14,10 @@ NormalMapFBO::~NormalMapFBO()
 void NormalMapFBO::generateNormalMap(GLint inTexHandle, GLint referenceNormalMap)
 {
 	inputTexHandle = inTexHandle;
-	referenceNormalMap = refNormalMap;
+	refNormalMap = referenceNormalMap;
 
 	setNormalMapProgUniforms();
-
+	renderToTextureAttachments();
 }
 
 void NormalMapFBO::setNormalMapProgUniforms()
@@ -37,4 +39,14 @@ void NormalMapFBO::setNormalMapProgUniforms()
 		glBindTexture(GL_TEXTURE_2D, refNormalMap);
 		glUniform1i(uniformLocation, 1);
 	}
+
+	uniformLocation = glGetUniformLocation(shaderProg,U_TOGGLENORMALID);
+	if (uniformLocation != -1 && refNormalMap != -1)
+	{
+		glUniform1i(uniformLocation, toggleNormalVal);
+	}
+
+	uniformLocation = glGetUniformLocation(shaderProg,U_HEIGHTSCALEID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, heightScale);
 }

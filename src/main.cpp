@@ -352,22 +352,12 @@ void display(void)
 
 	if (genNormalMap)
 	{
-		glUseProgram(curr_prog);
-		bindFBO(normalsFBO->getFBOHandle());
+		glUseProgram(normalmap_prog);
+		bindFBO(normalMapFBO->getFBOHandle());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		normalMapFBO->generateNormalMap(heightmap_tex, normalmap_tex);
+		normalMapFBO->renderToTextureAttachments();
 
-		setCurrProgUniforms();
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
-		drawQuad();
-		
 		unbindTextures();
 		glUseProgram(smooth_intermediate_prog);
 		bindFBO(smooth1FBO->getFBOHandle());
@@ -1051,6 +1041,7 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case ('t'):
 			toggleNormalVal = !toggleNormalVal;
+			normalMapFBO->toggleNormalMap();
 			break;
 		case ('i'):
 			userInteraction = !userInteraction;
@@ -1321,8 +1312,7 @@ void attachTempTexToFBO(FrameBufferObject** fbo, char* outName, GLuint shader_pr
 
 void setUpNormalsFBO()
 {
-	// setting up texture handles: terrainAttr
-	
+	// setting up texture handles: temp_tex
 	vector<GLuint> fboTex;
 	fboTex.push_back(temp_tex);
 
@@ -1333,7 +1323,7 @@ void setUpNormalsFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	normalsFBO = new FrameBufferObject(width, height, curr_prog, fboTex, fboOutNames, attachLocations);
+	normalMapFBO = new NormalMapFBO(width, height, curr_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
 }
 
 void setUpSmooth1FBO()
@@ -1536,6 +1526,8 @@ void initErosionFBO()
 	//setUpEvapFBO();
 }
 
+
+
 void deleteErosionFBO()
 {
 	delete copyFBO;
@@ -1562,6 +1554,7 @@ void initErosionShaders()
 	water_inc_prog = glslUtility::createProgram(vertWatIncPath, NULL, NULL, NULL, fragWatIncPath, attributeWithTexLocation, 2);
 	copy_tex_prog = glslUtility::createProgram(vertCopyPath, NULL, NULL, NULL, fragCopyPath, attributeWithTexLocation, 2);
 	water_shading_prog = glslUtility::createProgram(vertWaterPath, NULL, NULL, NULL, fragWaterPath, attributeWithTexLocation, 2);
+	normalmap_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
 }
 
 void initShader() {
@@ -1595,7 +1588,6 @@ void initShader() {
 			plane->setIndexMode(INDEX_MODE::QUADS);
 			curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
 		}
-		//curr_prog = glslUtility::createProgram(vertShaderPath, tessCtrlShaderPath, tessEvalShadePath, NULL, fragShaderPath, attributeLocation, 1);
 	}
 
 	skybox_prog = glslUtility::createProgram(vertSkyboxShaderPath, NULL, NULL, NULL, fragSkyboxShaderPath, attributeLocation, 1);

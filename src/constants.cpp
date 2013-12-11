@@ -2,8 +2,8 @@
 
 // Program flow switches
 
-bool genNormalMap = false;
-bool enableErosion = true;
+bool genNormalMap = true;
+bool enableErosion = false;
 bool enableTexcoords = false;
 bool enableWaterTest = false;
 
