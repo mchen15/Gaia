@@ -71,7 +71,6 @@ GLuint terrainattr_tex;
 GLuint velocity_tex;
 GLuint temp_tex;
 GLuint foammap_tex;
-GLuint smooth_intermediate_tex;
 
 //Smooth
 //FrameBufferObject* normalsFBO;

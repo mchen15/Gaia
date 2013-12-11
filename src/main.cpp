@@ -354,23 +354,9 @@ void display(void)
 	{
 		glUseProgram(normalmap_prog);
 		bindFBO(normalMapFBO->getFBOHandle());
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		normalMapFBO->generateNormalMap(heightmap_tex, normalmap_tex);
-
 		smoothKernelFBO->smooth(temp_tex,true);
-
-		//unbindTextures();
-		//glUseProgram(smooth_intermediate_prog);
-		//bindFBO(smooth1FBO->getFBOHandle());
-		//setSmoothIntermediateProgUniforms();
-		//drawQuad();
-
-		//unbindTextures();
-		//glUseProgram(smooth_prog);
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		//setSmoothProgUniforms();
-		//drawQuad();
 
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
@@ -467,30 +453,6 @@ void setCopyTexProgUniforms()
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, temp_tex);
-		glUniform1i(uniformLocation, 0);	
-	}
-}
-
-void setSmoothIntermediateProgUniforms()
-{
-	GLint uniformLocation = -1;
-	uniformLocation = glGetUniformLocation(smooth_intermediate_prog, "u_InputTex");
-	if (uniformLocation != -1)
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, temp_tex);
-		glUniform1i(uniformLocation, 0);	
-	}
-}
-
-void setSmoothProgUniforms()
-{
-	GLint uniformLocation = -1;
-	uniformLocation = glGetUniformLocation(smooth_prog, "u_SmoothPass1tex");
-	if (uniformLocation != -1)
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, smooth_intermediate_tex);
 		glUniform1i(uniformLocation, 0);	
 	}
 }
@@ -1172,14 +1134,6 @@ void initTextures()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	
-	glGenTextures(1, &smooth_intermediate_tex);
-	glBindTexture(GL_TEXTURE_2D, smooth_intermediate_tex);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
 }
 
 void initScene()
@@ -1437,9 +1391,8 @@ void setUpEvapFBO()
 
 void setUpSmoothPass1FBO()
 {
-	// setting up texture handles: terrainAttr
 	vector<GLuint> fboTex;
-	fboTex.push_back(smooth_intermediate_tex);
+	fboTex.push_back(temp_tex); // note that this texture doesnt matter because SmoothKernelFBO will use its own intermediate texture.
 
 	// setting up the output variable names used in the shader
 	vector<char*> fboOutNames;
@@ -1467,26 +1420,8 @@ void setUpSmoothPass2FBO()
 	smooth2FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
 }
 
-void setUpSmoothFBO()
-{
-	// setting up texture handles: terrainAttr
-	vector<GLuint> fboTex;
-	fboTex.push_back(smooth_intermediate_tex);
-
-	// setting up the output variable names used in the shader
-	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_Color");
-
-	vector<GLenum> attachLocations;
-	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
-
-	smooth1FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations);
-}
-
 void setUpSmoothingKernelFBO()
 {
-	setUpSmoothFBO();
-
 	setUpSmoothPass1FBO();
 	setUpSmoothPass2FBO();
 	smoothKernelFBO = new SmoothKernelFBO(smooth1FBO, smooth2FBO);
@@ -1494,7 +1429,6 @@ void setUpSmoothingKernelFBO()
 
 void initNormalFBO()
 {
-	//NOTE TO SELF: Havent deleted the new normals FBOs
 	setUpNormalsFBO();
 	setUpSmoothingKernelFBO();
 }
@@ -1560,6 +1494,8 @@ void deleteErosionFBO()
 	delete flowWatHeightFBO;
 	delete sedTransFBO;
 	delete waterIncFBO;
+	delete normalMapFBO;
+	delete smoothKernelFBO;
 }
 
 void initErosionShaders()
