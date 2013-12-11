@@ -12,6 +12,14 @@ enum INDEX_MODE {
 	CORNER
 };
 
+enum WATER_SOURCE {
+	RAIN,
+	LAKE,
+	NOSOURCE
+};
+
+extern WATER_SOURCE waterSource;
+
 extern int NUM_QUADS;
 extern vec2 SUBDIV;
 extern float texScale;
@@ -130,4 +138,9 @@ extern char* U_LIGHTDIRECTIONID;
 extern char* U_FRESNELTERMID;
 extern char* U_CAMPOSID;
 extern char* U_FOAMTEXID;
+extern char* U_MANIPCENTERID;
+extern char* U_MANIPRADIUSID;
+extern char* U_WTRSRCID;
+extern char* U_USERINTID;
+extern char* U_RANDSEED;
 #endif

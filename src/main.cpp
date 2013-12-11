@@ -7,6 +7,8 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/verbose_operator.hpp>
+#include <ctime>
+#include <cstdlib>
 
 void reshape(int w, int h)
 {
@@ -412,7 +414,6 @@ void display(void)
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_DEPTH_TEST);
 		setCurrProgUniforms();
-
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
 
@@ -537,6 +538,30 @@ void setWaterIncProgUniforms()
 	uniformLocation = glGetUniformLocation(water_inc_prog,U_DELTATID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation,deltaT);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_WTRSRCID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation,waterSource);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_MANIPCENTERID);
+	if (uniformLocation != -1)
+		glUniform2fv(uniformLocation, 1, &terrainManipulatorCenter[0]);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_MANIPRADIUSID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, terrainManipulatorRadius);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_WTRSRCID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation, waterSource);
+
+	srand((unsigned)time(0)); 
+	float randomSeed = (float)rand()/RAND_MAX;
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_RANDSEED);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,randomSeed);
+
 }
 
 void setFlowFluxProgUniforms()
@@ -863,6 +888,21 @@ void setCurrProgUniforms()
 		glm::vec4 lightColor = glm::vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 		glUniform4fv(uniformLocation, 1, &lightColor[0]);
 	}
+	uniformLocation = glGetUniformLocation(curr_prog,U_MANIPCENTERID);
+	if (uniformLocation != -1)
+		glUniform2fv(uniformLocation, 1, &terrainManipulatorCenter[0]);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_MANIPRADIUSID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, terrainManipulatorRadius);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTSCALEID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, heightScale);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_USERINTID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation, userInteraction);
 }
 
 void setWaterTestUniforms ()
@@ -1012,6 +1052,21 @@ void keyboard(unsigned char key, int x, int y)
 		case ('t'):
 			toggleNormalVal = !toggleNormalVal;
 			break;
+		case ('i'):
+			userInteraction = !userInteraction;
+			break;
+		case ('k'):
+			if(userInteraction)
+			{
+				waterSource = RAIN;
+			}
+			break;
+		case ('l'):
+			if(userInteraction)
+			{
+				waterSource = NOSOURCE;
+			}
+			break;
 		case('5'):
 			pixelsPerEdge++;
 			cout << "Lod Factor = " << pixelsPerEdge << endl;;
@@ -1022,6 +1077,14 @@ void keyboard(unsigned char key, int x, int y)
 			cout << "Lod Factor = " << pixelsPerEdge  << endl;;
 			break;
 
+		case('['):
+			terrainManipulatorRadius -= 0.002;
+			if(terrainManipulatorRadius<= 0.002)
+				terrainManipulatorRadius= 0.002;
+			break;
+
+		case(']'):
+			terrainManipulatorRadius += 0.002;
 	}
 }
 
@@ -1029,8 +1092,11 @@ void mouse(int button, int state, int x, int y)
 {
     if (state == GLUT_DOWN) {
         mouse_buttons |= 1<<button;
+		if(userInteraction)
+			waterSource = LAKE;
     } else if (state == GLUT_UP) {
         mouse_buttons = 0;
+		waterSource = NOSOURCE;
     }
 
     mouse_old_x = x;
@@ -1052,6 +1118,37 @@ void motion(int x, int y)
 
     mouse_old_x = x;
     mouse_old_y = y;
+}
+
+void passiveMotion(int x, int y)
+{
+	if ( userInteraction)
+	{
+	float px = (float)x/width;
+	float py = 1.0 - (float)y/height;
+	
+	px = px*2.0 - 1.0;
+	py = py*2.0 - 1.0;
+
+	glm::mat4 pInv = glm::inverse(cam->getPersp(width,height));
+	glm::mat4 viewInv = glm::inverse(cam->getView());
+
+
+	glm::vec4 ndc = pInv*glm::vec4(px,py,0.0,1.0);
+	ndc = glm::normalize(ndc);
+	ndc.w = 0.0;
+	glm::vec4 worldSpace = glm::normalize(viewInv*ndc);
+	glm::vec3 eyeToSceneDir = glm::vec3(worldSpace.x,worldSpace.y,worldSpace.z);
+	
+	float t = -cam->getPosition().z / eyeToSceneDir.z;
+	glm::vec3 point = cam->getPosition() + t*eyeToSceneDir;
+
+	if( point.x>= 0 && point.x<=width && point.y >=0 && point.y<=height)
+	{
+		terrainManipulatorCenter.x = point.x/width;
+		terrainManipulatorCenter.y = point.y/height;
+	}
+	}
 }
 
 void initTextures()
@@ -1100,13 +1197,12 @@ void initTextures()
 void initScene()
 {
 	// camera set up for quads rendering using 2nd technique
-	vec3 camPosition = vec3(0, -200,400);
+	vec3 camPosition = vec3(0, -200,300);
 	vec3 lookAtPoint = vec3(512,512,0);
 
 	// camera set up for lower corner technique
-	//vec3 camPosition = vec3(0, -3, 500);
-	//vec3 lookAtPoint = vec3(0,0,0);
-
+	//vec3 camPosition = vec3(0, 0, 0);
+	//vec3 lookAtPoint = vec3(5,0,0);
 
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
@@ -1606,6 +1702,7 @@ int main(int argc, char* argv[])
     glutKeyboardFunc(keyboard);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
+	glutPassiveMotionFunc(passiveMotion);
 
     glutMainLoop();
 	clearScene();

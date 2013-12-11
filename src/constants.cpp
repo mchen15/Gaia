@@ -1,11 +1,11 @@
 #include "constants.h"
 
 // Program flow switches
-bool genNormalMap = true;
-bool enableErosion = false;
+
+bool genNormalMap = false;
+bool enableErosion = true;
 bool enableTexcoords = false;
 bool enableWaterTest = false;
-
 
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(128, 128);
@@ -17,6 +17,7 @@ float pixelsPerEdge = 1;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 
+WATER_SOURCE waterSource = NOSOURCE;
 float deltaT = 0.05;
 float virtualPipeLength = 1.0;
 float virtualPipeArea = virtualPipeLength*virtualPipeLength;
@@ -125,3 +126,8 @@ char* U_LIGHTDIRECTIONID = "u_lightDirection";
 char* U_FRESNELTERMID = "u_fresnelR0";
 char* U_CAMPOSID = "u_cameraPosition";
 char* U_FOAMTEXID = "u_foamMap";
+char* U_MANIPCENTERID = "u_manipCenter";
+char* U_MANIPRADIUSID = "u_manipRadius";
+char* U_WTRSRCID = "u_waterSrc";
+char* U_USERINTID = "u_userInteraction";
+char* U_RANDSEED = "u_randomSeed";
