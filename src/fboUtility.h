@@ -18,8 +18,10 @@ public:
 	~FrameBufferObject();
 	void changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
 	GLuint getFBOHandle() { return FBOHandle; }
-
-	void renderToTextureAttachments();
+	GLuint getShaderProg() { return shaderProg; }
+	int getWidth() { return width; }
+	int getHeight() {return height; }
+	void render();
 
 protected:
 	void checkFrameBufferStatus(GLenum framebufferStatus);

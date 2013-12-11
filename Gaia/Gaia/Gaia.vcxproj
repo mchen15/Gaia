@@ -134,6 +134,7 @@
     <ClInclude Include="..\..\src\normalFBO.h" />
     <ClInclude Include="..\..\src\plane.h" />
     <ClInclude Include="..\..\src\skybox.h" />
+    <ClInclude Include="..\..\src\smoothFBO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\camera.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="..\..\src\normalFBO.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />
     <ClCompile Include="..\..\src\skybox.cpp" />
+    <ClCompile Include="..\..\src\smoothFBO.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

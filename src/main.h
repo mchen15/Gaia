@@ -16,6 +16,7 @@
 #include "fboUtility.h"
 #include "skybox.h"
 #include "normalFBO.h"
+#include "smoothFBO.h"
 
 using std::cout;
 using std::endl;
@@ -87,6 +88,7 @@ FrameBufferObject* flowWatHeightFBO;
 FrameBufferObject* sedTransFBO;
 FrameBufferObject* waterIncFBO;
 NormalMapFBO* normalMapFBO;
+SmoothKernelFBO* smoothKernelFBO;
 
 int mouse_buttons = 0;
 int mouse_old_x = 0;

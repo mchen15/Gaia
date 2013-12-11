@@ -17,7 +17,7 @@ void NormalMapFBO::generateNormalMap(GLint inTexHandle, GLint referenceNormalMap
 	refNormalMap = referenceNormalMap;
 
 	setNormalMapProgUniforms();
-	renderToTextureAttachments();
+	render();
 }
 
 void NormalMapFBO::setNormalMapProgUniforms()

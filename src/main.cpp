@@ -356,7 +356,6 @@ void display(void)
 		bindFBO(normalMapFBO->getFBOHandle());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		normalMapFBO->generateNormalMap(heightmap_tex, normalmap_tex);
-		normalMapFBO->renderToTextureAttachments();
 
 		unbindTextures();
 		glUseProgram(smooth_intermediate_prog);

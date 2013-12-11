@@ -116,7 +116,7 @@ void FrameBufferObject::changeTextureAttachments(vector<GLuint> tex, vector<char
 	textureAttach();
 }
 
-void FrameBufferObject::renderToTextureAttachments()
+void FrameBufferObject::render()
 {
 	glBindVertexArray(vertex_array);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
