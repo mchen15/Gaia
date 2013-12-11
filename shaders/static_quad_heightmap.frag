@@ -14,11 +14,13 @@ uniform float u_gridSpacing;
 uniform vec4 u_lightColor;
 uniform vec3 u_lightDirection;
 uniform int u_toggleNormal;
+uniform int u_userInteraction;
 
 //Terrain Manipulator
 uniform vec2 u_manipCenter;
 uniform float u_manipRadius;
 
+const float manipWidth = 0.0001;
 
 //vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
 //vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
@@ -109,7 +111,6 @@ void main(){
 		normal = sampleNormal(texcoord);
 	//vec3 color = sampleDiffuse(texcoord);
 
-
 	
 	vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
 	
@@ -118,11 +119,13 @@ void main(){
 
 	float avgSlope = (diff1 + diff2) / 2.0;
 
-	
-	if ( u_manipCenter.x >=0.0 && u_manipCenter.x <=1.0 && u_manipCenter.y >=0.0 && u_manipCenter.y <=1.0)
+	if (u_userInteraction==1 && u_manipCenter.x >=0.0 && u_manipCenter.x <=1.0 && u_manipCenter.y >=0.0 && u_manipCenter.y <=1.0)
 	{
-		if ( (texcoord.x-u_manipCenter.x)*(texcoord.x-u_manipCenter.x) + 
-			(texcoord.y-u_manipCenter.y)*(texcoord.y-u_manipCenter.y) <= u_manipRadius*u_manipRadius)
+		float distSq = (texcoord.x-u_manipCenter.x)*(texcoord.x-u_manipCenter.x) + 
+			(texcoord.y-u_manipCenter.y)*(texcoord.y-u_manipCenter.y);
+		float radSq = u_manipRadius*u_manipRadius;
+
+		if ( distSq >= radSq-manipWidth && distSq<=radSq+manipWidth)
 		{
 			color = vec3(1.0,0.0,0.0);
 		}

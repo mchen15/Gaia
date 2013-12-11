@@ -494,6 +494,23 @@ void setWaterIncProgUniforms()
 	uniformLocation = glGetUniformLocation(water_inc_prog,U_DELTATID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation,deltaT);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_WTRSRCID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation,waterSource);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_MANIPCENTERID);
+	if (uniformLocation != -1)
+		glUniform2fv(uniformLocation, 1, &terrainManipulatorCenter[0]);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_MANIPRADIUSID);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation, terrainManipulatorRadius);
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_WTRSRCID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation, waterSource);
+
 }
 
 void setFlowFluxProgUniforms()
@@ -831,6 +848,10 @@ void setCurrProgUniforms()
 	uniformLocation = glGetUniformLocation(curr_prog,U_HEIGHTSCALEID);
 	if (uniformLocation != -1)
 		glUniform1f(uniformLocation, heightScale);
+
+	uniformLocation = glGetUniformLocation(curr_prog,U_USERINTID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation, userInteraction);
 }
 
 void setWaterTestUniforms ()
@@ -980,6 +1001,9 @@ void keyboard(unsigned char key, int x, int y)
 		case ('t'):
 			toggleNormalVal = !toggleNormalVal;
 			break;
+		case ('i'):
+			userInteraction = !userInteraction;
+			break;
 		case('5'):
 			pixelsPerEdge++;
 			cout << "Lod Factor = " << pixelsPerEdge << endl;;
@@ -991,13 +1015,13 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 
 		case('['):
-			terrainManipulatorRadius -= 0.02;
-			if(terrainManipulatorRadius<= 0.02)
-				terrainManipulatorRadius= 0.02;
+			terrainManipulatorRadius -= 0.002;
+			if(terrainManipulatorRadius<= 0.002)
+				terrainManipulatorRadius= 0.002;
 			break;
 
 		case(']'):
-			terrainManipulatorRadius += 0.02;
+			terrainManipulatorRadius += 0.002;
 	}
 }
 
@@ -1005,8 +1029,11 @@ void mouse(int button, int state, int x, int y)
 {
     if (state == GLUT_DOWN) {
         mouse_buttons |= 1<<button;
+		if(userInteraction)
+			waterSource = LAKE;
     } else if (state == GLUT_UP) {
         mouse_buttons = 0;
+		waterSource = NOSOURCE;
     }
 
     mouse_old_x = x;

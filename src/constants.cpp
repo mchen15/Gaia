@@ -17,6 +17,7 @@ float pixelsPerEdge = 1;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 
+WATER_SOURCE waterSource = NOSOURCE;
 float deltaT = 0.05;
 float virtualPipeLength = 1.0;
 float virtualPipeArea = virtualPipeLength*virtualPipeLength;
@@ -125,3 +126,5 @@ char* U_CAMPOSID = "u_cameraPosition";
 char* U_FOAMTEXID = "u_foamMap";
 char* U_MANIPCENTERID = "u_manipCenter";
 char* U_MANIPRADIUSID = "u_manipRadius";
+char* U_WTRSRCID = "u_waterSrc";
+char* U_USERINTID = "u_userInteraction";
