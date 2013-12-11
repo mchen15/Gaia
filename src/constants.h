@@ -123,4 +123,6 @@ extern char* U_KSID;
 extern char* U_KEID;
 extern char* U_UP;
 extern char* U_CUBEMAPID;
+extern char* U_LIGHTCOLORID;
+extern char* U_LIGHTDIRECTIONID;
 #endif

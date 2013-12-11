@@ -12,11 +12,11 @@ uniform mat4 u_mvInvTrans;
 uniform vec2 u_numPatches;
 uniform float u_gridSpacing;
 uniform vec4 u_lightColor;
-uniform vec4 u_lightDirection;
+uniform vec3 u_lightDirection;
 uniform int u_toggleNormal;
 
-vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
-vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
+//vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
+//vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 
 float sampleHeight(vec2 coord)
 {
@@ -108,8 +108,8 @@ void main(){
 	
 	vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
 	
-	float intensity = max(dot(incident, normal), 0.0);
-	color = color * intensity * light.xyz;
+	float intensity = max(dot(u_lightDirection, normal), 0.0);
+	color = color * intensity * u_lightColor.xyz;
 
 	float avgSlope = (diff1 + diff2) / 2.0;
 

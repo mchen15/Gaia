@@ -410,14 +410,7 @@ void display(void)
 		glUseProgram(water_shading_prog);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		mat4 model(1.0f);
-		mat4 view = cam->getView();
-		mat4 persp = cam->getPersp(float(width), float(height));
-
-		mat4 pvm = persp * view * model;
-		GLint uniformLocation = glGetUniformLocation(water_shading_prog, U_PVMID);
-		glUniformMatrix4fv(uniformLocation, 1,GL_FALSE ,&pvm[0][0]);
+		setWaterTestUniforms();
 		waterTestPlane->setIndexMode(INDEX_MODE::TRIANGLES);
 		waterTestPlane->draw(triangle_attributes::POSITION, triangle_attributes::TEXCOORD);
 	}
@@ -813,6 +806,60 @@ void setCurrProgUniforms()
 	{
 		vec2 screen_size = vec2((float)width, (float)height);
 		glUniform2fv(uniformLocation, 1, &screen_size[0]);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_LIGHTDIRECTIONID);
+	if (uniformLocation != -1)
+	{
+		vec3 lightDir = glm::normalize(vec3(1.0, 5.2, 4.5));
+		glUniform3fv(uniformLocation, 1, &lightDir[0]);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_LIGHTCOLORID);
+	if (uniformLocation)
+	{
+		glm::vec4 lightColor = glm::vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
+		glUniform4fv(uniformLocation, 1, &lightColor[0]);
+	}
+}
+
+void setWaterTestUniforms ()
+{
+	mat4 model(1.0f);
+	mat4 view = cam->getView();
+	mat4 persp = cam->getPersp(float(width), float(height));
+
+	mat4 pvm = persp * view * model;
+	GLint uniformLocation = glGetUniformLocation(water_shading_prog, U_PVMID);
+	glUniformMatrix4fv(uniformLocation, 1,GL_FALSE ,&pvm[0][0]);
+	
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_LIGHTDIRECTIONID);
+	if (uniformLocation != -1)
+	{
+		vec3 lightDir = glm::normalize(vec3(1.0, 5.2, 4.5));
+		glUniform3fv(uniformLocation, 1, &lightDir[0]);
+	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_LIGHTCOLORID);
+	if (uniformLocation)
+	{
+		glm::vec4 lightColor = glm::vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
+		glUniform4fv(uniformLocation, 1, &lightColor[0]);
+	}
+	uniformLocation = glGetUniformLocation(water_shading_prog,U_HEIGHTMAPID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
+		glUniform1i(uniformLocation,0);
+	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog,U_NORMALMAPID);
+	if (uniformLocation !=-1)
+	{
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
+		glUniform1i(uniformLocation, 1);
 	}
 }
 

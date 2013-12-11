@@ -94,6 +94,7 @@ const char *attributeLocation[] = {"Position"};
 void mouse(int button, int state, int x, int y);
 void motion(int x, int y);
 void initShader();
+void setWaterTestUniforms ();
 void setCurrProgUniforms();
 void setSkyboxProgUniforms();
 void reshape(int w, int h);

@@ -119,3 +119,5 @@ char* U_KSID = "u_Ks";
 char* U_KEID = "u_Ke";
 char* U_UP = "u_up";
 char* U_CUBEMAPID = "u_cubemap";
+char* U_LIGHTCOLORID = "u_lightColor";
+char* U_LIGHTDIRECTIONID = "u_lightDirection";
