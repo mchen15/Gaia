@@ -846,6 +846,7 @@ void setWaterTestUniforms ()
 		glm::vec4 lightColor = glm::vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 		glUniform4fv(uniformLocation, 1, &lightColor[0]);
 	}
+	
 	uniformLocation = glGetUniformLocation(water_shading_prog,U_HEIGHTMAPID);
 	if (uniformLocation != -1)
 	{
@@ -861,8 +862,31 @@ void setWaterTestUniforms ()
 		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
 		glUniform1i(uniformLocation, 1);
 	}
-}
 
+	// calculate fresnel term
+	uniformLocation = glGetUniformLocation(water_shading_prog,U_FRESNELTERMID);
+	if (uniformLocation != -1)
+	{
+		float IOR = 1.33333;
+		float a = 0;
+		float c = cos(a) * IOR;
+		float g = sqrt(1 + pow(c,2) - pow(IOR, 2));
+		float t1 = pow((g-c)/(g+c), 2);
+		float t21 = c*(g+c) - pow(IOR,2);
+		float t22 = c*(g-c) + pow(IOR,2);
+		
+		float R0 = 0.5 * t1 * (1 + pow((t21/t22),2));
+
+		glUniform1f(uniformLocation, R0);
+	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_CAMPOS);
+	if (uniformLocation != -1)
+	{
+		vec3 camPos = cam->getPosition();
+		glUniform3fv(uniformLocation, 1, &camPos[0]);
+	}
+}
 void keyboard(unsigned char key, int x, int y) 
 {
 	switch(key) 

@@ -121,3 +121,5 @@ char* U_UP = "u_up";
 char* U_CUBEMAPID = "u_cubemap";
 char* U_LIGHTCOLORID = "u_lightColor";
 char* U_LIGHTDIRECTIONID = "u_lightDirection";
+char* U_FRESNELTERMID = "u_fresnelR0";
+char* U_CAMPOS = "u_cameraPosition";

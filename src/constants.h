@@ -125,4 +125,6 @@ extern char* U_UP;
 extern char* U_CUBEMAPID;
 extern char* U_LIGHTCOLORID;
 extern char* U_LIGHTDIRECTIONID;
+extern char* U_FRESNELTERMID;
+extern char* U_CAMPOS;
 #endif
