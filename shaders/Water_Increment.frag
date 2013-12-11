@@ -13,22 +13,36 @@ uniform float u_deltaT;
 uniform int u_waterSrc;
 uniform vec2 u_manipCenter;
 uniform float u_manipRadius;
+uniform float u_randomSeed;
 
 in vec2 v_Texcoord;
 out vec4 out_terrainAttr;
 
-
 float manipRadiusSq = u_manipRadius*u_manipRadius;
-vec2 manipCenter = vec2(0.5,0.5);
+
+float rand(vec2 co){
+  return fract(sin(u_randomSeed*dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 
 void main (void)
-{
+{ 
 	out_terrainAttr = texture(u_terrainAttrTex, v_Texcoord.st).rgba;
 	if ( u_waterSrc == LAKE)
 	{
 		vec2 dist = v_Texcoord-u_manipCenter;
 		if( dist.x*dist.x + dist.y*dist.y < manipRadiusSq)
 			out_terrainAttr.g += 0.1;
+	}
+
+	else if( u_waterSrc == RAIN)
+	{
+		float rainRate = 0.005;
+		float r = rand(v_Texcoord);
+		if ( r>0.6)
+		{
+			out_terrainAttr.g += u_deltaT*rainRate;
+		}
 	}
 	//vec2 dist = v_Texcoord-manipCenter;
 	//if( dist.x*dist.x + dist.y*dist.y < manipRadiusSq)

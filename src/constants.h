@@ -140,4 +140,5 @@ extern char* U_MANIPCENTERID;
 extern char* U_MANIPRADIUSID;
 extern char* U_WTRSRCID;
 extern char* U_USERINTID;
+extern char* U_RANDSEED;
 #endif

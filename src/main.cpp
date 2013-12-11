@@ -7,6 +7,8 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/verbose_operator.hpp>
+#include <ctime>
+#include <cstdlib>
 
 void reshape(int w, int h)
 {
@@ -511,6 +513,13 @@ void setWaterIncProgUniforms()
 	if (uniformLocation != -1)
 		glUniform1i(uniformLocation, waterSource);
 
+	srand((unsigned)time(0)); 
+	float randomSeed = (float)rand()/RAND_MAX;
+
+	uniformLocation = glGetUniformLocation(water_inc_prog,U_RANDSEED);
+	if (uniformLocation != -1)
+		glUniform1f(uniformLocation,randomSeed);
+
 }
 
 void setFlowFluxProgUniforms()
@@ -1003,6 +1012,18 @@ void keyboard(unsigned char key, int x, int y)
 			break;
 		case ('i'):
 			userInteraction = !userInteraction;
+			break;
+		case ('k'):
+			if(userInteraction)
+			{
+				waterSource = RAIN;
+			}
+			break;
+		case ('l'):
+			if(userInteraction)
+			{
+				waterSource = NOSOURCE;
+			}
 			break;
 		case('5'):
 			pixelsPerEdge++;

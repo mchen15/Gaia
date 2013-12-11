@@ -128,3 +128,4 @@ char* U_MANIPCENTERID = "u_manipCenter";
 char* U_MANIPRADIUSID = "u_manipRadius";
 char* U_WTRSRCID = "u_waterSrc";
 char* U_USERINTID = "u_userInteraction";
+char* U_RANDSEED = "u_randomSeed";
