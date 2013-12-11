@@ -906,6 +906,15 @@ void setWaterTestUniforms ()
 		glBindTexture(GL_TEXTURE_2D, foammap_tex);
 		glUniform1i(uniformLocation, 2);
 	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_CUBEMAPID);
+
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->getTextureHandle());
+		glUniform1i(uniformLocation, 3);
+	}
 }
 void keyboard(unsigned char key, int x, int y) 
 {
