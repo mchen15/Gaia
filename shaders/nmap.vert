@@ -3,7 +3,7 @@
 in vec3 Position;
 in vec2 Texcoord;
 
-noperspective  out vec2 v_Texcoord;
+out vec2 v_Texcoord;
 
 void main(void) {
     //vec4 world = u_Model * vec4(Position, 1.0);

@@ -56,6 +56,8 @@ GLuint water_inc_prog;
 GLuint copy_tex_prog;
 GLuint skybox_prog;
 GLuint water_shading_prog;
+GLuint smooth_intermediate_prog;
+GLuint smooth_prog;
 
 // textures
 GLuint heightmap_tex;
@@ -66,6 +68,11 @@ GLuint terrainattr_tex;
 GLuint velocity_tex;
 GLuint temp_tex;
 GLuint foammap_tex;
+GLuint smooth_intermediate_tex;
+
+//Smooth
+FrameBufferObject* normalsFBO;
+FrameBufferObject* smooth1FBO;
 
 // FBOs
 FrameBufferObject* copyFBO;
@@ -103,6 +110,7 @@ void initTextures();
 void drawQuad();
 void attachTempTexToFBO(FrameBufferObject** fbo, GLuint shader_prog);
 void initErosionFBO();
+void initNormalFBO();
 void initErosionShaders();
 void initErosionTextures();
 void deleteErosionFBO();
@@ -125,6 +133,10 @@ void setErosionDepoProgUniforms();
 void setSedimentTransProgUniforms();
 void setEvapoProgUniforms();
 void setSkyboxProgUniforms();
+
+//Smooth
+void setSmoothProgUniforms();
+void setSmoothIntermediateProgUniforms();
 
 // quad for outputting normal map
 unsigned int vertex_array;

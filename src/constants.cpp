@@ -1,10 +1,10 @@
 #include "constants.h"
 
 // Program flow switches
-bool genNormalMap = false;
+bool genNormalMap = true;
 bool enableErosion = false;
 bool enableTexcoords = false;
-bool enableWaterTest = true;
+bool enableWaterTest = false;
 
 
 int NUM_QUADS = 1;
@@ -26,11 +26,10 @@ float Ke = 0.001;
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
-//const char* heightmapPath = "../../textures/test1024.png";
-const char* heightmapPath = "../../textures/terrain_heights.jpg";
+const char* heightmapPath = "../../textures/test1024.png";
+//const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
-
 
 const char* cubeMapUpImgPath = "../../textures/skybox/sunnyUp.png";
 const char* cubeMapDownImgPath = "../../textures/skybox/sunnyDown.png";
@@ -52,6 +51,9 @@ const char* fragQuadShaderPath = "../../shaders/static_quad_heightmap.frag";
 
 const char* nmapVertShaderPath = "../../shaders/nmap.vert";
 const char* nmapFragShaderPath = "../../shaders/nmap.frag";
+
+const char* smooth1FragShaderPath = "../../shaders/smoothIntermediate.frag";
+const char* smoothFragShaderPath = "../../shaders/smooth.frag";
 
 const char* vertTerrainTexInitPath = "../../shaders/Terrain_Initialization.vert";
 const char* fragTerrainTexInitPath = "../../shaders/Terrain_Initialization.frag";

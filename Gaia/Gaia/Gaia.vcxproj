@@ -106,6 +106,8 @@
     <None Include="..\..\shaders\Sediment_Transport.vert" />
     <None Include="..\..\shaders\skybox.frag" />
     <None Include="..\..\shaders\skybox.vert" />
+    <None Include="..\..\shaders\smooth.frag" />
+    <None Include="..\..\shaders\smoothIntermediate.frag" />
     <None Include="..\..\shaders\static_heightmap.frag" />
     <None Include="..\..\shaders\static_heightmap.tc" />
     <None Include="..\..\shaders\static_heightmap.te" />

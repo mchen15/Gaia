@@ -75,9 +75,6 @@
     <None Include="..\..\shaders\Water_Increment.vert">
       <Filter>Shaders\Erosion</Filter>
     </None>
-    <None Include="..\..\shaders\Terrain_Initialization.frag">
-      <Filter>Shaders\Erosion</Filter>
-    </None>
     <None Include="..\..\shaders\Terrain_Initialization.vert">
       <Filter>Shaders\Erosion</Filter>
     </None>
@@ -152,6 +149,15 @@
     </None>
     <None Include="..\..\shaders\fbo_test.vert">
       <Filter>Shaders\Test</Filter>
+    </None>
+    <None Include="..\..\shaders\smooth.frag">
+      <Filter>Shaders\Normal</Filter>
+    </None>
+    <None Include="..\..\shaders\smoothIntermediate.frag">
+      <Filter>Shaders\Normal</Filter>
+    </None>
+    <None Include="..\..\shaders\Terrain_Initialization.frag">
+      <Filter>Shaders\Erosion</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

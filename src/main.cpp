@@ -351,6 +351,7 @@ void display(void)
 	if (genNormalMap)
 	{
 		glUseProgram(curr_prog);
+		bindFBO(normalsFBO->getFBOHandle());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		setCurrProgUniforms();
@@ -364,6 +365,23 @@ void display(void)
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
 		drawQuad();
+		
+		unbindTextures();
+		glUseProgram(smooth_intermediate_prog);
+		bindFBO(smooth1FBO->getFBOHandle());
+		setSmoothIntermediateProgUniforms();
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, temp_tex);
+		drawQuad();
+
+		unbindTextures();
+		glUseProgram(smooth_prog);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		setSmoothProgUniforms();
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, smooth_intermediate_tex);
+		drawQuad();
+
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
@@ -461,6 +479,30 @@ void setCopyTexProgUniforms()
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, temp_tex);
+		glUniform1i(uniformLocation, 0);	
+	}
+}
+
+void setSmoothIntermediateProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(smooth_intermediate_prog, "u_InputTex");
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, temp_tex);
+		glUniform1i(uniformLocation, 0);	
+	}
+}
+
+void setSmoothProgUniforms()
+{
+	GLint uniformLocation = -1;
+	uniformLocation = glGetUniformLocation(smooth_prog, "u_SmoothPass1tex");
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, smooth_intermediate_tex);
 		glUniform1i(uniformLocation, 0);	
 	}
 }
@@ -1045,6 +1087,14 @@ void initTextures()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glBindTexture(GL_TEXTURE_2D, 0);
+	
+	glGenTextures(1, &smooth_intermediate_tex);
+	glBindTexture(GL_TEXTURE_2D, smooth_intermediate_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
 }
 
 void initScene()
@@ -1088,6 +1138,7 @@ void initErosionTextures()
 	glGenTextures(1, &terrainattr_tex);
 	glGenTextures(1, &velocity_tex);
 	glGenTextures(1, &temp_tex);
+
 
 	glBindTexture(GL_TEXTURE_2D, flux_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -1170,6 +1221,54 @@ void attachTempTexToFBO(FrameBufferObject** fbo, char* outName, GLuint shader_pr
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
 	*fbo = new FrameBufferObject(width, height, shader_prog, fboTex, fboOutName, attachLocations);
+}
+
+void setUpNormalsFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(temp_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("color");
+	
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	normalsFBO = new FrameBufferObject(width, height, curr_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpSmooth1FBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(temp_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_Color");
+	
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	smooth1FBO = new FrameBufferObject(width, height, smooth_intermediate_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpSmoothFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(smooth_intermediate_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_Color");
+	
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	smooth1FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpWaterIncFBO()
@@ -1284,6 +1383,14 @@ void setUpEvapFBO()
 	evapFBO = new FrameBufferObject(width, height, evapo_prog, fboTex, fboOutNames, attachLocations);
 }
 
+void initNormalFBO()
+{
+	//NOTE TO SELF: Havent deleted the new normals FBOs
+	setUpNormalsFBO();
+	setUpSmooth1FBO();
+	setUpSmoothFBO();
+}
+
 void initErosionFBO()
 {
 	//Copy FBO to be used for copying
@@ -1373,6 +1480,8 @@ void initShader() {
 	if (genNormalMap)
 	{
 		curr_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
+		smooth_intermediate_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, smooth1FragShaderPath, attributeWithTexLocation, 2);
+		smooth_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, smoothFragShaderPath, attributeWithTexLocation, 2);
 	}
 	else
 	{
@@ -1489,6 +1598,7 @@ int main(int argc, char* argv[])
 	initShader();
 	initErosionShaders();
 	initErosionFBO();
+	initNormalFBO();
 	// initialization of flex_tex, velocity_tex, and terrainattr_tex
 	terrainInit();
 	glutDisplayFunc(display);

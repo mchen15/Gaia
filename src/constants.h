@@ -48,6 +48,8 @@ const extern char* tessCtrlShaderPath;
 const extern char* tessEvalShadePath;
 const extern char* nmapVertShaderPath;
 const extern char* nmapFragShaderPath;
+const extern char* smooth1FragShaderPath;
+const extern char* smoothFragShaderPath;
 const extern char* vertQuadShaderPath;
 const extern char* tessQuadCtrlShaderPath;
 const extern char* tessQuadEvalShadePath; 

@@ -1,6 +1,6 @@
 #version 400
 
-noperspective  in vec2 v_Texcoord;
+in vec2 v_Texcoord;
 uniform sampler2D u_heightMap;
 uniform sampler2D u_diffuseMap;
 uniform sampler2D u_normalMap;
