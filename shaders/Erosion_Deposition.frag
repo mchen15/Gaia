@@ -64,6 +64,5 @@ void main (void)
 		out_terrainAttr.b = out_terrainAttr.b - scaledDiff;
 		out_terrainAttr.b = max(0,out_terrainAttr.b);
 	}
-
 }
 

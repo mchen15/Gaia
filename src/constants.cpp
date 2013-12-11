@@ -2,8 +2,8 @@
 
 // Program flow switches
 
-bool genNormalMap = true;
-bool enableErosion = false;
+bool genNormalMap = false;
+bool enableErosion = true;
 bool enableTexcoords = false;
 bool enableWaterTest = false;
 
@@ -131,3 +131,4 @@ char* U_MANIPRADIUSID = "u_manipRadius";
 char* U_WTRSRCID = "u_waterSrc";
 char* U_USERINTID = "u_userInteraction";
 char* U_RANDSEED = "u_randomSeed";
+char* U_COMPUTEDNORMALMAPID = "u_computedNormalMap";

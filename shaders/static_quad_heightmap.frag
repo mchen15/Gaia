@@ -6,6 +6,7 @@ out vec4 fragment;
 
 uniform sampler2D u_heightMap;
 uniform sampler2D u_normalMap;
+uniform sampler2D u_computedNormalMap;
 uniform sampler2D u_diffuseMap;
 uniform float u_heightScale; 
 uniform mat4 u_mvInvTrans;
@@ -22,12 +23,14 @@ uniform float u_manipRadius;
 
 const float manipWidth = 0.0001;
 
-//vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
-//vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
-
 float sampleHeight(vec2 coord)
 {
 	return u_heightScale*texture(u_heightMap, coord).r;
+}
+
+vec3 sampleComputedNormal (vec2 coord)
+{
+	return texture(u_computedNormalMap, coord).xyz;
 }
 
 vec3 sampleNormal(vec2 coord)
@@ -106,7 +109,8 @@ void main(){
 	// using normal map
 
 	if (u_toggleNormal == 0)
-		normal = getNormalSobel();
+		//normal = getNormalSobel();
+		normal = sampleComputedNormal(texcoord);
 	else
 		normal = sampleNormal(texcoord);
 	//vec3 color = sampleDiffuse(texcoord);

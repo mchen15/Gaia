@@ -59,15 +59,6 @@ void terrainInit()
 	glUseProgram(terrain_init_prog);
 	
 	// setting up uniforms (e.g. input textures)
-/*	GLint uniformLocation = -1;
-
-	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTSCALEID);
-	glUniform1f(uniformLocation, 1.0f);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, heightmap_tex);
-	uniformLocation = glGetUniformLocation(terrain_init_prog, U_HEIGHTMAPID);
-	glUniform1i(uniformLocation, 0);*/	
 	setTerrainInitProgUniforms();
 
 	drawQuad();
@@ -346,6 +337,30 @@ void evaporation()
 	drawQuad();
 }
 
+void updateNormals()
+{
+	glUseProgram(normalmap_prog);
+	bindFBO(normalMapFBO->getFBOHandle());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	normalMapFBO->generateNormalMap(terrainattr_tex, normalmap_tex);	 // render the normal map generated from terrainattr_tex into temp_tex
+																		 // see setUpNormalsFBO() for the setup information
+	
+	smoothKernelFBO->changeTextureAttachments(computednormalmap_tex);	 // render to computednormalmap_tex
+	smoothKernelFBO->smooth(temp_tex,false);							 // take temp_tex as the input
+}
+
+void renderTerrain()
+{
+	unbindTextures();
+	glUseProgram(curr_prog);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+	setCurrProgUniforms();
+	plane->draw(triangle_attributes::POSITION);
+}
+
 void display(void)
 {
 	updateFPS();
@@ -361,6 +376,8 @@ void display(void)
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
+		updateNormals();
+
 		// Water Increment
 		waterInc();
 		
@@ -369,33 +386,17 @@ void display(void)
 		flowSimWaterHeight();
 		flowSimVel();
 
-		//// Erosion Deposition
+		// Erosion Deposition
 		erosionDeposition();
 
-		//// Sediment Transport
+		// Sediment Transport
 		sedimentTransport();
 
-		//// Evaporation
+		// Evaporation
 		evaporation();
-		
-		// Testing fbo: bind the default framebuffer to render to screen
-		//renderToScreen();
-		unbindTextures();
-		glUseProgram(curr_prog);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_DEPTH_TEST);
-		setCurrProgUniforms();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, normalmap_tex);
-
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
-		plane->draw(triangle_attributes::POSITION);
+		// Show results!
+		renderTerrain();
 	}
 	else if (enableWaterTest)
 	{
@@ -811,6 +812,14 @@ void setCurrProgUniforms()
 		glUniform1i(uniformLocation, 2);
 	}
 
+	uniformLocation = glGetUniformLocation(curr_prog, U_COMPUTEDNORMALMAPID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, computednormalmap_tex);
+		glUniform1i(uniformLocation, 3);
+	}
+
 	uniformLocation = glGetUniformLocation(curr_prog,U_TOGGLENORMALID);
 	if (uniformLocation != -1)
 	{
@@ -1176,6 +1185,7 @@ void initErosionTextures()
 	glGenTextures(1, &terrainattr_tex);
 	glGenTextures(1, &velocity_tex);
 	glGenTextures(1, &temp_tex);
+	glGenTextures(1, &computednormalmap_tex);
 
 
 	glBindTexture(GL_TEXTURE_2D, flux_tex);
@@ -1200,6 +1210,13 @@ void initErosionTextures()
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
 
 	glBindTexture(GL_TEXTURE_2D, temp_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+	
+	glBindTexture(GL_TEXTURE_2D, computednormalmap_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);

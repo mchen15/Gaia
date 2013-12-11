@@ -65,6 +65,7 @@ GLuint smooth_prog;
 // textures
 GLuint heightmap_tex;
 GLuint normalmap_tex;
+GLuint computednormalmap_tex;
 GLuint diffusemap_tex;
 GLuint flux_tex;
 GLuint terrainattr_tex;
