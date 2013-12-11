@@ -131,6 +131,7 @@
     <ClInclude Include="..\..\src\fboUtility.h" />
     <ClInclude Include="..\..\src\glslUtility.h" />
     <ClInclude Include="..\..\src\main.h" />
+    <ClInclude Include="..\..\src\normalFBO.h" />
     <ClInclude Include="..\..\src\plane.h" />
     <ClInclude Include="..\..\src\skybox.h" />
   </ItemGroup>
@@ -140,6 +141,7 @@
     <ClCompile Include="..\..\src\fboUtility.cpp" />
     <ClCompile Include="..\..\src\glslUtility.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\normalFBO.cpp" />
     <ClCompile Include="..\..\src\plane.cpp" />
     <ClCompile Include="..\..\src\skybox.cpp" />
   </ItemGroup>

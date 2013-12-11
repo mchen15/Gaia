@@ -1328,7 +1328,7 @@ void setUpNormalsFBO()
 
 	// setting up the output variable names used in the shader
 	vector<char*> fboOutNames;
-	fboOutNames.push_back("color");
+	fboOutNames.push_back("out_Color");
 	
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);

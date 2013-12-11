@@ -89,7 +89,6 @@ void FrameBufferObject::textureAttach()
 	for (int m = 0; m < numTextures; ++m)
 	{
 		glBindTexture(GL_TEXTURE_2D, textures[m]);
-		//glFramebufferTexture(GL_FRAMEBUFFER, drawBufs[loc[m]], textures[m], 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, drawBufs[loc[m]], GL_TEXTURE_2D, textures[m], 0);
 	}
 

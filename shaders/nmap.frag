@@ -2,13 +2,12 @@
 
 in vec2 v_Texcoord;
 uniform sampler2D u_heightMap;
-uniform sampler2D u_diffuseMap;
 uniform sampler2D u_normalMap;
 uniform float u_heightScale;
 
 uniform int u_toggleNormal;
 
-out vec4 color;
+out vec4 out_Color;
 
 float sampleHeight(vec2 texcoord)
 {
@@ -95,7 +94,6 @@ void main(void)
 	if( u_toggleNormal == 0)
 	{
 		vec3 normal = getNormalSobel();		
-		
 		//normal = getSimpleNormals();
 		//vec3 normal = getNormalInternetWay();
 		colorNormal = normal*0.5+0.5;
@@ -108,5 +106,4 @@ void main(void)
 	}
 
 	color = vec4(colorNormal,1.0);
-	//color = vec4(texture(u_diffuseMap,v_Texcoord).rgb,1);
 }

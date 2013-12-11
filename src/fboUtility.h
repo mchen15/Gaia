@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-
 using std::vector;
 using std::cout;
 using std::endl;
@@ -19,11 +18,11 @@ public:
 	void changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
 	GLuint getFBOHandle() { return FBOHandle; }
 
-private:
+protected:
 	void checkFrameBufferStatus(GLenum framebufferStatus);
 	void textureAttach();
 
-private:
+protected:
 	int width;						// width and height of the output texture
 	int height;
 	GLuint shaderProg;				// give one of the shader programs that will be using this fbo to write output textures
