@@ -2,9 +2,9 @@
 
 // Program flow switches
 bool genNormalMap = false;
-bool enableErosion = false;
+bool enableErosion = true;
 bool enableTexcoords = false;
-bool enableWaterTest = true;
+bool enableWaterTest = false;
 
 
 int NUM_QUADS = 1;
@@ -38,7 +38,7 @@ const char* cubeMapLeftImgPath = "../../textures/skybox/sunnyLeft.png";
 const char* cubeMapRightImgPath = "../../textures/skybox/sunnyRight.png";
 const char* cubeMapFrontImgPath = "../../textures/skybox/sunnyFront.png";
 const char* cubeMapBackImgPath = "../../textures/skybox/sunnyBack.png";
-
+const char* foamTextureImgPath = "../../textures/foam_texture.jpg";
 
 const char* vertShaderPath = "../../shaders/static_heightmap.vert";
 const char* tessCtrlShaderPath = "../../shaders/static_heightmap.tc";
@@ -85,7 +85,6 @@ const char* fragSedTransPath = "../../shaders/Sediment_Transport.frag";
 const char* vertWatIncPath = "../../shaders/Water_Increment.vert";
 const char* fragWatIncPath = "../../shaders/Water_Increment.frag";
 
-
 // uniform ids
 char* U_FARID = "u_Far";
 char* U_NEARID = "u_Near";
@@ -122,4 +121,5 @@ char* U_CUBEMAPID = "u_cubemap";
 char* U_LIGHTCOLORID = "u_lightColor";
 char* U_LIGHTDIRECTIONID = "u_lightDirection";
 char* U_FRESNELTERMID = "u_fresnelR0";
-char* U_CAMPOS = "u_cameraPosition";
+char* U_CAMPOSID = "u_cameraPosition";
+char* U_FOAMTEXID = "u_foamMap";

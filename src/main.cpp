@@ -880,11 +880,31 @@ void setWaterTestUniforms ()
 		glUniform1f(uniformLocation, R0);
 	}
 
-	uniformLocation = glGetUniformLocation(water_shading_prog, U_CAMPOS);
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_CAMPOSID);
 	if (uniformLocation != -1)
 	{
 		vec3 camPos = cam->getPosition();
 		glUniform3fv(uniformLocation, 1, &camPos[0]);
+	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_MODELID);
+	if (uniformLocation != -1)
+	{
+		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &model[0][0]);
+	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_VIEWID);
+	if (uniformLocation != -1)
+	{
+		glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, &view[0][0]);
+	}
+
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_FOAMTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, foammap_tex);
+		glUniform1i(uniformLocation, 2);
 	}
 }
 void keyboard(unsigned char key, int x, int y) 
@@ -1008,6 +1028,14 @@ void initTextures()
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glBindTexture(GL_TEXTURE_2D, 0);
+
+	foammap_tex = (unsigned int)SOIL_load_OGL_texture(diffusemapPath,0,0,0);
+	glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void initScene()

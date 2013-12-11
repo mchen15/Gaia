@@ -4,6 +4,8 @@ in vec2 Position;
 in vec2 Texcoord;
 
 uniform sampler2D u_heightMap;
+uniform mat4x4 u_Model;
+uniform mat4x4 u_View;
 uniform mat4x4 u_pvm;
 
 out vec2 v_Texcoord;
@@ -16,5 +18,6 @@ void main(void) {
 
 	// using gl_texture_cube_map, so I can use the unit positions as 3D texture coordinates.
 	v_Texcoord = Texcoord;
-	v_Position = gl_Position.xyz;
+	vec4 pos = u_View * u_Model * vec4(Position, height, 1.0);
+	v_Position = pos.xyz;
 }

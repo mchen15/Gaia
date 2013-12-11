@@ -65,7 +65,7 @@ GLuint flux_tex;
 GLuint terrainattr_tex;
 GLuint velocity_tex;
 GLuint temp_tex;
-
+GLuint foammap_tex;
 
 // FBOs
 FrameBufferObject* copyFBO;

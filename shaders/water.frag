@@ -5,6 +5,7 @@ in vec3 v_Position;
 
 uniform sampler2D u_heightMap;
 uniform sampler2D u_normalMap;
+uniform sampler2D u_foamMap;
 uniform vec4 u_lightColor;
 uniform vec3 u_lightDirection;
 uniform float u_fresnelR0;
@@ -49,8 +50,14 @@ void main(void)
 	float shininess = 0.5;
 
 	float dotSpec = clamp(dot(reflectedEyeVec, -u_lightDirection.xyz) * 0.5 + 0.5, 0.0, 1.0);
-	vec3 specular = (1.0 - fresnel) * clamp(-u_lightDirection.y, 0 , 1) * ((pow(dotSpec, 512.0)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
+	vec3 specular = (1.0 - fresnel) * clamp(u_lightDirection.y, 0 , 1) * ((pow(dotSpec,2.5)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
 	specular += specular * 25 * clamp(shininess - 0.05, 0, 1);
 	
 	fragColor = vec4(diffuse * color + specular, 1.0);
+	//fragColor = u_lightColor;
+	//fragColor = vec4(specular, 1.0);
+	//fragColor = vec4(dotSpec, dotSpec, dotSpec, 1.0);
+	//fragColor = clamp(vec4(pow(dotSpec, 2.0),pow(dotSpec, 2.0),pow(dotSpec, 2.0),1.0), 0, 1);
+	//fragColor = vec4(clamp(u_lightDirection.y, 0 , 1),clamp(u_lightDirection.y, 0 , 1),clamp(u_lightDirection.y, 0 , 1),1);
+	//fragColor = vec4((1.0 - fresnel),(1.0 - fresnel),(1.0 - fresnel),1.0);
 }
