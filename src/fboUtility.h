@@ -16,6 +16,7 @@ public:
 	FrameBufferObject(int w, int h, GLuint shader, vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations, 
 						unsigned int quadVao = 0, unsigned int quadIBO = 0,unsigned int numQuadIndices = 0);
 	~FrameBufferObject();
+	void changeTextureAttachments(GLuint tex);
 	void changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations);
 	GLuint getFBOHandle() { return FBOHandle; }
 	GLuint getShaderProg() { return shaderProg; }

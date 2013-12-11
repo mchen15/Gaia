@@ -11,6 +11,7 @@ SmoothKernelFBO::SmoothKernelFBO(FrameBufferObject *pass1, FrameBufferObject *pa
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, pass2->getWidth(), pass2->getHeight(), 0, GL_RGBA, GL_FLOAT, 0);
+	glBindTexture(GL_TEXTURE_2D,0);
 }
 
 SmoothKernelFBO::~SmoothKernelFBO()
@@ -20,21 +21,23 @@ SmoothKernelFBO::~SmoothKernelFBO()
 	glDeleteTextures(1, &intermediateTexture);
 }
 
-void SmoothKernelFBO::render()
-{
-	smoothPass2FBO->render();
-}
-
 void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO)
 {
 	inputTexture = intex;
 
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_DEPTH_TEST);
 	glUseProgram(smoothPass1FBO->getShaderProg());
 	bindFBO(smoothPass1FBO->getFBOHandle());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	smoothPass1FBO->changeTextureAttachments(intermediateTexture);
 	setUpPass1FBOUniforms();
 	smoothPass1FBO->render();
 
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_DEPTH_TEST);
 	glUseProgram(smoothPass2FBO->getShaderProg());
 
 	if (bindToDefaultFBO)
@@ -77,4 +80,9 @@ void SmoothKernelFBO::bindFBO(GLuint framebuf)
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuf);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
+}
+
+void SmoothKernelFBO::changeTextureAttachments(GLuint tex)
+{
+	smoothPass2FBO->changeTextureAttachments(tex);
 }

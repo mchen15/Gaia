@@ -107,6 +107,12 @@ void FrameBufferObject::textureAttach()
 	delete drawBufs;
 }
 
+void FrameBufferObject::changeTextureAttachments(GLuint tex)
+{
+	textures[0] = tex;
+	textureAttach();
+}
+
 void FrameBufferObject::changeTextureAttachments(vector<GLuint> tex, vector<char*> outNames, vector<GLenum> texAttachLocations)
 {
 	textures = tex;
@@ -118,6 +124,11 @@ void FrameBufferObject::changeTextureAttachments(vector<GLuint> tex, vector<char
 
 void FrameBufferObject::render()
 {
+	if (num_indices == 0)
+	{
+		cout << "FrameBufferObject::render(): Error: Need to construct the Frame Buffer Object with vertex array, vbo indices, and number of indices!" << endl;
+		return;
+	}
 	glBindVertexArray(vertex_array);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_indices);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_SHORT,0);

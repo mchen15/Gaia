@@ -10,7 +10,7 @@ public:
 	SmoothKernelFBO(FrameBufferObject *pass1, FrameBufferObject *pass2);
 	~SmoothKernelFBO();
 	void smooth(GLuint intex, bool bindToDefaultFBO = false);
-	void render();
+	void changeTextureAttachments(GLuint tex);
 
 private:
 	FrameBufferObject *smoothPass1FBO;

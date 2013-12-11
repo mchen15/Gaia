@@ -354,29 +354,27 @@ void display(void)
 	{
 		glUseProgram(normalmap_prog);
 		bindFBO(normalMapFBO->getFBOHandle());
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		normalMapFBO->generateNormalMap(heightmap_tex, normalmap_tex);
 
-		unbindTextures();
-		glUseProgram(smooth_intermediate_prog);
-		bindFBO(smooth1FBO->getFBOHandle());
-		setSmoothIntermediateProgUniforms();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, temp_tex);
-		drawQuad();
+		smoothKernelFBO->smooth(temp_tex,true);
 
-		unbindTextures();
-		glUseProgram(smooth_prog);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		setSmoothProgUniforms();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, smooth_intermediate_tex);
-		drawQuad();
+		//unbindTextures();
+		//glUseProgram(smooth_intermediate_prog);
+		//bindFBO(smooth1FBO->getFBOHandle());
+		//setSmoothIntermediateProgUniforms();
+		//drawQuad();
+
+		//unbindTextures();
+		//glUseProgram(smooth_prog);
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//setSmoothProgUniforms();
+		//drawQuad();
 
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
-
 		// Water Increment
 		waterInc();
 		
@@ -1322,39 +1320,7 @@ void setUpNormalsFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	normalMapFBO = new NormalMapFBO(width, height, curr_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
-}
-
-void setUpSmooth1FBO()
-{
-	// setting up texture handles: terrainAttr
-	vector<GLuint> fboTex;
-	fboTex.push_back(temp_tex);
-
-	// setting up the output variable names used in the shader
-	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_Color");
-	
-	vector<GLenum> attachLocations;
-	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
-
-	smooth1FBO = new FrameBufferObject(width, height, smooth_intermediate_prog, fboTex, fboOutNames, attachLocations);
-}
-
-void setUpSmoothFBO()
-{
-	// setting up texture handles: terrainAttr
-	vector<GLuint> fboTex;
-	fboTex.push_back(smooth_intermediate_tex);
-
-	// setting up the output variable names used in the shader
-	vector<char*> fboOutNames;
-	fboOutNames.push_back("out_Color");
-	
-	vector<GLenum> attachLocations;
-	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
-
-	smooth1FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations);
+	normalMapFBO = new NormalMapFBO(width, height, normalmap_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
 }
 
 void setUpWaterIncFBO()
@@ -1469,12 +1435,68 @@ void setUpEvapFBO()
 	evapFBO = new FrameBufferObject(width, height, evapo_prog, fboTex, fboOutNames, attachLocations);
 }
 
+void setUpSmoothPass1FBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(smooth_intermediate_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_Color");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	smooth1FBO = new FrameBufferObject(width, height, smooth_intermediate_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
+}
+
+void setUpSmoothPass2FBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(temp_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_Color");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	smooth2FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
+}
+
+void setUpSmoothFBO()
+{
+	// setting up texture handles: terrainAttr
+	vector<GLuint> fboTex;
+	fboTex.push_back(smooth_intermediate_tex);
+
+	// setting up the output variable names used in the shader
+	vector<char*> fboOutNames;
+	fboOutNames.push_back("out_Color");
+
+	vector<GLenum> attachLocations;
+	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
+
+	smooth1FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations);
+}
+
+void setUpSmoothingKernelFBO()
+{
+	setUpSmoothFBO();
+
+	setUpSmoothPass1FBO();
+	setUpSmoothPass2FBO();
+	smoothKernelFBO = new SmoothKernelFBO(smooth1FBO, smooth2FBO);
+}
+
 void initNormalFBO()
 {
 	//NOTE TO SELF: Havent deleted the new normals FBOs
 	setUpNormalsFBO();
-	setUpSmooth1FBO();
-	setUpSmoothFBO();
+	setUpSmoothingKernelFBO();
 }
 
 void initErosionFBO()
@@ -1554,6 +1576,8 @@ void initErosionShaders()
 	copy_tex_prog = glslUtility::createProgram(vertCopyPath, NULL, NULL, NULL, fragCopyPath, attributeWithTexLocation, 2);
 	water_shading_prog = glslUtility::createProgram(vertWaterPath, NULL, NULL, NULL, fragWaterPath, attributeWithTexLocation, 2);
 	normalmap_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
+	smooth_intermediate_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, smooth1FragShaderPath, attributeWithTexLocation, 2);
+	smooth_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, smoothFragShaderPath, attributeWithTexLocation, 2);
 }
 
 void initShader() {
@@ -1566,27 +1590,15 @@ void initShader() {
 	
 	std::cout << "Creating program." << std::endl;
 
-	if (genNormalMap)
+	if (enableTexcoords)
 	{
-		curr_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, nmapFragShaderPath, attributeWithTexLocation, 2);
-		smooth_intermediate_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, smooth1FragShaderPath, attributeWithTexLocation, 2);
-		smooth_prog = glslUtility::createProgram(nmapVertShaderPath, NULL, NULL, NULL, smoothFragShaderPath, attributeWithTexLocation, 2);
+		plane->setIndexMode(INDEX_MODE::TRIANGLES);
+		curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
 	}
 	else
 	{
-		if (enableTexcoords)
-		{
-			plane->setIndexMode(INDEX_MODE::TRIANGLES);
-			curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 2);
-		}
-		else
-		{
-			//plane->setIndexMode(INDEX_MODE::CORNER);
-			//curr_prog = glslUtility::createProgram(pass_vert, NULL, NULL, NULL, pass_frag, attributeWithTexLocation, 1);
-
-			plane->setIndexMode(INDEX_MODE::QUADS);
-			curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
-		}
+		plane->setIndexMode(INDEX_MODE::QUADS);
+		curr_prog = glslUtility::createProgram(vertQuadShaderPath, tessQuadCtrlShaderPath, tessQuadEvalShadePath, NULL, fragQuadShaderPath, attributeLocation, 1);
 	}
 
 	skybox_prog = glslUtility::createProgram(vertSkyboxShaderPath, NULL, NULL, NULL, fragSkyboxShaderPath, attributeLocation, 1);
@@ -1686,10 +1698,7 @@ int main(int argc, char* argv[])
 	initShader();
 	initErosionShaders();
 	initErosionFBO();
-
-	// temp 
-	if (genNormalMap)
-		initNormalFBO();
+	initNormalFBO();
 
 	// initialization of flex_tex, velocity_tex, and terrainattr_tex
 	terrainInit();

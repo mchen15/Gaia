@@ -76,6 +76,7 @@ GLuint smooth_intermediate_tex;
 //Smooth
 //FrameBufferObject* normalsFBO;
 FrameBufferObject* smooth1FBO;
+FrameBufferObject* smooth2FBO;
 
 // FBOs
 FrameBufferObject* copyFBO;
