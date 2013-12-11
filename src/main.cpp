@@ -1124,30 +1124,30 @@ void passiveMotion(int x, int y)
 {
 	if ( userInteraction)
 	{
-	float px = (float)x/width;
-	float py = 1.0 - (float)y/height;
+		float px = (float)x/width;
+		float py = 1.0 - (float)y/height;
 	
-	px = px*2.0 - 1.0;
-	py = py*2.0 - 1.0;
+		px = px*2.0 - 1.0;
+		py = py*2.0 - 1.0;
 
-	glm::mat4 pInv = glm::inverse(cam->getPersp(width,height));
-	glm::mat4 viewInv = glm::inverse(cam->getView());
+		glm::mat4 pInv = glm::inverse(cam->getPersp(width,height));
+		glm::mat4 viewInv = glm::inverse(cam->getView());
 
 
-	glm::vec4 ndc = pInv*glm::vec4(px,py,0.0,1.0);
-	ndc = glm::normalize(ndc);
-	ndc.w = 0.0;
-	glm::vec4 worldSpace = glm::normalize(viewInv*ndc);
-	glm::vec3 eyeToSceneDir = glm::vec3(worldSpace.x,worldSpace.y,worldSpace.z);
+		glm::vec4 ndc = pInv*glm::vec4(px,py,0.0,1.0);
+		ndc = glm::normalize(ndc);
+		ndc.w = 0.0;
+		glm::vec4 worldSpace = glm::normalize(viewInv*ndc);
+		glm::vec3 eyeToSceneDir = glm::vec3(worldSpace.x,worldSpace.y,worldSpace.z);
 	
-	float t = -cam->getPosition().z / eyeToSceneDir.z;
-	glm::vec3 point = cam->getPosition() + t*eyeToSceneDir;
+		float t = -cam->getPosition().z / eyeToSceneDir.z;
+		glm::vec3 point = cam->getPosition() + t*eyeToSceneDir;
 
-	if( point.x>= 0 && point.x<=width && point.y >=0 && point.y<=height)
-	{
-		terrainManipulatorCenter.x = point.x/width;
-		terrainManipulatorCenter.y = point.y/height;
-	}
+		if( point.x>= 0 && point.x<=width && point.y >=0 && point.y<=height)
+		{
+			terrainManipulatorCenter.x = point.x/width;
+			terrainManipulatorCenter.y = point.y/height;
+		}
 	}
 }
 
@@ -1322,6 +1322,7 @@ void attachTempTexToFBO(FrameBufferObject** fbo, char* outName, GLuint shader_pr
 void setUpNormalsFBO()
 {
 	// setting up texture handles: terrainAttr
+	
 	vector<GLuint> fboTex;
 	fboTex.push_back(temp_tex);
 
@@ -1694,7 +1695,11 @@ int main(int argc, char* argv[])
 	initShader();
 	initErosionShaders();
 	initErosionFBO();
-	initNormalFBO();
+
+	// temp 
+	if (genNormalMap)
+		initNormalFBO();
+
 	// initialization of flex_tex, velocity_tex, and terrainattr_tex
 	terrainInit();
 	glutDisplayFunc(display);

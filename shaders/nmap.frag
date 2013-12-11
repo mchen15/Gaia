@@ -92,7 +92,7 @@ void main(void)
 
 	vec3 colorNormal= vec3(0.0);
 
-	if( u_toggleNormal== 0)
+	if( u_toggleNormal == 0)
 	{
 		vec3 normal = getNormalSobel();		
 		
