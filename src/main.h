@@ -87,6 +87,9 @@ int frame;
 int timebase;
 int toggleNormalVal = 0;
 static float fps = 0;
+bool userInteraction = true;
+glm::vec2 terrainManipulatorCenter(-100,-100);
+float terrainManipulatorRadius(0.0f);
 
 const char *attributeWithTexLocation[] = {"Position", "Texcoord"};
 const char *attributeLocation[] = {"Position"};

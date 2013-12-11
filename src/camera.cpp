@@ -15,7 +15,7 @@ Camera::Camera(vec3 posv, vec3 lp, vec3 upv,float fieldOfView,float np, float fp
 	rx = 0;
 	ry = 0;
 	z = posv.z;
-	startDirection = lp - posv;
+	startDirection = glm::normalize(lp - posv);
 	startLeft = glm::cross(startDirection, up);
 }
 

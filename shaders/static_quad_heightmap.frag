@@ -15,6 +15,11 @@ uniform vec4 u_lightColor;
 uniform vec3 u_lightDirection;
 uniform int u_toggleNormal;
 
+//Terrain Manipulator
+uniform vec2 u_manipCenter;
+uniform float u_manipRadius;
+
+
 //vec3 incident = normalize(vec3(1.0, 5.2, 4.5));
 //vec4 light = vec4(1.0, 0.95, 0.9, 1.0) * 1.1;
 
@@ -113,22 +118,17 @@ void main(){
 
 	float avgSlope = (diff1 + diff2) / 2.0;
 
-
-	const float EPSILON = 0.01;
-	//boundary conditions
-	if( texcoord.s > 0 - EPSILON && texcoord.s < 0 + EPSILON || 
 	
+	if ( u_manipCenter.x >=0.0 && u_manipCenter.x <=1.0 && u_manipCenter.y >=0.0 && u_manipCenter.y <=1.0)
+	{
+		if ( (texcoord.x-u_manipCenter.x)*(texcoord.x-u_manipCenter.x) + 
+			(texcoord.y-u_manipCenter.y)*(texcoord.y-u_manipCenter.y) <= u_manipRadius*u_manipRadius)
+		{
+			color = vec3(1.0,0.0,0.0);
+		}
+	}
 
-	(texcoord.s > 1 - EPSILON && texcoord.s < 1 + EPSILON) || 
-		
-
-	(texcoord.t > 0 - EPSILON && texcoord.t < 0 + EPSILON) || 
-		
-
-	(texcoord.t > 1 - EPSILON && texcoord.t < 1 + EPSILON) )
-		fragment =  vec4( 0,0,0,0);
-	else
-
+	
 	fragment = vec4(color,1.0);
 
 	//fragment = vec4(diff1, 0, 0, 1.0);

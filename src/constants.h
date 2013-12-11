@@ -128,4 +128,6 @@ extern char* U_LIGHTDIRECTIONID;
 extern char* U_FRESNELTERMID;
 extern char* U_CAMPOSID;
 extern char* U_FOAMTEXID;
+extern char* U_MANIPCENTERID;
+extern char* U_MANIPRADIUSID;
 #endif
