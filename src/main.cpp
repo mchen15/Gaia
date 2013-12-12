@@ -1084,8 +1084,10 @@ void mouse(int button, int state, int x, int y)
 {
     if (state == GLUT_DOWN) {
         mouse_buttons |= 1<<button;
-		if(userInteraction)
+		if(userInteraction && button == GLUT_LEFT_BUTTON)
 			waterSource = LAKE;
+		else if(userInteraction && button == GLUT_RIGHT_BUTTON)
+			waterSource = TERRAINMOD;
     } else if (state == GLUT_UP) {
         mouse_buttons = 0;
 		waterSource = NOSOURCE;
@@ -1530,8 +1532,6 @@ void initErosionFBO()
 	// Evaporation
 	//setUpEvapFBO();
 }
-
-
 
 void deleteErosionFBO()
 {

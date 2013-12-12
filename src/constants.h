@@ -15,7 +15,8 @@ enum INDEX_MODE {
 enum WATER_SOURCE {
 	RAIN,
 	LAKE,
-	NOSOURCE
+	NOSOURCE,
+	TERRAINMOD
 };
 
 extern WATER_SOURCE waterSource;

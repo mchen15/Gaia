@@ -3,6 +3,7 @@
 #define RAIN 0
 #define LAKE 1
 #define NOSOURCE 2
+#define TERRAINMOD 3
 // u_terrainAttrTex Channels
 // r: terrain height
 // g: water height
@@ -42,6 +43,18 @@ void main (void)
 		if ( r>0.8)
 		{
 			out_terrainAttr.g += u_deltaT*rainRate;
+		}
+	}
+
+	else if ( u_waterSrc == TERRAINMOD)
+	{
+		vec2 dist = v_Texcoord-u_manipCenter;
+		float distMagSq = dist.x*dist.x + dist.y*dist.y;
+		if( distMagSq < manipRadiusSq)
+		{
+			float r = distMagSq/manipRadiusSq;
+			float gaussianFalloff = (1-r)*(1-r);
+			out_terrainAttr.r += 0.1*gaussianFalloff;
 		}
 	}
 	//vec2 dist = v_Texcoord-manipCenter;

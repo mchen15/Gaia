@@ -12,11 +12,6 @@ void main(void) {
 	//vPosition = Position.xyz;
 	v_Texcoord = Texcoord;
 	//v_Texcoord = Position.xy*0.5 + 0.5;
-	v_Texcoord.y = 1-v_Texcoord.y;
-
-	v_Texcoord = Texcoord;
-	v_Texcoord.y = 1-Texcoord.y;
-
 	gl_Position = vec4(Position.xyz,1.0);
 
 }
