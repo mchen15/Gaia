@@ -209,12 +209,23 @@ void main(){
 		normal = sampleNormal(texcoord);
 	//vec3 color = sampleDiffuse(texcoord);
 
+	float height =texture(u_heightMap, texcoord).r;
+	float normalizedHeight = height / u_heightScale;
 	vec3 waterColor = computeWaterColor();
+	vec3 baseTerrainColor = vec3(0,0,0);
+	vec3 grass = vec3(0.1,1.0,0.1);
+	vec3 dirt = vec3(0.54,0.27,0);
+	vec3 dirt2 = vec3(0.8,0.6,0.2);
+	
+	float dirtGrassRatio = clamp(0.5-normalizedHeight, 0, 1);
+	baseTerrainColor = mix(dirt, grass, dirtGrassRatio);
+	float dirt2Ratio = clamp(normalizedHeight-0.4, 0, 1);
+	baseTerrainColor = mix(baseTerrainColor, dirt2, dirt2Ratio);
 
 	float intensity = max(dot(u_lightDirection, normal), 0.0);
-	float height =texture(u_heightMap, texcoord).r;
+	
 	//vec3 color = color * intensity * u_lightColor.xyz;	//vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
-	vec3 terrainColor = vec3(0.54,0.27,0)*intensity*u_lightColor.xyz;
+	vec3 terrainColor = baseTerrainColor*intensity*u_lightColor.xyz;
 	float blend = 8.0*height/u_heightScale*clamp(texture(u_heightMap, texcoord).g,0.0,0.8);
 	vec3 color = mix( terrainColor, waterColor, blend);
 	
