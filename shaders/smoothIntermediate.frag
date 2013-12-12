@@ -4,9 +4,6 @@
 ////////////////////////////////////
 uniform sampler2D u_InputTex;
 
-uniform int u_ScreenWidth = 1280;
-uniform int u_ScreenHeight= 720;
-
 in vec2 v_Texcoord;
 
 out vec4 out_Color;
@@ -29,7 +26,7 @@ void main() {
 
         int kxHalf = u_kernelX/2;
         int count = 0;
-        float delX = 1.0/u_ScreenWidth;
+        float delX = 1.0/textureSize(u_InputTex,0).x;
 
         vec3 sumColor = vec3(0.0);
 

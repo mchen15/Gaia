@@ -8,7 +8,7 @@ bool enableTexcoords = false;
 bool enableWaterTest = false;
 
 int NUM_QUADS = 1;
-vec2 SUBDIV = vec2(128, 128);
+vec2 SUBDIV = vec2(32, 32);
 float texScale = 1;
 float heightScale = 200;
 vec3 lightPosWorld = vec3(10, 10, 10);
@@ -24,6 +24,8 @@ float virtualPipeArea = virtualPipeLength*virtualPipeLength;
 float Kc = 0.01;
 float Ks = 0.01;
 float Ke = 0.001;
+vec2 simRes(1280,720);
+vec2 screenRes(1280,720);
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";

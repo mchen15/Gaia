@@ -188,6 +188,5 @@ void main(){
 		}
 	}
 
-	
 	fragment = vec4(color,1.0);
 }

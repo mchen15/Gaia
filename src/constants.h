@@ -18,7 +18,8 @@ enum WATER_SOURCE {
 	NOSOURCE,
 	TERRAINMOD
 };
-
+extern vec2 simRes; //Simulation resolution
+extern vec2 screenRes;
 extern WATER_SOURCE waterSource;
 
 extern int NUM_QUADS;

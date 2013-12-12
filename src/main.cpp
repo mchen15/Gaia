@@ -56,6 +56,7 @@ void terrainInit()
 	unbindTextures();
 	bindFBO(initTerrainFBO->getFBOHandle());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0,0,simRes.x,simRes.y);
 	glUseProgram(terrain_init_prog);
 	
 	// setting up uniforms (e.g. input textures)
@@ -70,6 +71,7 @@ void renderToScreen()
 	glUseProgram(fbo_test_prog);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glViewport(0,0,screenRes.x,screenRes.y);
 	glEnable(GL_TEXTURE_2D);
 
 	// setting up uniforms (e.g. input textures)
@@ -100,6 +102,7 @@ void waterInc()
 	unbindTextures();
 	glUseProgram(water_inc_prog);
 	bindFBO(waterIncFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 	//glActiveTexture(GL_TEXTURE0);
 	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
@@ -112,6 +115,7 @@ void waterInc()
 	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(terrainattr_tex);
 	// setting up the output variable names used in the shader
@@ -129,6 +133,7 @@ void flowSimFlux()
 	unbindTextures();
 	glUseProgram(flow_flux_prog);
 	bindFBO(flowSimFluxFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 
 	//glActiveTexture(GL_TEXTURE0);
@@ -146,6 +151,7 @@ void flowSimFlux()
 		//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(flux_tex);
 	// setting up the output variable names used in the shader
@@ -163,6 +169,7 @@ void flowSimVel()
 	unbindTextures();
 	glUseProgram(flow_vel_prog);
 	bindFBO(flowSimVelFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 
 	//glActiveTexture(GL_TEXTURE0);
@@ -186,6 +193,7 @@ void flowSimVel()
 	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(velocity_tex);
 	// setting up the output variable names used in the shader
@@ -203,6 +211,7 @@ void flowSimWaterHeight()
 	unbindTextures();
 	glUseProgram(flow_water_height_prog);
 	bindFBO(flowWatHeightFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 
 	//glActiveTexture(GL_TEXTURE0);
@@ -220,6 +229,7 @@ void flowSimWaterHeight()
 	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(terrainattr_tex);
 	// setting up the output variable names used in the shader
@@ -237,6 +247,7 @@ void erosionDeposition()
 	unbindTextures();
 	glUseProgram(erosion_depo_prog);
 	bindFBO(erosDepoFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 	//
 	//glActiveTexture(GL_TEXTURE0);
@@ -260,6 +271,7 @@ void erosionDeposition()
 	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(terrainattr_tex);
 	// setting up the output variable names used in the shader
@@ -277,6 +289,7 @@ void sedimentTransport()
 	unbindTextures();
 	glUseProgram(sediment_trans_prog);
 	bindFBO(sedTransFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 
 	//glActiveTexture(GL_TEXTURE0);
@@ -295,6 +308,7 @@ void sedimentTransport()
 	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(terrainattr_tex);
 	// setting up the output variable names used in the shader
@@ -312,6 +326,7 @@ void evaporation()
 	unbindTextures();
 	glUseProgram(evapo_prog);
 	bindFBO(evapFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	//GLint uniformLocation = -1;
 
 	//glActiveTexture(GL_TEXTURE0);
@@ -325,6 +340,7 @@ void evaporation()
 	//COPY
 	glUseProgram(copy_tex_prog);
 	bindFBO( copyFBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	vector<GLuint> fboTex;
 	fboTex.push_back(terrainattr_tex);
 	// setting up the output variable names used in the shader
@@ -354,6 +370,7 @@ void renderTerrain()
 	unbindTextures();
 	glUseProgram(curr_prog);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0,0,screenRes.x,screenRes.y);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
@@ -1139,8 +1156,8 @@ void passiveMotion(int x, int y)
 
 		if( point.x>= 0 && point.x<=width && point.y >=0 && point.y<=height)
 		{
-			terrainManipulatorCenter.x = point.x/width;
-			terrainManipulatorCenter.y = point.y/height;
+			terrainManipulatorCenter.x = point.x/simRes.x;
+			terrainManipulatorCenter.y = point.y/simRes.y;
 		}
 	}
 }
@@ -1223,40 +1240,41 @@ void initErosionTextures()
 	glGenTextures(1, &computednormalmap_tex);
 
 
+
 	glBindTexture(GL_TEXTURE_2D, flux_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, simRes.x, simRes.y, 0, GL_RGBA, GL_FLOAT, 0);
 
 	glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, simRes.x, simRes.y, 0, GL_RGBA, GL_FLOAT, 0);
 
 	glBindTexture(GL_TEXTURE_2D, velocity_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, simRes.x, simRes.y, 0, GL_RGBA, GL_FLOAT, 0);
 
 	glBindTexture(GL_TEXTURE_2D, temp_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, simRes.x, simRes.y, 0, GL_RGBA, GL_FLOAT, 0);
 	
 	glBindTexture(GL_TEXTURE_2D, computednormalmap_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, simRes.x, simRes.y, 0, GL_RGBA, GL_FLOAT, 0);
 }
 
 void setUpCopyFBO()
@@ -1657,8 +1675,8 @@ int main(int argc, char* argv[])
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-    width = 1280;
-    height = 720;
+    width = screenRes.x;
+    height = screenRes.y;
     glutInitWindowSize(width,height);
 	char title[100];
 	sprintf(title,"GAIA [%0.2f fps]", fps);

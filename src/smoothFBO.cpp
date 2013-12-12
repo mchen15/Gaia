@@ -30,6 +30,7 @@ void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO, int kernelSize
 	glDisable(GL_DEPTH_TEST);
 	glUseProgram(smoothPass1FBO->getShaderProg());
 	bindFBO(smoothPass1FBO->getFBOHandle());
+	glViewport(0,0,simRes.x,simRes.y);
 	smoothPass1FBO->changeTextureAttachments(intermediateTexture);
 	setUpPass1FBOUniforms(kernelSizeX);
 	smoothPass1FBO->render();
@@ -40,9 +41,14 @@ void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO, int kernelSize
 	glUseProgram(smoothPass2FBO->getShaderProg());
 
 	if (bindToDefaultFBO)
+	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
 	else
+	{
 		bindFBO(smoothPass2FBO->getFBOHandle());
+		glViewport(0,0,simRes.x,simRes.y);
+	}
 
 	setUpPass2FBOUniforms(kernelSizeY);
 	smoothPass2FBO->render();
@@ -85,6 +91,7 @@ void SmoothKernelFBO::bindFBO(GLuint framebuf)
 	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuf);
+	glViewport(0,0,simRes.x,simRes.y);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 }
