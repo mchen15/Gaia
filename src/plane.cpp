@@ -140,6 +140,7 @@ void Plane::draw(int positionLocation)
 		glDrawArrays(GL_PATCHES, 0, divx*divy);
 	}
 
+	glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
     glDisableVertexAttribArray(positionLocation);
 }
 
