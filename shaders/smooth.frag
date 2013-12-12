@@ -8,7 +8,7 @@ uniform int u_ScreenHeight=720;
 in vec2 v_Texcoord;
 out vec4 out_Color;
 
-uniform int kernelY = 10;
+uniform int kernelY = 1;
 
 vec3 sampleSmoothPass1(vec2 texcoords) {
     return texture(u_SmoothPass1tex,texcoords).xyz;

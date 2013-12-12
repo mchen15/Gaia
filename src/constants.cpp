@@ -13,7 +13,7 @@ float texScale = 1;
 float heightScale = 200;
 vec3 lightPosWorld = vec3(10, 10, 10);
 float gridSpacing = 1;
-float pixelsPerEdge = 1;
+float pixelsPerEdge = 20;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 

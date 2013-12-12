@@ -10,7 +10,7 @@ uniform int u_ScreenHeight= 720;
 in vec2 v_Texcoord;
 
 out vec4 out_Color;
-uniform int kernelX = 10;
+uniform int kernelX = 1;
 
 /////////////////////////////////////
 // UTILITY FUNCTIONS
