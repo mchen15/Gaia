@@ -342,10 +342,11 @@ void updateNormals()
 	glUseProgram(normalmap_prog);
 	bindFBO(normalMapFBO->getFBOHandle());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	normalMapFBO->generateNormalMap(terrainattr_tex, normalmap_tex);	 // render the normal map generated from terrainattr_tex into temp_tex
 																		 // see setUpNormalsFBO() for the setup information
 	
-	smoothKernelFBO->changeTextureAttachments(computednormalmap_tex);	 // render to computednormalmap_tex
+	smoothKernelFBO->changeTextureAttachments(computednormalmap_tex);	 // change the render target to computednormalmap_tex
 	smoothKernelFBO->smooth(temp_tex,false);							 // take temp_tex as the input
 }
 
@@ -861,6 +862,39 @@ void setCurrProgUniforms()
 	uniformLocation = glGetUniformLocation(curr_prog,U_USERINTID);
 	if (uniformLocation != -1)
 		glUniform1i(uniformLocation, userInteraction);
+
+	// calculate fresnel term
+	uniformLocation = glGetUniformLocation(curr_prog,U_FRESNELTERMID);
+	if (uniformLocation != -1)
+	{
+		float IOR = 1.33333;
+		float a = 0;
+		float c = cos(a) * IOR;
+		float g = sqrt(1 + pow(c,2) - pow(IOR, 2));
+		float t1 = pow((g-c)/(g+c), 2);
+		float t21 = c*(g+c) - pow(IOR,2);
+		float t22 = c*(g-c) + pow(IOR,2);
+
+		float R0 = 0.5 * t1 * (1 + pow((t21/t22),2));
+
+		glUniform1f(uniformLocation, R0);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_CAMPOSID);
+	if (uniformLocation != -1)
+	{
+		vec3 camPos = cam->getPosition();
+		glUniform3fv(uniformLocation, 1, &camPos[0]);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_CUBEMAPID);
+
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->getTextureHandle());
+		glUniform1i(uniformLocation, 4);
+	}
 }
 
 void setWaterTestUniforms ()
@@ -927,6 +961,15 @@ void setWaterTestUniforms ()
 		glUniform3fv(uniformLocation, 1, &camPos[0]);
 	}
 
+	uniformLocation = glGetUniformLocation(water_shading_prog, U_CUBEMAPID);
+
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->getTextureHandle());
+		glUniform1i(uniformLocation, 3);
+	}
+
 	uniformLocation = glGetUniformLocation(water_shading_prog, U_MODELID);
 	if (uniformLocation != -1)
 	{
@@ -945,15 +988,6 @@ void setWaterTestUniforms ()
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, foammap_tex);
 		glUniform1i(uniformLocation, 2);
-	}
-
-	uniformLocation = glGetUniformLocation(water_shading_prog, U_CUBEMAPID);
-
-	if (uniformLocation != -1)
-	{
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->getTextureHandle());
-		glUniform1i(uniformLocation, 3);
 	}
 }
 void keyboard(unsigned char key, int x, int y) 

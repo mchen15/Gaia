@@ -3,9 +3,9 @@
 // Program flow switches
 
 bool genNormalMap = false;
-bool enableErosion = false;
+bool enableErosion = true;
 bool enableTexcoords = false;
-bool enableWaterTest = true;
+bool enableWaterTest = false;
 
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(128, 128);

@@ -3,9 +3,12 @@
 layout(quads, fractional_odd_spacing, ccw) in;
 out vec2 texcoord;
 out float depth;
+out vec3 fs_Position;
 
 uniform sampler2D u_heightMap;
 uniform mat4 u_pvm;
+uniform mat4x4 u_Model;
+uniform mat4x4 u_View;
 uniform float u_gridSpacing;
 uniform float u_heightScale;
 
@@ -19,8 +22,10 @@ void main(){
     texcoord = position.xy;
     float height = texture(u_heightMap, texcoord).r;
 	vec2 tSize = textureSize(u_heightMap,0)*u_gridSpacing;
-    gl_Position = u_pvm * vec4(texcoord*tSize, height, 1.0);
+	vec4 pos = vec4(texcoord*tSize, height, 1.0);
+    gl_Position = u_pvm * pos;
 
     depth = gl_Position.z;
+	fs_Position = (u_View * u_Model * pos).xyz;
 }
        

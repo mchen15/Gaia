@@ -2,6 +2,7 @@
 
 in vec2 texcoord;
 in float depth;
+in vec3 fs_Position;
 out vec4 fragment;
 
 uniform sampler2D u_heightMap;
@@ -16,6 +17,11 @@ uniform vec4 u_lightColor;
 uniform vec3 u_lightDirection;
 uniform int u_toggleNormal;
 uniform int u_userInteraction;
+
+// water shading
+uniform samplerCube u_cubemap;
+uniform float u_fresnelR0;
+uniform vec3 u_cameraPosition;
 
 //Terrain Manipulator
 uniform vec2 u_manipCenter;
@@ -66,19 +72,59 @@ vec3 getNormalSobel()
 
 }
 
+///////////////////////
+// water shading stuff
+float computeFresnelTerm(vec3 normal, vec3 eyeVec)
+{
+	float cosIncidentAngle = dot(normal, eyeVec);
+	return clamp(u_fresnelR0 + (1.0 - u_fresnelR0) * pow(1 - cosIncidentAngle, 5), 0, 1);
+}
+
+vec3 computeWaterColor()
+{
+	vec3 position = fs_Position;
+	vec3 shallow = vec3(0, 0.2, 0.5) * 0.1;
+	vec3 deep = vec3(0.16, 0.83, 1.0) * 0.9;
+	vec3 normal = sampleNormal(texcoord);
+	
+	float waterHeight = sampleHeight(texcoord);
+
+	float mixFactor = clamp(waterHeight / 0.00075, 0, 1);
+	vec3 color = mix(shallow, deep, sqrt(mixFactor));  
+	
+	// lighting computation
+	float diffuse = max(dot(u_lightDirection, normal),0);
+	vec3 eyeVector = normalize(u_cameraPosition - position);
+	vec3 reflectedEyeVec = reflect(-eyeVector, normal);	
+	float fresnel = computeFresnelTerm(normal, eyeVector);
+
+	float shininess = 0.5;
+
+	float dotSpec = clamp(dot(reflectedEyeVec, -u_lightDirection.xyz) * 0.5 + 0.5, 0.0, 1.0);
+	vec3 specular = (1.0 - fresnel) * clamp(u_lightDirection.y, 0 , 1) * ((pow(dotSpec,4.5)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
+	specular += specular * 25 * clamp(shininess - 0.05, 0, 1);
+	
+	vec3 envColor = texture(u_cubemap, normalize(reflectedEyeVec)).rgb;
+		
+	vec4 waterColor = clamp(vec4(diffuse * color * envColor + specular, 1.0), 0, 1);
+	//waterColor = vec4(diffuse * color, 1.0);
+	//waterColor = u_lightColor;
+	//waterColor = vec4(specular, 1.0);
+	//waterColor = vec4(color,1.0);
+	//waterColor = vec4(specular + envColor , 1.0);
+	//waterColor = vec4(dotSpec, dotSpec, dotSpec, 1.0);
+	//waterColor = clamp(vec4(pow(dotSpec, 2.0),pow(dotSpec, 2.0),pow(dotSpec, 2.0),1.0), 0, 1);
+	//waterColor = vec4(clamp(u_lightDirection.y, 0 , 1),clamp(u_lightDirection.y, 0 , 1),clamp(u_lightDirection.y, 0 , 1),1);
+	//waterColor = vec4((1.0 - fresnel),(1.0 - fresnel),(1.0 - fresnel),1.0);
+	//waterColor = vec4(envColor, 1.0);
+
+	return waterColor.rgb;
+}
+
+
+
 void main(){
-    //vec3 normal = normalize(texture(terrain, texcoord).xyz);
-    //vec4 color = texture(diffuse, texcoord);
-    //float noise_factor = texture(noise_tile, texcoord*32).r+0.1;
 
-    //float dot_surface_incident = max(0, dot(normal, incident));
-
-    //color = color * light * noise_factor * (max(0.1, dot_surface_incident)+0.05)*1.5;
-    //fragment = mix(color, color*0.5+vec4(0.5, 0.5, 0.5, 1.0), depth*2.0);
-
-	// compute normal
-
-	//vec2 stepSize = 1.0 / u_numPatches;
 	vec2 stepSize = 1.0 / textureSize(u_heightMap, 0);
 
 	float h21 = sampleHeight(vec2(texcoord.s + stepSize.s, texcoord.t));
@@ -115,8 +161,9 @@ void main(){
 		normal = sampleNormal(texcoord);
 	//vec3 color = sampleDiffuse(texcoord);
 
-	
-	vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
+	vec3 waterColor = computeWaterColor();
+	//vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
+	vec3 color = mix( vec3(0.54,0.27,0), waterColor, texture(u_heightMap, texcoord).g);
 	
 	float intensity = max(dot(u_lightDirection, normal), 0.0);
 	color = color * intensity * u_lightColor.xyz;
@@ -137,12 +184,4 @@ void main(){
 
 	
 	fragment = vec4(color,1.0);
-
-	//fragment = vec4(diff1, 0, 0, 1.0);
-	//fragment = vec4(diff2, 0, 0, 1.0);
-	//fragment = vec4(avgSlope, 0, 0, 1.0);
-
-	//fragment = vec4(slopeY, 1.0);
-	//fragment = vec4(normal, 1.0);
-	//fragment = vec4(1,1,1,1);
 }
