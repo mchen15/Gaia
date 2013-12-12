@@ -21,7 +21,7 @@ SmoothKernelFBO::~SmoothKernelFBO()
 	glDeleteTextures(1, &intermediateTexture);
 }
 
-void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO)
+void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO, int kernelSizeX, int kernelSizeY)
 {
 	inputTexture = intex;
 
@@ -31,9 +31,8 @@ void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO)
 	glUseProgram(smoothPass1FBO->getShaderProg());
 	bindFBO(smoothPass1FBO->getFBOHandle());
 	smoothPass1FBO->changeTextureAttachments(intermediateTexture);
-	setUpPass1FBOUniforms();
+	setUpPass1FBOUniforms(kernelSizeX);
 	smoothPass1FBO->render();
-
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -45,11 +44,11 @@ void SmoothKernelFBO::smooth(GLuint intex, bool bindToDefaultFBO)
 	else
 		bindFBO(smoothPass2FBO->getFBOHandle());
 
-	setUpPass2FBOUniforms();
+	setUpPass2FBOUniforms(kernelSizeY);
 	smoothPass2FBO->render();
 }
 
-void SmoothKernelFBO::setUpPass1FBOUniforms()
+void SmoothKernelFBO::setUpPass1FBOUniforms(int kernelSize)
 {
 	GLint uniformLocation = -1;
 	uniformLocation = glGetUniformLocation(smoothPass1FBO->getShaderProg(), "u_InputTex");
@@ -59,9 +58,13 @@ void SmoothKernelFBO::setUpPass1FBOUniforms()
 		glBindTexture(GL_TEXTURE_2D, inputTexture);
 		glUniform1i(uniformLocation, 0);	
 	}
+
+	uniformLocation = glGetUniformLocation(smoothPass2FBO->getShaderProg(),U_KERNELSIZEXID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation,kernelSize);
 }
 
-void SmoothKernelFBO::setUpPass2FBOUniforms()
+void SmoothKernelFBO::setUpPass2FBOUniforms(int kernelSize)
 {
 	GLint uniformLocation = -1;
 	uniformLocation = glGetUniformLocation(smoothPass2FBO->getShaderProg(), "u_SmoothPass1tex");
@@ -71,6 +74,10 @@ void SmoothKernelFBO::setUpPass2FBOUniforms()
 		glBindTexture(GL_TEXTURE_2D, intermediateTexture);
 		glUniform1i(uniformLocation, 0);	
 	}
+
+	uniformLocation = glGetUniformLocation(smoothPass2FBO->getShaderProg(),U_KERNELSIZEYID);
+	if (uniformLocation != -1)
+		glUniform1i(uniformLocation,kernelSize);
 }
 
 void SmoothKernelFBO::bindFBO(GLuint framebuf)

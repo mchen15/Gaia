@@ -345,9 +345,8 @@ void updateNormals()
 
 	normalMapFBO->generateNormalMap(terrainattr_tex, normalmap_tex);	 // render the normal map generated from terrainattr_tex into temp_tex
 																		 // see setUpNormalsFBO() for the setup information
-	
 	smoothKernelFBO->changeTextureAttachments(computednormalmap_tex);	 // change the render target to computednormalmap_tex
-	smoothKernelFBO->smooth(temp_tex,false);							 // take temp_tex as the input
+	smoothKernelFBO->smooth(temp_tex,false,10,10);							 // take temp_tex as the input
 }
 
 void renderTerrain()
@@ -372,7 +371,7 @@ void display(void)
 		bindFBO(normalMapFBO->getFBOHandle());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		normalMapFBO->generateNormalMap(heightmap_tex, normalmap_tex);
-		smoothKernelFBO->smooth(temp_tex,true);
+		smoothKernelFBO->smooth(temp_tex,true,1,1);
 
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes

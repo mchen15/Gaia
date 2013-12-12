@@ -144,4 +144,6 @@ extern char* U_WTRSRCID;
 extern char* U_USERINTID;
 extern char* U_RANDSEED;
 extern char* U_COMPUTEDNORMALMAPID;
+extern char* U_KERNELSIZEXID;
+extern char* U_KERNELSIZEYID;
 #endif

@@ -168,12 +168,12 @@ void main(){
 	//vec3 color = sampleDiffuse(texcoord);
 
 	vec3 waterColor = computeWaterColor();
-	//vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
-	vec3 color = mix( vec3(0.54,0.27,0), waterColor, texture(u_heightMap, texcoord).g);
-	
-	float intensity = max(dot(u_lightDirection, normal), 0.0);
-	color = color * intensity * u_lightColor.xyz;
 
+	float intensity = max(dot(u_lightDirection, normal), 0.0);
+	//vec3 color = color * intensity * u_lightColor.xyz;	//vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
+	vec3 terrainColor = vec3(0.54,0.27,0)*intensity*u_lightColor.xyz;
+	vec3 color = mix( terrainColor, waterColor, texture(u_heightMap, texcoord).g);
+	
 	float avgSlope = (diff1 + diff2) / 2.0;
 
 	if (u_userInteraction==1 && u_manipCenter.x >=0.0 && u_manipCenter.x <=1.0 && u_manipCenter.y >=0.0 && u_manipCenter.y <=1.0)

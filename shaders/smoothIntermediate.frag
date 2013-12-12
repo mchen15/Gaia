@@ -10,7 +10,7 @@ uniform int u_ScreenHeight= 720;
 in vec2 v_Texcoord;
 
 out vec4 out_Color;
-uniform int kernelX = 1;
+uniform int u_kernelX = 1;
 
 /////////////////////////////////////
 // UTILITY FUNCTIONS
@@ -27,7 +27,7 @@ vec3 sampleCol(vec2 texcoords) {
 void main() {
     vec3 color = sampleCol(v_Texcoord);
 
-        int kxHalf = kernelX/2;
+        int kxHalf = u_kernelX/2;
         int count = 0;
         float delX = 1.0/u_ScreenWidth;
 

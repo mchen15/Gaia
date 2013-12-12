@@ -132,3 +132,5 @@ char* U_WTRSRCID = "u_waterSrc";
 char* U_USERINTID = "u_userInteraction";
 char* U_RANDSEED = "u_randomSeed";
 char* U_COMPUTEDNORMALMAPID = "u_computedNormalMap";
+char* U_KERNELSIZEXID = "u_kernelX";
+char* U_KERNELSIZEYID = "u_kernelY";

@@ -9,7 +9,7 @@ class SmoothKernelFBO
 public:
 	SmoothKernelFBO(FrameBufferObject *pass1, FrameBufferObject *pass2);
 	~SmoothKernelFBO();
-	void smooth(GLuint intex, bool bindToDefaultFBO = false);
+	void smooth(GLuint intex, bool bindToDefaultFBO = false,int kernelSizeX = 1, int kernelSizeY = 1);
 	void changeTextureAttachments(GLuint tex);
 
 private:
@@ -18,8 +18,8 @@ private:
 	GLuint intermediateTexture;
 	GLuint inputTexture;
 private:
-	void setUpPass1FBOUniforms();
-	void setUpPass2FBOUniforms();
+	void setUpPass1FBOUniforms(int kernelSize);
+	void setUpPass2FBOUniforms(int kernelSize);
 	void bindFBO(GLuint framebuf);
 };
 
