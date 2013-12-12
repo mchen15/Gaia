@@ -358,7 +358,7 @@ void updateNormals()
 	glUseProgram(normalmap_prog);
 	bindFBO(normalMapFBO->getFBOHandle());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	glViewport(0,0,simRes.x,simRes.y);
 	normalMapFBO->generateNormalMap(terrainattr_tex, normalmap_tex);	 // render the normal map generated from terrainattr_tex into temp_tex
 																		 // see setUpNormalsFBO() for the setup information
 	smoothKernelFBO->changeTextureAttachments(computednormalmap_tex);	 // change the render target to computednormalmap_tex
@@ -1344,7 +1344,7 @@ void setUpNormalsFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	normalMapFBO = new NormalMapFBO(width, height, normalmap_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
+	normalMapFBO = new NormalMapFBO(simRes.x, simRes.y, normalmap_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
 }
 
 void setUpWaterIncFBO()
@@ -1360,7 +1360,7 @@ void setUpWaterIncFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	waterIncFBO = new FrameBufferObject(width, height, water_inc_prog, fboTex, fboOutNames, attachLocations);
+	waterIncFBO = new FrameBufferObject(simRes.x, simRes.y, water_inc_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpFlowSimFluxFBO()
@@ -1376,7 +1376,7 @@ void setUpFlowSimFluxFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	flowSimFluxFBO = new FrameBufferObject(width, height, flow_flux_prog, fboTex, fboOutNames, attachLocations);
+	flowSimFluxFBO = new FrameBufferObject(simRes.x, simRes.y, flow_flux_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpFlowSimWaterHeightFBO()
@@ -1392,7 +1392,7 @@ void setUpFlowSimWaterHeightFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	flowWatHeightFBO = new FrameBufferObject(width, height, flow_water_height_prog, fboTex, fboOutNames, attachLocations);
+	flowWatHeightFBO = new FrameBufferObject(simRes.x, simRes.y, flow_water_height_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpFlowSimVelocityFBO()
@@ -1408,7 +1408,7 @@ void setUpFlowSimVelocityFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	flowSimVelFBO = new FrameBufferObject(width, height, flow_vel_prog, fboTex, fboOutNames, attachLocations);
+	flowSimVelFBO = new FrameBufferObject(simRes.x, simRes.y, flow_vel_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpErosionDepoFBO()
@@ -1424,7 +1424,7 @@ void setUpErosionDepoFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	erosDepoFBO = new FrameBufferObject(width, height, erosion_depo_prog, fboTex, fboOutNames, attachLocations);
+	erosDepoFBO = new FrameBufferObject(simRes.x, simRes.y, erosion_depo_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpSedTransFBO()
@@ -1440,7 +1440,7 @@ void setUpSedTransFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	sedTransFBO = new FrameBufferObject(width, height, sediment_trans_prog, fboTex, fboOutNames, attachLocations);
+	sedTransFBO = new FrameBufferObject(simRes.x, simRes.y, sediment_trans_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpEvapFBO()
@@ -1456,7 +1456,7 @@ void setUpEvapFBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	evapFBO = new FrameBufferObject(width, height, evapo_prog, fboTex, fboOutNames, attachLocations);
+	evapFBO = new FrameBufferObject(simRes.x, simRes.y,evapo_prog, fboTex, fboOutNames, attachLocations);
 }
 
 void setUpSmoothPass1FBO()
@@ -1471,7 +1471,7 @@ void setUpSmoothPass1FBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	smooth1FBO = new FrameBufferObject(width, height, smooth_intermediate_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
+	smooth1FBO = new FrameBufferObject(simRes.x, simRes.y, smooth_intermediate_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
 }
 
 void setUpSmoothPass2FBO()
@@ -1487,7 +1487,7 @@ void setUpSmoothPass2FBO()
 	vector<GLenum> attachLocations;
 	attachLocations.push_back(GL_COLOR_ATTACHMENT0);
 
-	smooth2FBO = new FrameBufferObject(width, height, smooth_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
+	smooth2FBO = new FrameBufferObject(simRes.x, simRes.y, smooth_prog, fboTex, fboOutNames, attachLocations, vertex_array, vbo_indices, num_indices);
 }
 
 void setUpSmoothingKernelFBO()
