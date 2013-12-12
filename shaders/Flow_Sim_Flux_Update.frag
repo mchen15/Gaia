@@ -13,7 +13,7 @@ out vec4 out_flux;
 
 vec2 texSize = textureSize(u_terrainAttrTex,0);
 const float gravity = 9.8;
-const float EPSILON = 0.01;
+
 
 float getFluxDelta(int offsetX, int offsetY)
 {
@@ -44,17 +44,29 @@ void main (void)
 	out_flux.w = max(0,out_flux.w+getFluxDelta(0,-1));
 
 	//boundary conditions
-	if( v_Texcoord.s > 0 - EPSILON && v_Texcoord.s < 0 + EPSILON)
+	if ( gl_FragCoord.x>0.0 && gl_FragCoord.x < 1.0)
 		out_flux.x = 0.0;
 
-	else if (v_Texcoord.s > 1 - EPSILON && v_Texcoord.s < 1 + EPSILON)
+	else if (gl_FragCoord.x < texSize.x-1.0 && gl_FragCoord.x> texSize.x-2.0)
 		out_flux.y = 0.0;
 
-	if (v_Texcoord.t > 0 - EPSILON && v_Texcoord.t < 0 + EPSILON)
+	if ( gl_FragCoord.y>0.0 && gl_FragCoord.y < 1.0)
 		out_flux.w = 0.0;
 
-	else if (v_Texcoord.t > 1 - EPSILON && v_Texcoord.t < 1 + EPSILON)
+	else if (gl_FragCoord.y < texSize.y-1.0 && gl_FragCoord.y> texSize.y-2.0)
 		out_flux.z = 0.0;
+
+	//if( v_Texcoord.s > 0 - EPSILON && v_Texcoord.s < 0 + EPSILON)
+	//	out_flux.x = 0.0;
+
+	//else if (v_Texcoord.s > 1 - EPSILON && v_Texcoord.s < 1 + EPSILON)
+	//	out_flux.y = 0.0;
+
+	//if (v_Texcoord.t > 0 - EPSILON && v_Texcoord.t < 0 + EPSILON)
+	//	out_flux.w = 0.0;
+
+	//else if (v_Texcoord.t > 1 - EPSILON && v_Texcoord.t < 1 + EPSILON)
+	//	out_flux.z = 0.0;
 
 	float scaleFactor = 0.0;
 
