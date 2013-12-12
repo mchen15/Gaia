@@ -85,7 +85,13 @@ vec3 computeWaterColor()
 	vec3 position = fs_Position;
 	vec3 shallow = vec3(0, 0.2, 0.5) * 0.1;
 	vec3 deep = vec3(0.16, 0.83, 1.0) * 0.9;
-	vec3 normal = sampleNormal(texcoord);
+	vec3 normal = vec3(0,0,0);
+	
+	if (u_toggleNormal == 0)
+		//normal = getNormalSobel();
+		normal = sampleComputedNormal(texcoord);
+	else
+		normal = sampleNormal(texcoord);
 	
 	float waterHeight = sampleHeight(texcoord);
 
