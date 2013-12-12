@@ -149,12 +149,12 @@ vec3 computeWaterColor()
 	float shininess = 0.5;
 
 	float dotSpec = clamp(dot(reflectedEyeVec, -u_lightDirection.xyz) * 0.5 + 0.5, 0.0, 1.0);
-	vec3 specular = (1.0 - fresnel) * clamp(u_lightDirection.y, 0 , 1) * ((pow(dotSpec,4.5)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
+	vec3 specular = (1.0 - fresnel) * clamp(u_lightDirection.y, 0 , 1) * ((pow(dotSpec,50.5)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
 	specular += specular * 25 * clamp(shininess - 0.05, 0, 1);
 	
 	vec3 envColor = texture(u_cubemap, normalize(reflectedEyeVec)).rgb;
 		
-	vec4 waterColor = clamp(vec4(diffuse * color * envColor + specular, 1.0), 0, 1);
+	vec4 waterColor = clamp(vec4(diffuse * color * envColor + specular, 1.0), 0.0, 1.0);
 	//waterColor = vec4(diffuse * color, 1.0);
 	//waterColor = u_lightColor;
 	//waterColor = vec4(specular, 1.0);
@@ -217,6 +217,7 @@ void main(){
 	vec3 terrainColor = vec3(0.54,0.27,0)*intensity*u_lightColor.xyz;
 	float blend = 8.0*height/u_heightScale*clamp(texture(u_heightMap, texcoord).g,0.0,0.8);
 	vec3 color = mix( terrainColor, waterColor, blend);
+	
 	
 	float avgSlope = (diff1 + diff2) / 2.0;
 

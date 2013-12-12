@@ -369,18 +369,31 @@ void renderTerrain()
 {
 	unbindTextures();
 	glUseProgram(curr_prog);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0,0,screenRes.x,screenRes.y);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
 	setCurrProgUniforms();
 	plane->draw(triangle_attributes::POSITION);
+	glDisable(GL_BLEND);
 }
 
 void display(void)
 {
 	updateFPS();
+	
+	if (!genNormalMap)
+	{
+		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+		glUseProgram(skybox_prog);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		setSkyboxProgUniforms();
+		skybox->drawSkybox(triangle_attributes::POSITION);
+	}
+
 
 	if (genNormalMap)
 	{
@@ -392,9 +405,7 @@ void display(void)
 
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
-	{
-		
-
+	{	
 		// Water Increment
 		waterInc();
 		
@@ -453,14 +464,7 @@ void display(void)
 			plane->draw(triangle_attributes::POSITION);
 		}
 	}
-	
-	if (!genNormalMap)
-	{
-		glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-		glUseProgram(skybox_prog);
-		setSkyboxProgUniforms();
-		skybox->drawSkybox(triangle_attributes::POSITION);
-	}
+
 
 	glutPostRedisplay();
     glutSwapBuffers();
