@@ -212,9 +212,11 @@ void main(){
 	vec3 waterColor = computeWaterColor();
 
 	float intensity = max(dot(u_lightDirection, normal), 0.0);
+	float height =texture(u_heightMap, texcoord).r;
 	//vec3 color = color * intensity * u_lightColor.xyz;	//vec3 color = mix( vec3(0.54,0.27,0), vec3(0,0,1), texture(u_heightMap, texcoord).g);
 	vec3 terrainColor = vec3(0.54,0.27,0)*intensity*u_lightColor.xyz;
-	vec3 color = mix( terrainColor, waterColor, texture(u_heightMap, texcoord).g);
+	float blend = 8.0*height/u_heightScale*clamp(texture(u_heightMap, texcoord).g,0.0,0.8);
+	vec3 color = mix( terrainColor, waterColor, blend);
 	
 	float avgSlope = (diff1 + diff2) / 2.0;
 

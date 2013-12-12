@@ -40,7 +40,7 @@ void main (void)
 	{
 		float rainRate = 0.005;
 		float r = rand(v_Texcoord);
-		if ( r>0.8)
+		if ( r>0.2)
 		{
 			out_terrainAttr.g += u_deltaT*rainRate;
 		}

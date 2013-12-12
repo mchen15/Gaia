@@ -703,7 +703,7 @@ void setEvapoProgUniforms()
 
 void setSkyboxProgUniforms()
 {
-	mat4 model = scale(mat4(1.0), vec3(2000, 2000, 2000));
+	mat4 model = scale(mat4(1.0), vec3(5000, 5000, 5000));
 	mat4 view = cam->getView();
 	mat4 project = cam->getPersp(width,height);
 
@@ -1167,7 +1167,7 @@ void passiveMotion(int x, int y)
 		float t = -cam->getPosition().z / eyeToSceneDir.z;
 		glm::vec3 point = cam->getPosition() + t*eyeToSceneDir;
 
-		if( point.x>= 0 && point.x<=width && point.y >=0 && point.y<=height)
+		if( point.x>= 0 && point.x<=simRes.x && point.y >=0 && point.y<=simRes.y)
 		{
 			terrainManipulatorCenter.x = point.x/simRes.x;
 			terrainManipulatorCenter.y = point.y/simRes.y;
@@ -1223,7 +1223,7 @@ void initScene()
 	vec3 up = vec3(0,0,1);
 	float fov = 45.0f;
 	float nearPlane = 0.01f;
-	float farPlane = 5000.0f;
+	float farPlane = 10000.0f;
 
 	cam = new Camera(camPosition, lookAtPoint, up,fov,nearPlane,farPlane);
 	plane = new Plane(vec2(0), vec2(1), SUBDIV.x, SUBDIV.y); // LOOK: Our plane is from 0 to 1 with numPatches
