@@ -3,15 +3,15 @@
 // Program flow switches
 
 bool genNormalMap = false;
-bool enableErosion = true;
+bool enableErosion = false;
 bool enableTexcoords = false;
-bool enableWaterTest = false;
+bool enableWaterTest = true;
 
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(128, 128);
 float texScale = 1;
 float heightScale = 200;
-vec3 lightPosWorld = vec3(0, 0, 10);
+vec3 lightPosWorld = vec3(10, 10, 10);
 float gridSpacing = 1;
 float pixelsPerEdge = 1;
 float tessLevelInner = 3;
@@ -27,8 +27,8 @@ float Ke = 0.001;
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
-const char* heightmapPath = "../../textures/test1024.png";
-//const char* heightmapPath = "../../textures/terrain_heights.jpg";
+//const char* heightmapPath = "../../textures/test1024.png";
+const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
 

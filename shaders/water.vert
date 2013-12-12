@@ -17,8 +17,8 @@ void main(void) {
 	gl_Position = u_pvm * vec4(Position, height, 1);
 
 	v_Texcoord = Texcoord;
-	v_Position = gl_Position.xyz;
+	//v_Position = gl_Position.xyz;
 
-	//vec4 pos = u_View * u_Model * vec4(Position, height, 1.0);
-	//v_Position = pos.xyz;
+	vec4 pos = u_View * u_Model * vec4(Position, height, 1.0);
+	v_Position = pos.xyz;
 }

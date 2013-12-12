@@ -33,7 +33,7 @@ float computeFresnelTerm(vec3 normal, vec3 eyeVec)
 void main(void)
 {
 	vec3 position = v_Position;
-	vec3 shallow = vec3(0, 0.2, 0.5) * 0.5;
+	vec3 shallow = vec3(0, 0.2, 0.5) * 0.1;
 	vec3 deep = vec3(0.16, 0.83, 1.0) * 0.9;
 	vec3 normal = sampleNormal(v_Texcoord);
 	
@@ -51,13 +51,13 @@ void main(void)
 	float shininess = 0.5;
 
 	float dotSpec = clamp(dot(reflectedEyeVec, -u_lightDirection.xyz) * 0.5 + 0.5, 0.0, 1.0);
-	vec3 specular = (1.0 - fresnel) * clamp(u_lightDirection.y, 0 , 1) * ((pow(dotSpec,2.5)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
+	vec3 specular = (1.0 - fresnel) * clamp(u_lightDirection.y, 0 , 1) * ((pow(dotSpec,4.5)) * (shininess * 1.8 + 0.2)) * u_lightColor.xyz;
 	specular += specular * 25 * clamp(shininess - 0.05, 0, 1);
 	
 	vec3 envColor = texture(u_cubemap, normalize(reflectedEyeVec)).rgb;
-
-	//fragColor = vec4(diffuse * color, 1.0);
+		
 	fragColor = clamp(vec4(diffuse * color * envColor + specular, 1.0), 0, 1);
+	//fragColor = vec4(diffuse * color, 1.0);
 	//fragColor = u_lightColor;
 	//fragColor = vec4(specular, 1.0);
 	//fragColor = vec4(color,1.0);
