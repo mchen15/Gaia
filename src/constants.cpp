@@ -13,7 +13,7 @@ float texScale = 1;
 float heightScale = 200;
 vec3 lightPosWorld = vec3(10, 10, 10);
 float gridSpacing = 1;
-float pixelsPerEdge = 20;
+float pixelsPerEdge = 10;
 float tessLevelInner = 3;
 float tessLevelOuter = 3;
 
@@ -29,8 +29,8 @@ vec2 screenRes(1280,720);
 //const char* heightmapPath = "../../textures/earthbump1024.png";
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
-const char* heightmapPath = "../../textures/test1024.png";
-//const char* heightmapPath = "../../textures/terrain_heights.jpg";
+//const char* heightmapPath = "../../textures/test1024.png";
+const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
 

@@ -72,6 +72,48 @@ vec3 getNormalSobel()
 
 }
 
+vec2 tSize = textureSize(u_heightMap,0);
+const float samples = 32;
+const float occlusionRadius = 1.0;
+
+vec3 getWorldPos( vec2 texcoord)
+{
+	float h = texture(u_heightMap,texcoord).r;
+	return vec3( texcoord*tSize,h);
+}
+
+float getOcclusionFactor()
+{
+	float occlusion = 0.0;
+	
+	vec3 normal =  sampleComputedNormal(texcoord);
+	vec3 tangent = normalize(cross( vec3(0.0,0.0,1.0),normal));
+	vec3 bitangent = normalize( cross(tangent,normal));
+
+	mat3 orthobasis = mat3(tangent,normal,bitangent);
+	vec3 pos = getWorldPos(texcoord);
+	for(int i=1; i<samples+1;++i)
+	{
+		float s = float(i)/samples;
+		float a = sqrt(s* 512.0);
+		float b = sqrt(s);
+
+		float x = sin(a)*b*occlusionRadius;
+		float y = cos(a)*b*occlusionRadius;
+
+		vec3 sample_uv = orthobasis*vec3(x,y,0.0);
+		vec3 sample_pos = getWorldPos( sample_uv.xy);
+
+		vec3 sample_dir = normalize(sample_pos - pos);
+		float lambert = clamp( dot(normal,sample_dir),0.0,1.0);
+
+		float dist_factor =40.0/sqrt(length(sample_pos-pos));
+		occlusion += dist_factor*lambert;
+	}
+	return (1.0 - occlusion/samples);
+}
+
+
 ///////////////////////
 // water shading stuff
 float computeFresnelTerm(vec3 normal, vec3 eyeVec)
@@ -188,5 +230,6 @@ void main(){
 		}
 	}
 
+	float occ = getOcclusionFactor();
 	fragment = vec4(color,1.0);
 }

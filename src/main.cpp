@@ -393,7 +393,7 @@ void display(void)
 	}
 	else if (enableErosion) // temporarily have erosion as a completely different part of our pipeline for debugging purposes
 	{
-		updateNormals();
+		
 
 		// Water Increment
 		waterInc();
@@ -411,6 +411,9 @@ void display(void)
 
 		// Evaporation
 		evaporation();
+
+		//Update normals
+		updateNormals();
 
 		// Show results!
 		renderTerrain();
@@ -1706,6 +1709,7 @@ int main(int argc, char* argv[])
 
 	// initialization of flex_tex, velocity_tex, and terrainattr_tex
 	terrainInit();
+	updateNormals();
 	glutDisplayFunc(display);
     glutReshapeFunc(reshape);	
     glutKeyboardFunc(keyboard);
