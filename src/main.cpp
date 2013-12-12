@@ -1011,6 +1011,9 @@ void setWaterTestUniforms ()
 }
 void keyboard(unsigned char key, int x, int y) 
 {
+    float tx = 0;
+    float ty = 0;
+    float tz = 0;
 	switch(key) 
 	{
 		case(27):
@@ -1040,22 +1043,24 @@ void keyboard(unsigned char key, int x, int y)
 		case ('m'):
 			plane->toggleIndexingMode();
 			break;
-		case ('w'):
-			cam->setPosition( cam->getPosition()+ vec3(0,5,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(0,5,0));
-			break;
-		case ('s'):
-			cam->setPosition( cam->getPosition()- vec3(0,5,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(0,5,0));
-			break;
-		case ('a'):
-			cam->setPosition( cam->getPosition()- vec3(5,0,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() - vec3(5,0,0));
-			break;
-		case ('d'):
-			cam->setPosition( cam->getPosition()+vec3(5,0,0));
-			cam->setLookAtPoint(cam->getLookAtPoint() + vec3(5,0,0));
-			break;
+        case('w'):
+            tz = 5.0;
+            break;
+        case('s'):
+            tz = -5.0;
+            break;
+        case('d'):
+            tx = -5.0;
+            break;
+        case('a'):
+            tx = 5.0;
+            break;
+        case('q'):
+            ty = 5.0;
+            break;
+        case('z'):
+            ty = -5.0;
+            break;
 		case ('r'):
 			initShader();
 			initErosionShaders();
@@ -1098,6 +1103,11 @@ void keyboard(unsigned char key, int x, int y)
 		case(']'):
 			terrainManipulatorRadius += 0.002;
 	}
+
+    if (abs(tx) > 0 || abs(tz) > 0 || abs(ty) > 0) {
+        cam->adjust(0,0,0,tx,ty,tz);
+		
+    }
 }
 
 void mouse(int button, int state, int x, int y)
