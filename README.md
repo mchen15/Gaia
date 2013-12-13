@@ -25,13 +25,17 @@ http://www.youtube.com/watch?v=iPPxxh8R2PU
 
 
 
-![alt tag](https://raw.github.com/mchen15/Gaia/finalResults/terrain.png)
+![alt tag](https://raw.github.com/mchen15/Gaia/master/finalResults/terrain.png)
 
 -----------------------------
 REFERENCES
 ------------------------------
 [1]http://http.developer.nvidia.com/GPUGems/gpugems_ch21.html
+
 [2]Fast Hydraulic Erosion Simulation and Visualization on GPU, by Xing Mei et al
+
 [3]Dynamic simulation of splashing fluids, by James O Brien et al
+
 [4]http://www.gamedev.net/page/resources/_/technical/graphics-programming-and-theory/rendering-water-as-a-post-process-effect-r2642
+
 [5]http://codeflow.org/entries/2011/nov/10/webgl-gpu-landscaping-and-erosion/
