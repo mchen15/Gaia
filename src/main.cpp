@@ -94,20 +94,33 @@ void renderToScreen()
 	drawQuad();
 }
 
+void startTimer(char* string)
+{
+	if (enableTimers)
+	{
+		cout << string << endl;
+		t1 = clock();
+	}
+}
 
-
+void stopTimer()
+{
+	if (enableTimers)
+	{
+		t2 = clock();
+		float diff ((float)t2-(float)t1);
+		float seconds = diff / CLOCKS_PER_SEC;
+		cout<<seconds<<endl;
+	}
+}
 
 void waterInc()
 {
+	startTimer("Water Inc Time:");
 	unbindTextures();
 	glUseProgram(water_inc_prog);
 	bindFBO(waterIncFBO->getFBOHandle());
 	glViewport(0,0,simRes.x,simRes.y);
-	//GLint uniformLocation = -1;
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(water_inc_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 0);
 
 	setWaterIncProgUniforms();
 	drawQuad();
@@ -126,25 +139,17 @@ void waterInc()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void flowSimFlux()
 {
+	startTimer("Flow Sim Flux Time");
 	unbindTextures();
 	glUseProgram(flow_flux_prog);
 	bindFBO(flowSimFluxFBO->getFBOHandle());
 	glViewport(0,0,simRes.x,simRes.y);
-	//GLint uniformLocation = -1;
 
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, flux_tex);
-	//uniformLocation = glGetUniformLocation(flow_flux_prog, U_FLUXTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(flow_flux_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 1);
 	setFlowFluxProgUniforms();
 	drawQuad();
 
@@ -162,30 +167,16 @@ void flowSimFlux()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void flowSimVel()
 {
+	startTimer("Flow Sim Vel Time");
 	unbindTextures();
 	glUseProgram(flow_vel_prog);
 	bindFBO(flowSimVelFBO->getFBOHandle());
 	glViewport(0,0,simRes.x,simRes.y);
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, flux_tex);
-	//uniformLocation = glGetUniformLocation(flow_vel_prog, U_FLUXTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(flow_vel_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 1);
-
-	//glActiveTexture(GL_TEXTURE2);
-	//glBindTexture(GL_TEXTURE_2D, velocity_tex);
-	//uniformLocation = glGetUniformLocation(flow_vel_prog, U_VELTEXID);
-	//glUniform1i(uniformLocation, 2);
 
 	setFlowVelProgUniforms();
 	drawQuad();
@@ -204,10 +195,12 @@ void flowSimVel()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void flowSimWaterHeight()
 {
+	startTimer("Flow Sim Water Height Time");
 	unbindTextures();
 	glUseProgram(flow_water_height_prog);
 	bindFBO(flowWatHeightFBO->getFBOHandle());
@@ -240,10 +233,12 @@ void flowSimWaterHeight()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void erosionDeposition()
 {
+	startTimer("Erosion Deposition");
 	unbindTextures();
 	glUseProgram(erosion_depo_prog);
 	bindFBO(erosDepoFBO->getFBOHandle());
@@ -282,26 +277,21 @@ void erosionDeposition()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void sedimentTransport()
 {
+	if (enableTimers)
+	{
+		cout << "Sediment Transport" << endl;
+		t1 = clock();
+	}
+
 	unbindTextures();
 	glUseProgram(sediment_trans_prog);
 	bindFBO(sedTransFBO->getFBOHandle());
 	glViewport(0,0,simRes.x,simRes.y);
-	//GLint uniformLocation = -1;
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, terrainattr_tex);
-	//uniformLocation = glGetUniformLocation(sediment_trans_prog, U_TERRAINATTRTEXID);
-	//glUniform1i(uniformLocation, 0);
-
-	//glActiveTexture(GL_TEXTURE1);
-	//glBindTexture(GL_TEXTURE_2D, velocity_tex);
-	//uniformLocation = glGetUniformLocation(sediment_trans_prog, U_VELTEXID);
-	//glUniform1i(uniformLocation, 1);
-
 	setSedimentTransProgUniforms();
 	drawQuad();
 
@@ -319,10 +309,12 @@ void sedimentTransport()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void evaporation()
 {
+	startTimer("Evaporation Time");
 	unbindTextures();
 	glUseProgram(evapo_prog);
 	bindFBO(evapFBO->getFBOHandle());
@@ -351,10 +343,12 @@ void evaporation()
 	copyFBO->changeTextureAttachments(fboTex,fboOutNames,attachLocations);
 	setCopyTexProgUniforms();
 	drawQuad();
+	stopTimer();
 }
 
 void updateNormals()
 {
+	startTimer("Update Normal Time");
 	glUseProgram(normalmap_prog);
 	bindFBO(normalMapFBO->getFBOHandle());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -363,10 +357,12 @@ void updateNormals()
 																		 // see setUpNormalsFBO() for the setup information
 	smoothKernelFBO->changeTextureAttachments(computednormalmap_tex);	 // change the render target to computednormalmap_tex
 	smoothKernelFBO->smooth(temp_tex,false,10,10);							 // take temp_tex as the input
+	stopTimer();
 }
 
 void renderTerrain()
 {
+	startTimer("Render Terrain Time");
 	unbindTextures();
 	glUseProgram(curr_prog);
 	glEnable(GL_BLEND);
@@ -378,6 +374,7 @@ void renderTerrain()
 	setCurrProgUniforms();
 	plane->draw(triangle_attributes::POSITION);
 	glDisable(GL_BLEND);
+	stopTimer();
 }
 
 void display(void)

@@ -8,6 +8,7 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "SOIL.h"
 #include "camera.h"
 #include "plane.h"
@@ -38,6 +39,8 @@ namespace quad_attributes {
         TEXCOORD
     };
 }
+
+clock_t t1, t2;
 
 Camera* cam;
 Plane* plane;

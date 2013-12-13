@@ -37,6 +37,7 @@ extern bool enableTexcoords;	// texcoords will be used as an input attribute in 
 								// pass.frag)
 extern bool enableErosion;
 extern bool enableWaterTest;
+extern bool enableTimers;
 
 //EROSION
 

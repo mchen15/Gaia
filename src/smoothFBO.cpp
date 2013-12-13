@@ -65,7 +65,7 @@ void SmoothKernelFBO::setUpPass1FBOUniforms(int kernelSize)
 		glUniform1i(uniformLocation, 0);	
 	}
 
-	uniformLocation = glGetUniformLocation(smoothPass2FBO->getShaderProg(),U_KERNELSIZEXID);
+	uniformLocation = glGetUniformLocation(smoothPass1FBO->getShaderProg(),U_KERNELSIZEXID);
 	if (uniformLocation != -1)
 		glUniform1i(uniformLocation,kernelSize);
 }

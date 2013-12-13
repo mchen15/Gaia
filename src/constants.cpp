@@ -6,6 +6,7 @@ bool genNormalMap = false;
 bool enableErosion = true;
 bool enableTexcoords = false;
 bool enableWaterTest = false;
+bool enableTimers = true;
 
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(32, 32);
