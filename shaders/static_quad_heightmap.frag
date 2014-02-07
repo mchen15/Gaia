@@ -161,17 +161,6 @@ vec3 computeWaterColor()
 	vec3 envColor = texture(u_cubemap, normalize(reflectedEyeVec)).rgb;
 		
 	vec4 waterColor = clamp(vec4(diffuse * color * envColor + specular, 1.0), 0.0, 1.0);
-	//waterColor = vec4(diffuse * color, 1.0);
-	//waterColor = u_lightColor;
-	//waterColor = vec4(specular, 1.0);
-	//waterColor = vec4(color,1.0);
-	//waterColor = vec4(specular + envColor , 1.0);
-	//waterColor = vec4(dotSpec, dotSpec, dotSpec, 1.0);
-	//waterColor = clamp(vec4(pow(dotSpec, 2.0),pow(dotSpec, 2.0),pow(dotSpec, 2.0),1.0), 0, 1);
-	//waterColor = vec4(clamp(u_lightDirection.y, 0 , 1),clamp(u_lightDirection.y, 0 , 1),clamp(u_lightDirection.y, 0 , 1),1);
-	//waterColor = vec4((1.0 - fresnel),(1.0 - fresnel),(1.0 - fresnel),1.0);
-	//waterColor = vec4(envColor, 1.0);
-
 	return waterColor.rgb;
 }
 
@@ -188,6 +177,15 @@ vec3 computeTerrainColor(float normalizedHeight, float intensity)
 	baseTerrainColor = mix(baseTerrainColor, dirt2, dirt2Ratio);
 	vec3 terrainColor = baseTerrainColor*intensity*u_lightColor.xyz;
 	return terrainColor;
+}
+
+vec3 getTexturedTerrainColor(float normalizedHeight, float intensity)
+{
+	vec3 dirtColor = texture(u_dirtTex,3.0*texcoord).rgb;
+	vec3 grassColor = texture(u_grassTex,3.0*texcoord).rgb;
+	vec3 rockColor = texture(u_rockTex,texcoord).rgb;
+
+	return intensity*grassColor;
 }
 
 void main(){
@@ -232,7 +230,8 @@ void main(){
 	float normalizedHeight = height / u_heightScale;
 	float intensity = max(dot(u_lightDirection, normal), 0.0);
 	vec3 waterColor = computeWaterColor();
-	vec3 terrainColor = computeTerrainColor(normalizedHeight, intensity);
+	//vec3 terrainColor = computeTerrainColor(normalizedHeight, intensity);
+	vec3 terrainColor = getTexturedTerrainColor(normalizedHeight, intensity);
 	float blend = 8.0*height/u_heightScale*clamp(texture(u_heightMap, texcoord).g,0.0,0.8);
 	vec3 color = mix( terrainColor, waterColor, blend);
 	

@@ -31,12 +31,13 @@ vec2 screenRes(1280,720);
 //const char* heightmapPath = "../../textures/random.png";
 //const char* heightmapPath = "../../textures/test2.png";
 //const char* heightmapPath = "../../textures/test1024.png";
+
 const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
-const char* grassTexPath = "../../;
-const char* rockTexPath;
-const char* dirtTexPath;
+const char* grassTexPath = "../../textures/grass.jpg";
+const char* rockTexPath = "../../textures/rock.jpg";
+const char* dirtTexPath = "../../textures/dirt.jpg";
 
 const char* cubeMapUpImgPath = "../../textures/skybox/sunnyUp.png";
 const char* cubeMapDownImgPath = "../../textures/skybox/sunnyDown.png";

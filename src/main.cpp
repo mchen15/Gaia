@@ -908,12 +908,35 @@ void setCurrProgUniforms()
 	}
 
 	uniformLocation = glGetUniformLocation(curr_prog, U_CUBEMAPID);
-
 	if (uniformLocation != -1)
 	{
 		glActiveTexture(GL_TEXTURE4);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->getTextureHandle());
 		glUniform1i(uniformLocation, 4);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_GRASSTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE5);
+		glBindTexture(GL_TEXTURE_2D, grass_tex);
+		glUniform1i(uniformLocation, 5);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_DIRTTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE6);
+		glBindTexture(GL_TEXTURE_2D, dirt_tex);
+		glUniform1i(uniformLocation, 6);
+	}
+
+	uniformLocation = glGetUniformLocation(curr_prog, U_ROCKTEXID);
+	if (uniformLocation != -1)
+	{
+		glActiveTexture(GL_TEXTURE7);
+		glBindTexture(GL_TEXTURE_2D, rock_tex);
+		glUniform1i(uniformLocation, 7);
 	}
 }
 
@@ -1204,8 +1227,32 @@ void initTextures()
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-	foammap_tex = (unsigned int)SOIL_load_OGL_texture(diffusemapPath,0,0,0);
+	foammap_tex = (unsigned int)SOIL_load_OGL_texture(foamTextureImgPath, 0, 0, 0);
 	glBindTexture(GL_TEXTURE_2D, diffusemap_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	grass_tex = (unsigned int)SOIL_load_OGL_texture(grassTexPath, 0, 0, 0);
+	glBindTexture(GL_TEXTURE_2D, grass_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	rock_tex = (unsigned int)SOIL_load_OGL_texture(rockTexPath, 0, 0, 0);
+	glBindTexture(GL_TEXTURE_2D, rock_tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	dirt_tex = (unsigned int)SOIL_load_OGL_texture(dirtTexPath, 0, 0, 0);
+	glBindTexture(GL_TEXTURE_2D, dirt_tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
