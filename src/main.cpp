@@ -1015,6 +1015,8 @@ void keyboard(unsigned char key, int x, int y)
     float tx = 0;
     float ty = 0;
     float tz = 0;
+
+	float camSpeed = 10;
 	switch(key) 
 	{
 		case(27):
@@ -1045,22 +1047,22 @@ void keyboard(unsigned char key, int x, int y)
 			plane->toggleIndexingMode();
 			break;
         case('w'):
-            tz = 5.0;
+			tz = camSpeed;
             break;
         case('s'):
-            tz = -5.0;
+			tz = -camSpeed;
             break;
         case('d'):
-            tx = -5.0;
+			tx = -camSpeed;
             break;
         case('a'):
-            tx = 5.0;
+			tx = camSpeed;
             break;
         case('q'):
-            ty = 5.0;
+			ty = camSpeed;
             break;
         case('z'):
-            ty = -5.0;
+			ty = -camSpeed;
             break;
 		case ('r'):
 			initShader();

@@ -52,6 +52,9 @@ extern float Ke;
 const extern char* heightmapColorPath;	// temporarily load a color map
 const extern char* normalmapPath;
 const extern char* diffusemapPath;
+const extern char* grassTexPath;
+const extern char* rockTexPath;
+const extern char* dirtTexPath;
 const extern char* heightmapPath;
 const extern char* vertShaderPath;
 const extern char* fragShaderPath;
@@ -149,4 +152,7 @@ extern char* U_RANDSEED;
 extern char* U_COMPUTEDNORMALMAPID;
 extern char* U_KERNELSIZEXID;
 extern char* U_KERNELSIZEYID;
+extern char* U_GRASSTEXID;
+extern char* U_ROCKTEXID;
+extern char* U_DIRTTEXID;
 #endif

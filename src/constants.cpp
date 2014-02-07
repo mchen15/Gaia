@@ -6,7 +6,7 @@ bool genNormalMap = false;
 bool enableErosion = true;
 bool enableTexcoords = false;
 bool enableWaterTest = false;
-bool enableTimers = true;
+bool enableTimers = false;
 
 int NUM_QUADS = 1;
 vec2 SUBDIV = vec2(32, 32);
@@ -34,6 +34,9 @@ vec2 screenRes(1280,720);
 const char* heightmapPath = "../../textures/terrain_heights.jpg";
 const char* normalmapPath = "../../textures/terrain_normals.jpg";
 const char* diffusemapPath = "../../textures/terrain_diffuse.jpg";
+const char* grassTexPath = "../../;
+const char* rockTexPath;
+const char* dirtTexPath;
 
 const char* cubeMapUpImgPath = "../../textures/skybox/sunnyUp.png";
 const char* cubeMapDownImgPath = "../../textures/skybox/sunnyDown.png";
@@ -137,3 +140,6 @@ char* U_RANDSEED = "u_randomSeed";
 char* U_COMPUTEDNORMALMAPID = "u_computedNormalMap";
 char* U_KERNELSIZEXID = "u_kernelX";
 char* U_KERNELSIZEYID = "u_kernelY";
+char* U_GRASSTEXID = "u_grassTex";
+char* U_ROCKTEXID = "u_rockTex";
+char* U_DIRTTEXID = "u_dirtTex";

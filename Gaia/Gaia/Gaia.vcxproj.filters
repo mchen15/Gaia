@@ -19,9 +19,6 @@
     <Filter Include="Shaders\Erosion">
       <UniqueIdentifier>{c4c4a5df-a3ed-4995-ac60-73f6635e0ab5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shaders\Terrain Tessellation">
-      <UniqueIdentifier>{ac5d7ae0-b901-42cb-8735-067dae251efb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders\Normal">
       <UniqueIdentifier>{94d66d5c-4561-4123-af3a-a24b89652d9c}</UniqueIdentifier>
     </Filter>
@@ -31,25 +28,28 @@
     <Filter Include="Shaders\Rendering">
       <UniqueIdentifier>{d31be426-7982-4cd3-a624-32ecd8ff30e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Terrain Tessellation and Rendering">
+      <UniqueIdentifier>{ac5d7ae0-b901-42cb-8735-067dae251efb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\shaders\static_quad_heightmap.frag">
-      <Filter>Shaders\Terrain Tessellation</Filter>
+      <Filter>Shaders\Terrain Tessellation and Rendering</Filter>
     </None>
     <None Include="..\..\shaders\static_quad_heightmap.tc">
-      <Filter>Shaders\Terrain Tessellation</Filter>
+      <Filter>Shaders\Terrain Tessellation and Rendering</Filter>
     </None>
     <None Include="..\..\shaders\static_quad_heightmap.te">
-      <Filter>Shaders\Terrain Tessellation</Filter>
+      <Filter>Shaders\Terrain Tessellation and Rendering</Filter>
     </None>
     <None Include="..\..\shaders\static_quad_heightmap.vert">
-      <Filter>Shaders\Terrain Tessellation</Filter>
+      <Filter>Shaders\Terrain Tessellation and Rendering</Filter>
     </None>
     <None Include="..\..\shaders\tessNoise.tc">
-      <Filter>Shaders\Terrain Tessellation</Filter>
+      <Filter>Shaders\Terrain Tessellation and Rendering</Filter>
     </None>
     <None Include="..\..\shaders\tessNoise.te">
-      <Filter>Shaders\Terrain Tessellation</Filter>
+      <Filter>Shaders\Terrain Tessellation and Rendering</Filter>
     </None>
     <None Include="..\..\shaders\Erosion_Deposition.frag">
       <Filter>Shaders\Erosion</Filter>
