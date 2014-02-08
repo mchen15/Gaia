@@ -181,11 +181,36 @@ vec3 computeTerrainColor(float normalizedHeight, float intensity)
 
 vec3 getTexturedTerrainColor(float normalizedHeight, float intensity)
 {
-	vec3 dirtColor = texture(u_dirtTex,3.0*texcoord).rgb;
-	vec3 grassColor = texture(u_grassTex,3.0*texcoord).rgb;
-	vec3 rockColor = texture(u_rockTex,texcoord).rgb;
+	vec3 dirtColor = texture(u_dirtTex,2.0*texcoord).rgb;
+	vec3 grassColor = texture(u_grassTex,2.0*texcoord).rgb;
+	vec3 rockColor = texture(u_rockTex,2.0*texcoord).rgb;
 
-	return intensity*grassColor;
+	float threshold1 = 0.25;
+	float threshold2 = 0.7;
+
+	vec3 intermediateColor = vec3(0,0,0);
+	vec3 terrainColor = vec3(0,0,0);
+
+	if (normalizedHeight > threshold1)
+	{
+		intermediateColor = mix(dirtColor, grassColor, normalizedHeight);
+	}
+	else
+	{
+		return intensity*mix(dirtColor, grassColor, 0.9);
+	}
+
+	if (normalizedHeight > threshold1 && normalizedHeight < threshold2)
+	{
+		terrainColor = mix(rockColor, intermediateColor, normalizedHeight);
+	}
+	else
+	{
+		terrainColor = mix(rockColor, intermediateColor, 0.01);
+		terrainColor = mix(terrainColor, grassColor, 0.12);
+	}
+
+	return intensity * terrainColor;
 }
 
 void main(){
