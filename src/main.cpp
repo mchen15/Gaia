@@ -1132,6 +1132,9 @@ void keyboard(unsigned char key, int x, int y)
 
     if (abs(tx) > 0 || abs(tz) > 0 || abs(ty) > 0) {
         cam->adjust(0,0,0,tx,ty,tz);
+
+		vec3 pos = cam->getPosition();
+		cout << "cam position: " << pos.x << " " << pos.y << " "<< pos.z << endl;
 		
     }
 }
@@ -1263,8 +1266,8 @@ void initTextures()
 void initScene()
 {
 	// camera set up for quads rendering using 2nd technique
-	vec3 camPosition = vec3(0, -200,300);
-	vec3 lookAtPoint = vec3(512,512,0);
+	vec3 camPosition = vec3(-172, 405, 300);
+	vec3 lookAtPoint = vec3(700,400,0);
 
 	// camera set up for lower corner technique
 	//vec3 camPosition = vec3(0, 0, 0);

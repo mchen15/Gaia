@@ -34,6 +34,7 @@ uniform vec2 u_manipCenter;
 uniform float u_manipRadius;
 
 const float manipWidth = 0.0001;
+const float eps = 0.001;
 
 float sampleHeight(vec2 coord)
 {
@@ -142,6 +143,9 @@ vec3 computeWaterColor()
 		normal = sampleNormal(texcoord);
 	
 	float waterHeight = sampleHeight(texcoord);
+
+	if (waterHeight < eps)
+		return vec3(-1, -1, -1);
 
 	float mixFactor = clamp(waterHeight / 0.00075, 0, 1);
 	vec3 color = mix(shallow, deep, sqrt(mixFactor));  
@@ -255,11 +259,20 @@ void main(){
 	float normalizedHeight = height / u_heightScale;
 	float intensity = max(dot(u_lightDirection, normal), 0.0);
 	vec3 waterColor = computeWaterColor();
-	//vec3 terrainColor = computeTerrainColor(normalizedHeight, intensity);
 	vec3 terrainColor = getTexturedTerrainColor(normalizedHeight, intensity);
-	float blend = 8.0*height/u_heightScale*clamp(texture(u_heightMap, texcoord).g,0.0,0.8);
-	vec3 color = mix( terrainColor, waterColor, blend);
-	
+
+	vec3 color = vec3(0, 0, 0);
+
+	if (waterColor.x != -1.0)
+	{
+		float blend = 8.0*height / u_heightScale*clamp(texture(u_heightMap, texcoord).g, 0.0, 0.8);
+		color = mix(terrainColor, waterColor, blend);
+	}
+	else
+	{
+		color = terrainColor;
+	}
+
 	float avgSlope = (diff1 + diff2) / 2.0;
 
 	if (u_userInteraction==1 && u_manipCenter.x >=0.0 && u_manipCenter.x <=1.0 && u_manipCenter.y >=0.0 && u_manipCenter.y <=1.0)

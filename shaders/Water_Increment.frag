@@ -38,7 +38,7 @@ void main (void)
 
 	else if( u_waterSrc == RAIN)
 	{
-		float rainRate = 0.005;
+		float rainRate = 0.015;
 		float r = rand(v_Texcoord);
 		if ( r>0.2)
 		{

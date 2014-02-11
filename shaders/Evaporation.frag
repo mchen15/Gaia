@@ -1,8 +1,12 @@
 #version 400
-
+// u_terrainAttrTex Channels
+// r: terrain height
+// g: water height
+// b: sedimentation
+// a: <placeholder for d1 to be used while extracing velocity from flux>
 uniform sampler2D u_terrainAttrTex;
 uniform float u_deltaT;
-uniform float u_Ke = 0.001;
+uniform float u_Ke = 0.01;
 
 in vec2 v_Texcoord;
 out vec4 out_terrainAttr;

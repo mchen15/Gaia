@@ -25,7 +25,7 @@ http://www.youtube.com/watch?v=iPPxxh8R2PU
 
 
 
-![alt tag](https://raw.github.com/mchen15/Gaia/master/finalResults/terrain.png)
+![alt tag](https://raw.github.com/mchen15/Gaia/master/finalResults/terrain_textured.png)
 
 -----------------------------
 REFERENCES
